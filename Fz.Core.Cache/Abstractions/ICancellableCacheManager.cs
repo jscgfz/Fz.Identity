@@ -7,6 +7,8 @@ public interface ICancellableCacheManager
   Task<string> GetOrSetStringAsync(string key, Func<Task<string>> func, TimeSpan expiration, CancellationToken cancellationToken);
   Task SetStringAsync(string key, string value, CancellationToken cancellationToken);
   Task SetStringAsync(string key, string value, TimeSpan expiration, CancellationToken cancellationToken);
+  Task Set<TValue>(string key, TValue value, CancellationToken cancellationToken);
+  Task Set<TValue>(string key, TValue value, TimeSpan expiration, CancellationToken cancellationToken);
   Task<TResult?> TryGetAsync<TResult>(string key, CancellationToken cancellationToken);
   Task<TResult> GetOrSetAsync<TResult>(string key, Func<Task<TResult>> func, CancellationToken cancellationToken);
   Task<TResult> GetOrSetAsync<TResult>(string key, Func<Task<TResult>> func, TimeSpan expiration, CancellationToken cancellationToken);
