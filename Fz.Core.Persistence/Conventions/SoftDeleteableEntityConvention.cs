@@ -13,7 +13,7 @@ public sealed class SoftDeleteableEntityConvention : IModelFinalizingConvention
     => modelBuilder
       .Metadata
       .GetEntityTypes()
-      .Where(entityType => entityType.ClrType is { IsAbstract: false, IsInterface: false } && typeof(ISoftDeleteableEntity<>).IsAssignableFrom(entityType.ClrType))
+      .Where(entityType => entityType.ClrType is { IsAbstract: false, IsInterface: false } && entityType.ClrType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISoftDeleteableEntity<>)))
       .ToList()
       .ForEach(entityType =>
       {
