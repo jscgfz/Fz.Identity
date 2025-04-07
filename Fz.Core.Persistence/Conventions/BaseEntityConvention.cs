@@ -13,17 +13,22 @@ public sealed class BaseEntityConvention : IModelFinalizingConvention
     => modelBuilder
       .Metadata
       .GetEntityTypes()
-      .Where(entityType => entityType.ClrType is { IsAbstract: false, IsInterface: false } && typeof(IBaseEntity<>).IsAssignableFrom(entityType.ClrType))
+      .Where(entityType => entityType.ClrType is { IsAbstract: false, IsInterface: false } && entityType.ClrType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IBaseEntity<>)))
       .Select(entityType => entityType.FindProperty(nameof(IBaseEntity<Guid>.Id)) ?? throw new NullReferenceException())
       .ToList()
       .ForEach(conventionProp =>
       {
-        conventionProp.SetValueGenerated(ValueGenerated.OnAddOrUpdate);
         string? asignation = conventionProp.ClrType switch
         {
-          Type t when t == typeof(Guid) => conventionProp.SetDefaultValueSql(DatabaseDefaultValues.Guid),
+          Type t when t == typeof(Guid) => ApplyGuid(conventionProp),
           Type t when t == typeof(int) => string.Empty,
           _ => throw new NotImplementedException()
         };
       });
+
+  private static string? ApplyGuid(IConventionProperty conventionProp)
+  {
+    conventionProp.SetValueGenerated(ValueGenerated.OnAddOrUpdate);
+    return conventionProp.SetDefaultValueSql(DatabaseDefaultValues.Guid);
+  }
 }
