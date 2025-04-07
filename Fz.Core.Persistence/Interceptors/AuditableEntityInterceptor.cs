@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 namespace Fz.Core.Persistence.Interceptors;
 
 public sealed class AuditableEntityInterceptor<TContext, TUser>(IContextControlFieldsManager<TUser> contextControlFieldsManager) : SaveChangesInterceptor, ISaveChangesInterceptor
-  where TContext : DatabaseContext, new()
+  where TContext : DatabaseContext
   where TUser : IEquatable<TUser>
 {
   private readonly IContextControlFieldsManager<TUser> _contextControlFieldsManager = contextControlFieldsManager;
