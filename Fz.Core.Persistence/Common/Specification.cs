@@ -1,7 +1,7 @@
 ﻿using Fz.Core.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Linq;
+using Fz.Core.Domain.Primitives.Abstractions.Common;
 
 namespace Fz.Core.Persistence.Common;
 
@@ -103,6 +103,13 @@ public class Specification<TQuery, TResult> : ISpecification<TQuery, TResult>
   public Specification<TQuery, TResult> WithOrderBy(Expression<Func<TQuery, object>> orderBy)
   {
     _orderBy = orderBy;
+    return this;
+  }
+
+  public Specification<TQuery, TResult> WithPagination(IPaginationParams pagination)
+  {
+    _take = pagination.PageSize;
+    _skip = pagination.PageIndex * pagination.PageSize;
     return this;
   }
 
