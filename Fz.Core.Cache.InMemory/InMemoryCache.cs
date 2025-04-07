@@ -7,6 +7,36 @@ public sealed class InMemoryCache(IMemoryCache cache) : ICacheManager
 {
   private readonly IMemoryCache _cache = cache;
 
+  public Task Set<TValue>(string key, TValue value)
+  {
+    _cache.Set(key, value);
+    return Task.CompletedTask;
+  }
+
+  public Task Set<TValue>(string key, TValue value, TimeSpan expiration)
+  {
+    MemoryCacheEntryOptions options = new()
+    {
+      AbsoluteExpirationRelativeToNow = expiration,
+    };
+    _cache.Set(key, value, options);
+    return Task.CompletedTask;
+  }
+
+  public Task Set<TValue>(string key, TValue value, CancellationToken cancellationToken)
+  {
+    if (cancellationToken.IsCancellationRequested)
+      Set(key, value);
+    return Task.CompletedTask;
+  }
+
+  public Task Set<TValue>(string key, TValue value, TimeSpan expiration, CancellationToken cancellationToken)
+  {
+    if (cancellationToken.IsCancellationRequested)
+      Set(key, value, expiration);
+    return Task.CompletedTask;
+  }
+
   async Task<TResult> ICacheManager.GetOrSetAsync<TResult>(string key, Func<Task<TResult>> func)
   {
     if (_cache.TryGetValue(key, out TResult? result))
