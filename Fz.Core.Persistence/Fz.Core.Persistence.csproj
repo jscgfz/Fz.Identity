@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fz.Core.Domain.Primitives\Fz.Core.Domain.Primitives.csproj" />
+    <ProjectReference Include="..\Fz.Core.Result\Fz.Core.Result.csproj" />
   </ItemGroup>
 
 </Project>
