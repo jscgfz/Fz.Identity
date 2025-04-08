@@ -1,34 +1,42 @@
-var builder = WebApplication.CreateBuilder(args);
+using Asp.Versioning.Builder;
+using Fz.Core.Cache.InMemory.Extensions;
+using Fz.Core.Http.Extensions;
+using Fz.Finanzaseguros.Api.Abstractions;
+using Fz.Finanzaseguros.Infrastructure.Extensions;
+using System.Reflection;
 
-// Add services to the container.
+var app = WebApplication
+  .CreateBuilder(args)
+  .WithProblemDetails()
+  .WithEndpointModulesFromAssembly<IInsuranceModule>(Assembly.GetExecutingAssembly())
+  .WithInMemoryCache()
+  .WithApiVersioning()
+  .WithCors()
+  .WithEndpointsApiExplorer()
+  .WithInfrastructure()
+  .Build();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+ApiVersionSet set = app
+  .NewApiVersionSet()
+  .HasApiVersion(new(1))
+  .ReportApiVersions()
+  .Build();
 
 app.UseHttpsRedirection();
+app.UseCors();
+app
+  .MapGroup("/api/v{version:apiVersion}")
+  .RequireCors()
+  .WithApiVersionSet(set)
+  .ProducesProblem(StatusCodes.Status500InternalServerError)
+  .ProducesProblem(StatusCodes.Status400BadRequest)
+  .MapEndpointModules<IInsuranceModule>();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-  var forecast = Enumerable.Range(1, 5).Select(index =>
-      new WeatherForecast
-      (
-          DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-          Random.Shared.Next(-20, 55),
-          summaries[Random.Shared.Next(summaries.Length)]
-      ))
-      .ToArray();
-  return forecast;
-});
+app.MapOpenApiDocument(
+  "finanzauto-finanzaseguros",
+  servers: app.Configuration.GetSection("ScalarServers").Get<IEnumerable<string>>()
+)
+  .UseAuthentication()
+  .UseAuthorization();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-  public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
