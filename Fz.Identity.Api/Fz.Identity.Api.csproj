@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Features\Masters\Commands\" />
+    <Folder Include="Features\Roles\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fz.Core.Cache.InMemory\Fz.Core.Cache.InMemory.csproj" />
+    <ProjectReference Include="..\Fz.Core.Cache\Fz.Core.Cache.csproj" />
+    <ProjectReference Include="..\Fz.Core.Domain.Primitives\Fz.Core.Domain.Primitives.csproj" />
+    <ProjectReference Include="..\Fz.Core.Http\Fz.Core.Http.csproj" />
+    <ProjectReference Include="..\Fz.Core.Persistence\Fz.Core.Persistence.csproj" />
+    <ProjectReference Include="..\Fz.Core.Result.Extensions\Fz.Core.Result.Extensions.csproj" />
+    <ProjectReference Include="..\Fz.Core.Result\Fz.Core.Result.csproj" />
+  </ItemGroup>
+
+</Project>
