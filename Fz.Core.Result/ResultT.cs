@@ -10,12 +10,12 @@ public sealed class Result<TValue>(
   {
     get
     {
-      Guards.Assert(() => IsSuccess, new InvalidOperationException("No hay valores para un resultado erroneo"));
+      Guards.Not(() => IsSuccess, new InvalidOperationException("No hay valores para un resultado erroneo"));
       Guards.ThrowIfNull(_value, nameof(Value));
       return _value!;
     }
   }
 
   public static implicit operator Result<TValue>(TValue? value)
-    => From(value, ResultTypes.NotFound, [new Error("Object.NotFound", "Elemento no encontrado")]);
+    => From(value!, ResultTypes.NotFound, [new Error("Object.NotFound", "Elemento no encontrado")]);
 }
