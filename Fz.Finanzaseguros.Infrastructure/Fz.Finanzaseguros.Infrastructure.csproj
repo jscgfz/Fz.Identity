@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Refit" Version="8.0.0" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fz.Core.Cache\Fz.Core.Cache.csproj" />
+    <ProjectReference Include="..\Fz.Finanzaseguros.Application\Fz.Finanzaseguros.Application.csproj" />
+  </ItemGroup>
 </Project>
