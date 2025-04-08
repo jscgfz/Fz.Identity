@@ -1,4 +1,5 @@
 ﻿using Fz.Core.Result.Common;
+using System.Collections;
 
 namespace Fz.Core.Result;
 
@@ -13,20 +14,20 @@ public class Result
   {
     Guards.ThrowIfNull(type, nameof(type));
     errors ??= [];
-    Guards.Assert(
+    Guards.Not(
       () => ResultTypes.IsValidType(type),
       new ArgumentException("Tipo de Resultado invalido", nameof(type)));
-    Guards.Assert(
+    Guards.If(
       () => !ResultTypes.IsSuccess(type) && (!errors.Any() || errors.Any(e => e == Error.Empty)),
       new ArgumentException("El resultado debe tener errores especificados", nameof(errors)));
-    Guards.Assert(
-      () => ResultTypes.IsSuccess(type) && (errors.Any(e => e != Error.Empty) || errors.Any()),
+    Guards.If(
+      () => ResultTypes.IsSuccess(type) && (errors.Any(e => e != Error.Empty)),
       new ArgumentException("El resultado no debe tener errores especificados", nameof(errors)));
-    (Type, Errors) = (type, errors);
+    (Type, Errors) = (type, errors);    
   }
 
   public static Result<TValue> From<TValue>(TValue? value, ResultType onErrorType, IEnumerable<Error> onError)
-    => value is null ? Failure<TValue>(onErrorType, onError) : Success(value);
+    => value is null || value is ICollection col && col.Count == 0 ? Failure<TValue>(onErrorType, onError) : Success(value);
   public static async Task<Result<TValue>> From<TValue>(Task<TValue?> promise, ResultType onErrorType, IEnumerable<Error> onError)
     => From(await promise, onErrorType, onError);
   public static Result Success() => new(ResultTypes.OK, [Error.Empty]);
