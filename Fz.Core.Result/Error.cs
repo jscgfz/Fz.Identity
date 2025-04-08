@@ -10,4 +10,9 @@ public sealed record Error
     => Description = description;
   public Error(string code, string description)
     => (Code, Description) = (code, description);
+
+  public override int GetHashCode()
+  {
+    return HashCode.Combine(Code, Description);
+  }
 }
