@@ -47,7 +47,7 @@ public static class ResultTypes
   public static ResultType ServiceUnavailable => new(503, " Service Unavailable ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.4");
   public static ResultType GatewayTimeout => new(504, " Gateway Timeout ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.5");
   public static ResultType HTTPVersionNotSupported => new(505, " HTTP Version Not Supported ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.6");
-  public static bool IsSuccess(ResultType type) => UnsuccessTypes.Contains(type.Status);
+  public static bool IsSuccess(ResultType type) => !UnsuccessTypes.Contains(type.Status);
   public static bool IsValidType(ResultType type) => type.Status is > 99 and < 600;
 
   private static readonly IEnumerable<int> UnsuccessTypes = [ 400 ,401 ,402 ,403 ,404 ,405 ,406 ,407 ,408 ,409 ,410 ,411 ,412 ,413 ,414 ,415 ,416 ,417 ,426 ,500 ,501 ,502 ,503 ,504 ,505 ];
