@@ -57,3 +57,5 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+/Fz.Identity.Api/Properties/PublishProfiles
+/Fz.Identity.Api/Fz.Identity.Api.csproj.user
