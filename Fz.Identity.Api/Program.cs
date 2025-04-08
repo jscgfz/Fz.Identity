@@ -38,7 +38,10 @@ app
   .ProducesProblem(StatusCodes.Status400BadRequest)
   .MapEndpointModules<IIdentityModule>();
 
-app.MapOpenApiDocument("finanzauto-identity", servers: app.Configuration.GetSection("ScalarServers").Get<IEnumerable<string>>())
+app.MapOpenApiDocument(
+  "finanzauto-identity",
+  servers: app.Configuration.GetSection("ScalarServers").Get<IEnumerable<string>>()
+  )
   .UseAuthentication()
   .UseAuthorization();
 
