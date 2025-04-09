@@ -18,6 +18,12 @@ public static class Dependencyinjection
       .ValidateDataAnnotations()
       .ValidateOnStart();
 
+    builder.Services
+      .AddOptions<SarlaftServiceSettings>()
+      .BindConfiguration(nameof(SarlaftServiceSettings))
+      .ValidateDataAnnotations()
+      .ValidateOnStart();
+
     builder
       .Services
       .AddRefitClient<IMpmService>()
@@ -27,6 +33,16 @@ public static class Dependencyinjection
         client.BaseAddress = new(settings.BaseUrl);
       })
       .AddHttpMessageHandler<MpmAuthenticationDelegate>();
+
+    builder.Services
+      .AddRefitClient<ISarlaftService>()
+      .ConfigureHttpClient((provider, client) =>
+      {
+        SarlaftServiceSettings settings = provider.GetRequiredService<IOptions<SarlaftServiceSettings>>().Value;
+        client.BaseAddress = new(settings.BaseUrl);
+      })
+      .AddHttpMessageHandler<SarlaftAuthenticationDelegate>();
+
     return builder;
   }
 }
