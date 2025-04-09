@@ -1,8 +1,8 @@
-﻿using Refit;
+﻿using System.Text.Json.Serialization;
 
 namespace Fz.Finanzaseguros.Application.Common.Models.MPM.Request;
 
 public sealed record MpmAuthRequest(
-  [property: AliasAs("usr_Login")] string Username,
-  [property: AliasAs("Usr_PassIng")] string Password
+  [property: JsonPropertyName("usr_Login")] string Username,
+  [property: JsonPropertyName("Usr_PassIng")] string Password
 );

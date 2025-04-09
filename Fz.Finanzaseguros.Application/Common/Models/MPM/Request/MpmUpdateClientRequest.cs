@@ -1,13 +1,13 @@
-﻿using Refit;
+﻿using System.Text.Json.Serialization;
 
 namespace Fz.Finanzaseguros.Application.Common.Models.MPM.Request;
 
 public record MpmUpdateClientRequest(
-  [property: AliasAs("clI_Id")] int Id,
-  [property: AliasAs("clI_Nombre")] string Name,
-  [property: AliasAs("clI_Apellido1")] string LastName1,
-  [property: AliasAs("clI_Apellido2")] string LastName2,
-  [property: AliasAs("clI_Sexo")] int GenderId,
-  [property: AliasAs("clI_Nacimiento")] DateTime BirthDate,
-  [property: AliasAs("vcO_ID")] int ComunicationViaId
+  [property: JsonPropertyName("clI_Id")] int Id,
+  [property: JsonPropertyName("clI_Nombre")] string Name,
+  [property: JsonPropertyName("clI_Apellido1")] string LastName1,
+  [property: JsonPropertyName("clI_Apellido2")] string LastName2,
+  [property: JsonPropertyName("clI_Sexo")] int GenderId,
+  [property: JsonPropertyName("clI_Nacimiento")] DateTime BirthDate,
+  [property: JsonPropertyName("vcO_ID")] int ComunicationViaId
 );
