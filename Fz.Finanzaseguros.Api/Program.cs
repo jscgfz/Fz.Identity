@@ -36,7 +36,8 @@ app.MapOpenApiDocument(
   "finanzauto-finanzaseguros",
   servers: app.Configuration.GetSection("ScalarServers").Get<IEnumerable<string>>()
 )
-  .UseAuthentication()
-  .UseAuthorization();
+  //.UseAuthentication()
+  //.UseAuthorization()
+  ;
 
 app.Run();
