@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Fz.Identity.Api.Extensions;
 
@@ -110,6 +111,7 @@ public static class DependencyInjection
           sql =>
           {
             sql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+            sql.MigrationsAssembly(Assembly.GetExecutingAssembly());
             sql.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(5), errorNumbersToAdd: null);
           }
         );
@@ -130,6 +132,7 @@ public static class DependencyInjection
           sql =>
           {
             sql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+            sql.MigrationsAssembly(Assembly.GetExecutingAssembly());
             sql.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(5), errorNumbersToAdd: null);
           }
         );

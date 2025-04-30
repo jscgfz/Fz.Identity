@@ -10,6 +10,5 @@ public sealed record UsersQuery(
   int? ApplicationId,
   string? Filter,
   int? PageIndex,
-  int? PageSize,
-  int? Page
-) : PaginationParams(PageIndex, PageSize, Page), IQuery<Result<IPaginatedResult<UserDto>>>;
+  int? PageSize
+) : PaginationParams(PageIndex, PageSize), IQuery<Result<IPaginatedResult<UserDto>>>;

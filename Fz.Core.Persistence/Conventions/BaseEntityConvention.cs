@@ -22,6 +22,7 @@ public sealed class BaseEntityConvention : IModelFinalizingConvention
         {
           Type t when t == typeof(Guid) => ApplyGuid(conventionProp),
           Type t when t == typeof(int) => string.Empty,
+          Type t when t == typeof(string) => string.Empty,
           _ => throw new NotImplementedException()
         };
       });

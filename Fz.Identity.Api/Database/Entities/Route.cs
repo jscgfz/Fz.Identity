@@ -6,6 +6,7 @@ public class Route : Entity<int>
 {
   public int ApplitionId { get; set; }
   public string Name { get; set; }
+  public string Description { get; set; }
   public string UrlImg { get; set; }
   public string Path { get; set; }
   public int Order { get; set; }
@@ -18,10 +19,11 @@ public class Route : Entity<int>
   public virtual IEnumerable<Route> Children { get; set; } = default!;
   public virtual IEnumerable<RoleRoute> Roles { get; set; } = default!;
 
-  public Route(int applicationId, string name, string urlImg, string path, int order, bool excludeNav, string component)
+  public Route(int applicationId, string name, string description, string urlImg, string path, int order, bool excludeNav, string component)
   {
     ApplitionId = applicationId;
     Name = name;
+    Description = description;
     UrlImg = urlImg;
     Path = path;
     Order = order;

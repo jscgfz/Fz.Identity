@@ -15,6 +15,7 @@ public sealed class UserSpecifications
         row.Name.Contains(query.Filter) ||
         row.Surname.Contains(query.Filter) ||
         row.Username.Contains(query.Filter) ||
+        (row.Name + " " + row.Surname).Trim().Contains(query.Filter) ||
         row.IdentificationNumber.Contains(query.Filter) ||
         row.PrincipalEmail.Contains(query.Filter)
       )

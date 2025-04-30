@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fz.Core.Domain.Primitives\Fz.Core.Domain.Primitives.csproj" />
+    <ProjectReference Include="..\Fz.Core.Persistence\Fz.Core.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

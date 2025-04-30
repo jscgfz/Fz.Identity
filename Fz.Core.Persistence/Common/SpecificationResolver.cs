@@ -21,11 +21,11 @@ public sealed class SpecificationResolver
     int count = await context.Repository<TQuery>().CountAsync();
     int pageCount = (int)Math.Ceiling((double)count / (parameters.PageSize ?? 10));
     IEnumerable<TResult> data = await query
-      .Skip((parameters.PageIndex ?? 1) * ((parameters.Page ?? 1) - 1))
+      .Skip(((parameters.PageIndex ?? 1) - 1) * (parameters.PageSize ?? 1))
       .Take(parameters.PageSize ?? 10)
       .ToListAsync();
     
-    return new PaginationSet<TResult>(data, pageCount, parameters.Page ?? 1, parameters.PageSize ?? 10);
+    return new PaginationSet<TResult>(data, pageCount, parameters.PageIndex ?? 1, parameters.PageSize ?? 10, count);
   }
 
   public static async Task<Result.Result<IPaginatedResult<TResult>>> ComputeResult<TQuery, TResult, TParams>(

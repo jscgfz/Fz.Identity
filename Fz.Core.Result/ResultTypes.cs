@@ -1,4 +1,5 @@
 ﻿using Fz.Core.Result.Common;
+using System.Net;
 
 namespace Fz.Core.Result;
 
@@ -27,8 +28,8 @@ public static class ResultTypes
   public static ResultType Forbidden => new(403, " Forbidden ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3");
   public static ResultType NotFound => new(404, " Not Found ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4");
   public static ResultType MethodNotAllowed => new(405, " Method Not Allowed ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.5");
-  public static ResultType NotAcceptable => new(406, " Not Acceptable ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.6");
-  public static ResultType ProxyAuthenticationRequired => new(407, " Proxy Authentication Required ", "https://datatracker.ietf.org/doc/html/rfc7235#section-3.2");
+  public static ResultType NotAcceptable => new(406, " Not Acc                                                                                                                                                                                                                                          eptable ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.6");
+  public static ResultType ProxyAuthenticationRequired => new(407, " Prox   y Authentication Required ", "https://datatracker.ietf.org/doc/html/rfc7235#section-3.2");
   public static ResultType RequestTimeout => new(408, " Request Timeout ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.7");
   public static ResultType Conflict => new(409, " Conflict ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8");
   public static ResultType Gone => new(410, " Gone ", "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.9");
@@ -51,4 +52,13 @@ public static class ResultTypes
   public static bool IsValidType(ResultType type) => type.Status is > 99 and < 600;
 
   private static readonly IEnumerable<int> UnsuccessTypes = [ 400 ,401 ,402 ,403 ,404 ,405 ,406 ,407 ,408 ,409 ,410 ,411 ,412 ,413 ,414 ,415 ,416 ,417 ,426 ,500 ,501 ,502 ,503 ,504 ,505 ];
+  
+  public static ResultType FromStatusCode(int statusCode)
+    => typeof(ResultTypes).GetProperties()
+      .Select(p => p.GetValue(null))
+      .OfType<ResultType>()
+      .FirstOrDefault(r => r.Status == statusCode) ?? throw new InvalidDataException();
+
+  public static ResultType FromStatusCode(HttpStatusCode statusCode)
+    => FromStatusCode(((int)statusCode));
 }
