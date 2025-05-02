@@ -10,5 +10,8 @@ public sealed record AddUserCommand(
   string UserName,
   string Email,
   string IdentificationNumber,
-  string PhoneNamuber
+  string PhoneNamuber,
+  string DocumentType,
+  List<Guid> RoleIds,
+  List<int> ApplicationIds
 ) : ICommand<Result<UserAddedResponseDto>>;

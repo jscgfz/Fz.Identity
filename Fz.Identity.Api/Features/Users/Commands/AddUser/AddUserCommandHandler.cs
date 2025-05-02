@@ -32,7 +32,7 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
         await _dbContext.Repository<User>().AnyAsync(row => row.IdentificationNumber == request.IdentificationNumber, cancellationToken)),
     ];
 
-    if(validations.Any(row => row.Value))
+    if (validations.Any(row => row.Value))
       return Result.Failure<UserAddedResponseDto>(ResultTypes.BadRequest, validations.Where(row => row.Value).Select(row => row.Key));
 
     User user = new()
@@ -45,9 +45,38 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
       IdentificationNumber = request.IdentificationNumber,
       PrincipalPhoneNumber = request.PhoneNamuber,
       PrincipalPhoneNumberConfirmed = false,
+      DocumentType = request.DocumentType,
     };
 
     _dbContext.Add(user);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    List<UserRole> userRoles = new();
+    foreach (var roleId in request.RoleIds)
+    {
+      UserRole userRole = new()
+      {
+        RoleId = roleId,
+        UserId = user.Id,
+      };
+      userRoles.Add(userRole);
+    }
+
+    List<UserApplication> userApplications = new();
+    foreach (var applicationId in request.ApplicationIds)
+    {
+      UserApplication userApplication = new()
+      {
+        ApplicationId = applicationId,
+        UserId = user.Id,
+      };
+      userApplications.Add(userApplication);
+    }
+
+    _dbContext.AddRange(userRoles);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    _dbContext.AddRange(userApplications);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return new UserAddedResponseDto(user.Id, user.Username);
