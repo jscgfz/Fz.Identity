@@ -28,6 +28,7 @@ public sealed class UserSpecifications
         row.Surname,
         row.IdentificationNumber,
         row.PrincipalEmail,
-        row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null
+        row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null,
+        row.IsDeleted
       ));
 }

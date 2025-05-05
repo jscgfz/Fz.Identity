@@ -8,5 +8,6 @@ public sealed record UserDto(
   string Surname,
   string IdentificationNumber,
   string Email,
+  bool IsDeleted,
   IEnumerable<RoleDto>? Roles
 );
