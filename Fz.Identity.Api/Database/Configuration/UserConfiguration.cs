@@ -14,6 +14,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
     builder.HasIndex(row => row.PrincipalEmail).IsUnique();
     builder.HasIndex(row => row.PrincipalPhoneNumber).IsUnique();
     builder.HasIndex(row => row.IdentificationNumber).IsUnique();
+    builder.Property(row => row.DocumentType).HasDefaultValue("C");
     builder.HasData([
       new()
       {
