@@ -12,13 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fz.Identity.Api.Features.Users.Queries.UserById;
 
-public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<UserQuery, Result<UserDto>>
+public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<UserQuery, Result<UserDetailDto>>
 {
   private readonly IReadOnlyDbContext _context
     = provider.GetRequiredKeyedService<IReadOnlyDbContext>(ContextTypes.Identity);
   private readonly IIdentityContextControlFieldsManager _identityManager
     = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
-  public Task<Result<UserDto>> Handle(UserQuery request, CancellationToken cancellationToken)
+  public Task<Result<UserDetailDto>> Handle(UserQuery request, CancellationToken cancellationToken)
   => Result.From(
       _context.Repository<User>().Where(row => row.Id == request.userId)
         .Include(row => row.Roles.Where(r => r.Role.ApplicationId == _identityManager.ApplicationId))
@@ -26,5 +26,5 @@ public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<
         .FirstOrDefaultAsync(),
       ResultTypes.NotFound,
       [new Error("Users.NotFound", "no se encontraron usuarios para la consulta")]
-    ).Map(UserDto.MapFrom);
+    ).Map(UserDetailDto.MapFrom);
 }
