@@ -3,6 +3,7 @@ using Fz.Core.Result.Extensions;
 using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Features.Users.Commands.AddCredential;
 using Fz.Identity.Api.Features.Users.Commands.AddUser;
+using Fz.Identity.Api.Features.Users.Commands.UpdateUser;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Features.Users.Queries.UserById;
 using Fz.Identity.Api.Features.Users.Queries.Users;
@@ -35,9 +36,15 @@ public sealed class UserModule : IIdentityModule
       .ProducesProblem(StatusCodes.Status409Conflict)
       .WithDescription("Agrega una credencial a un usuario existente");
 
-    group.MapPost("/{userId}", async (Guid userId, ISender sender) => await sender.Send(new UserQuery(userId)).ToResult())
+    group.MapGet("/{userId}", async (Guid userId, ISender sender) => await sender.Send(new UserQuery(userId)).ToResult())
       .RequireAuthorization()
-      .Produces(StatusCodes.Status201Created)
+      .Produces(StatusCodes.Status200OK)
+      .ProducesProblem(StatusCodes.Status409Conflict)
+      .WithDescription("Obtiene un usuario existente por su id");
+
+    group.MapPut("/{userId}", async (UpdateUserCommand cmd, ISender sender) => await sender.Send(cmd).ToResult())
+      .RequireAuthorization()
+      .Produces(StatusCodes.Status204NoContent)
       .ProducesProblem(StatusCodes.Status409Conflict)
       .WithDescription("Obtiene un usuario existente por su id");
   }
