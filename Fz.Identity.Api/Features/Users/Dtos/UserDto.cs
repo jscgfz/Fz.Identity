@@ -9,7 +9,7 @@ public sealed record UserDto(
   string Surname,
   string IdentificationNumber,
   string Email,
-  bool IsDeleted,
+  bool? IsActive,
   IEnumerable<RoleDto>? Roles
 )
 {
