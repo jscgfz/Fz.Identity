@@ -1,4 +1,5 @@
 ﻿using Fz.Core.Persistence.Abstractions;
+using Fz.Core.Persistence.Extensions;
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
@@ -35,17 +36,26 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     IEnumerable<UserRole> userRoles = _dbContext.Repository<UserRole>()
-      .Where(row => row.UserId == request.id && row.Role.ApplicationId == _identityManager.ApplicationId);
+      .Where(row => row.UserId == request.id && row.Role.ApplicationId == _identityManager.ApplicationId)
+      .IncludeDeleted();
 
-    IEnumerable<UserRole> userRolesToDelete = userRoles.Where(ur => !request.RoleIds.Contains(ur.RoleId));
+    IEnumerable<UserRole> userRolesToDelete = userRoles.Where(ur => !request.RoleIds.Contains(ur.RoleId) && !ur.IsDeleted);
     if (userRolesToDelete.Any())
       _dbContext.DeleteRange(userRolesToDelete);
+
+    List<UserRole> userRolesToUpdate = userRoles.Where(ur => request.RoleIds.Contains(ur.RoleId) && ur.IsDeleted).ToList();
+
+    if (userRolesToDelete.Any())
+    {
+      userRolesToUpdate.ForEach(ur => ur.IsDeleted = false);
+      _dbContext.UpdateRange(userRolesToUpdate);
+    }
 
     IEnumerable<Guid> newUserRoleIds = request.RoleIds.Except(userRoles.Select(ur => ur.RoleId));
     if (newUserRoleIds.Any())
     {
       List<UserRole> newUserRoles = new();
-      foreach (var roleId in request.RoleIds)
+      foreach (var roleId in newUserRoleIds)
       {
         UserRole userRole = new()
         {
@@ -53,10 +63,9 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
           UserId = user.Id,
         };
         newUserRoles.Add(userRole);
-        _dbContext.AddRange(newUserRoles);
       }
+      _dbContext.AddRange(newUserRoles);
     }
-
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success(ResultTypes.NoContent);
