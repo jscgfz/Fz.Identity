@@ -19,6 +19,7 @@ public class Specification<TQuery, TResult> : ISpecification<TQuery, TResult>
   private Expression<Func<TQuery, TResult>>? _cast;
   private int? _take;
   private int? _skip;
+  private bool _includeDeleted = false;
 
   public Specification() { }
 
@@ -139,6 +140,12 @@ public class Specification<TQuery, TResult> : ISpecification<TQuery, TResult>
     return this;
   }
 
+  public Specification<TQuery, TResult> WithDeleted()
+  {
+    _includeDeleted = true;
+    return this;
+  }
+
   public virtual IQueryable<TResult> Apply(IQueryable<TQuery> query)
   {
     if (_action is not null)
@@ -162,6 +169,8 @@ public class Specification<TQuery, TResult> : ISpecification<TQuery, TResult>
       query = query.Take(_take.Value);
     if (_skip.HasValue && _skip.Value != 0)
       query = query.Skip(_skip.Value);
+    if(_includeDeleted)
+      query = query.IgnoreQueryFilters();
     return typeof(TResult) == typeof(TQuery) ? (IQueryable<TResult>)query : query.Select(_cast ?? throw new InvalidOperationException("Selector must be setted"));
   }
 }
