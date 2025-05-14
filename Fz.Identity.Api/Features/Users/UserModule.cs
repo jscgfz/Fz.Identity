@@ -4,6 +4,7 @@ using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Features.Users.Commands.AddCredential;
 using Fz.Identity.Api.Features.Users.Commands.AddUser;
 using Fz.Identity.Api.Features.Users.Commands.UpdateUser;
+using Fz.Identity.Api.Features.Users.Commands.UpdateUserApplicationCommand;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Features.Users.Queries.UserById;
 using Fz.Identity.Api.Features.Users.Queries.Users;
@@ -46,6 +47,12 @@ public sealed class UserModule : IIdentityModule
       .RequireAuthorization()
       .Produces(StatusCodes.Status204NoContent)
       .ProducesProblem(StatusCodes.Status409Conflict)
-      .WithDescription("Obtiene un usuario existente por su id");
+      .WithDescription("Actualiza un usuario existente por su id");
+
+    group.MapPut("/{userId}/appliccations/{applicationId}", async (Guid userId, int applicationId, UpdateUserApplicationRequest body, ISender sender) => await sender.Send(new UpdateUserApplicationCommand(userId, applicationId, body.IsActive)).ToResult())
+      .RequireAuthorization()
+      .Produces(StatusCodes.Status204NoContent)
+      .ProducesProblem(StatusCodes.Status409Conflict)
+      .WithDescription("Actualiza el estado de un usuario en una aplicaión por su id");
   }
 }
