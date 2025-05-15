@@ -23,6 +23,7 @@ public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<
       _context.Repository<User>().Where(row => row.Id == request.userId)
         .Include(row => row.Roles.Where(r => r.Role.ApplicationId == _identityManager.ApplicationId))
         .ThenInclude(ur => ur.Role)
+        .Include(row => row.Applications.Where(a => a.ApplicationId == _identityManager.ApplicationId))
         .FirstOrDefaultAsync(),
       ResultTypes.NotFound,
       [new Error("Users.NotFound", "no se encontraron usuarios para la consulta")]

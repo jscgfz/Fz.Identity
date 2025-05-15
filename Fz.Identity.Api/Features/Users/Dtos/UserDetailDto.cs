@@ -1,5 +1,6 @@
 ﻿using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Roles.Dtos;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Fz.Identity.Api.Features.Users.Dtos;
 
@@ -9,7 +10,7 @@ public sealed record UserDetailDto(
   string Surname,
   string IdentificationNumber,
   string Email,
-  bool IsDeleted,
+  bool? IsActive,
   string DocumentType,
   string UserName,
   string PhoneNumber,
@@ -23,7 +24,7 @@ public sealed record UserDetailDto(
       user.Surname,
       user.IdentificationNumber,
       user.PrincipalEmail,
-      user.IsDeleted,
+      user.Applications.Any() ? !user.Applications.FirstOrDefault().IsDeleted : null,
       user.DocumentType,
       user.Username,
       user.PrincipalPhoneNumber,
