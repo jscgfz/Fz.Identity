@@ -29,6 +29,7 @@ public sealed class UserSpecifications
         row.IdentificationNumber,
         row.PrincipalEmail,
         row.Applications.Any(a => a.ApplicationId == query.ApplicationId) ? !row.Applications.First(a => a.ApplicationId == query.ApplicationId).IsDeleted : null,
+        row.Username,
         (row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null)
       ))
     .WithDeleted();
