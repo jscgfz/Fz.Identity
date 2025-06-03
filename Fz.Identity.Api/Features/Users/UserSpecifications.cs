@@ -16,7 +16,7 @@ public sealed class UserSpecifications
         row.Surname.Contains(query.Filter) ||
         row.Username.Contains(query.Filter) ||
         (row.Name + " " + row.Surname).Trim().Contains(query.Filter) ||
-        row.IdentificationNumber.Contains(query.Filter) ||
+        (!string.IsNullOrWhiteSpace(row.IdentificationNumber) && row.IdentificationNumber.Contains(query.Filter)) ||
         row.PrincipalEmail.Contains(query.Filter)
       )
       .WithAndFilter(row => !query.ApplicationId.HasValue || row.Applications.Any(a => a.ApplicationId == query.ApplicationId))
@@ -28,7 +28,7 @@ public sealed class UserSpecifications
         row.Surname,
         row.IdentificationNumber,
         row.PrincipalEmail,
-        row.Applications.Any() ? !row.Applications.FirstOrDefault(a => a.ApplicationId == query.ApplicationId).IsDeleted : null,
+        row.Applications.Any(a => a.ApplicationId == query.ApplicationId) ? !row.Applications.First(a => a.ApplicationId == query.ApplicationId).IsDeleted : null,
         (row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null)
       ))
     .WithDeleted();

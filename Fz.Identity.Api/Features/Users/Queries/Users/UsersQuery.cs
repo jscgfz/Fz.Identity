@@ -10,5 +10,6 @@ public sealed record UsersQuery(
   int? ApplicationId,
   string? Filter,
   int? PageIndex,
-  int? PageSize
-) : PaginationParams(PageIndex, PageSize), IQuery<Result<IPaginatedResult<UserDto>>>;
+  int? PageSize,
+  bool FullSet = false
+) : PaginationParams(PageIndex, PageSize, FullSet), IQuery<Result<IPaginatedResult<UserDto>>>;
