@@ -5,4 +5,4 @@ using System.Text.Json;
 
 namespace Fz.Identity.Api.Features.Auth.Commands.Login;
 
-public record class LoginCommand(int ApplicationId, int CredentialType, JsonElement Credentials) : ICommand<Result<IdentityResponseDto>>;
+public record class LoginCommand(int ApplicationId, int? CredentialType, JsonElement Credentials) : ICommand<Result<IdentityResponseDto>>;
