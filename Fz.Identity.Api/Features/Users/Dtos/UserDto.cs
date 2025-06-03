@@ -10,6 +10,7 @@ public sealed record UserDto(
   string? IdentificationNumber,
   string Email,
   bool? IsActive,
+  string UserName,
   IEnumerable<RoleDto>? Roles
 )
 {
@@ -21,6 +22,7 @@ public sealed record UserDto(
         user.IdentificationNumber,
         user.PrincipalEmail,
         user.IsDeleted,
+        user.Username,
         (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null)
       );
 }
