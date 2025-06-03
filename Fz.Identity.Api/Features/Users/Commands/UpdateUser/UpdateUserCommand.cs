@@ -8,9 +8,9 @@ public sealed record UpdateUserCommand(
   string Name,
   string Surname,
   string Email,
-  string IdentificationNumber,
-  string PhoneNamuber,
-  string DocumentType,
+  string? IdentificationNumber,
+  string? PhoneNamuber,
+  string? DocumentType,
   string UserName,
   List<Guid> RoleIds
   ) : ICommand<Result>;
