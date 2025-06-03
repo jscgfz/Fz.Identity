@@ -26,10 +26,10 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
         await _dbContext.Repository<User>().AnyAsync(row => row.Username == request.UserName, cancellationToken)),
       KeyValuePair.Create(
         new Error("PhoneNumber.Registered", "El número de telefono ya se encuentra registrado en la base de datos"),
-        await _dbContext.Repository<User>().AnyAsync(row => row.PrincipalPhoneNumber == request.PhoneNamuber, cancellationToken)),
+        await _dbContext.Repository<User>().AnyAsync(row => !string.IsNullOrEmpty(request.PhoneNamuber) && row.PrincipalPhoneNumber == request.PhoneNamuber, cancellationToken)),
       KeyValuePair.Create(
         new Error("IdentificationNumber.Registered", "El número de identificación ya se encuentra registrado en la base de datos"),
-        await _dbContext.Repository<User>().AnyAsync(row => row.IdentificationNumber == request.IdentificationNumber, cancellationToken)),
+        await _dbContext.Repository<User>().AnyAsync(row => !string.IsNullOrEmpty(request.IdentificationNumber) && row.IdentificationNumber == request.IdentificationNumber, cancellationToken)),
     ];
 
     if (validations.Any(row => row.Value))
