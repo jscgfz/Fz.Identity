@@ -4,6 +4,7 @@ namespace Fz.Identity.Api.Database.Entities;
 
 public class Application : MasterEntity<int>
 {
+  public bool MultDomainEnabled { get; set; }
   public virtual IEnumerable<Role> Roles { get; set; } = default!;
   public virtual IEnumerable<UserClaim> UserClaims { get; set; } = default!;
   public virtual IEnumerable<AllowedCredential> AllowedCredentials { get; set; } = default!;

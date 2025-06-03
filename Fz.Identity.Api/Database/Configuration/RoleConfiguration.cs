@@ -27,7 +27,9 @@ public sealed class RoleConfiguration(IIdentityContextControlFieldsManager manag
         new Role { Id = Guid.Parse("228ee2e2-843e-47cc-98ff-ae78e52340b7"), ApplicationId = 7, Name = "Administrador" },
         new Role { Id = Guid.Parse("8c187a8e-a65a-45a1-a29b-49c99e1b3cff"), ApplicationId = 7, Name = "GRC" },
         new Role { Id = Guid.Parse("1e219934-094f-48ee-9360-2ad224160120"), ApplicationId = 8, Name = "Admin Contenido" },
-        new Role { Id = Guid.Parse("a4622c30-47a6-468b-a1ca-c2be50ca186d"), ApplicationId = 8, Name = "Admin TI" }
+        new Role { Id = Guid.Parse("a4622c30-47a6-468b-a1ca-c2be50ca186d"), ApplicationId = 8, Name = "Admin TI" },
+        new Role { Id = Guid.Parse("8149c0b3-18db-4c79-8df3-81300b7c5cfb"), ApplicationId = 4, Name = "Administrador" },
+        new Role { Id = Guid.Parse("07d4316e-4834-48fd-8afd-a96524c615ed"), ApplicationId = 4, Name = "Agente" },
       ]);
   }
 }

@@ -23,8 +23,7 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
   public async Task<Result> CreateCredential(Guid userId, string username)
   {
     if (_context.Repository<Credential>()
-      .AsEnumerable()
-      .Where(row => row.UserId == userId && row.CredentialTypeId == (int)CredentialTypes.AsDomain && row.CredentialValue.TryGetProperty("Username", out JsonElement userName) && userName.GetString() == username)
+      .Where(row => row.UserId == userId && row.CredentialTypeId == (int)CredentialTypes.AsDomain && row.CredentialValue == username)
       .Any())
       return Result.Failure(ResultTypes.Conflict, [new Error("Credential.AlreadyExists", "Ya existe una credencial con ese nombre de usuario")]);
 
@@ -32,7 +31,7 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
     {
       UserId = userId,
       CredentialTypeId = (int)CredentialTypes.AsDomain,
-      CredentialValue = JsonSerializer.SerializeToElement(new { Username = username }),
+      CredentialValue = username,
       CredentialConfirmed = false,
       TwoFactorEnabled = false
     };
@@ -67,7 +66,6 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
           .AsEnumerable()
           .Select(row => new CredentialDto(
             row.CredentialValue,
-            row.CredentialValue.GetProperty("Username").GetString()!,
             password,
             row.CredentialTypeId,
             row.UserId

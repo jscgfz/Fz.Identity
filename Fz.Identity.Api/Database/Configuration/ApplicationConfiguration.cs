@@ -10,6 +10,7 @@ public sealed class ApplicationConfiguration : IEntityTypeConfiguration<Applicat
   public void Configure(EntityTypeBuilder<Application> builder)
   {
     builder.ToTable("Applications", IdentityContextSchemas.Configuration);
+    builder.Property(row => row.MultDomainEnabled).HasDefaultValue(false);
     builder.HasData([
       new Application { Id = 1, Name = "Atenea Identity", Description = "Central de identidad del grupo atenea" },
       new Application { Id = 2, Name = "Atenea Iris", Description = "Aplicación principal de Atenea" },

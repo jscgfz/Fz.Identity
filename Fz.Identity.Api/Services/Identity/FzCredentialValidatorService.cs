@@ -24,7 +24,7 @@ public sealed class FzCredentialValidatorService(IServiceProvider provider) : IC
   {
     if (_context.Repository<Credential>()
       .AsEnumerable()
-      .Where(row => row.UserId == userId && row.CredentialTypeId == (int)CredentialTypes.FzDomain && row.CredentialValue.TryGetProperty("Username", out JsonElement userName) && userName.GetString() == username)
+      .Where(row => row.UserId == userId && row.CredentialTypeId == (int)CredentialTypes.FzDomain && row.CredentialValue == username)
       .Any())
       return Result.Failure(ResultTypes.Conflict, [new Error("Credential.AlreadyExists", "Ya existe una credencial con ese nombre de usuario")]);
 
@@ -32,7 +32,7 @@ public sealed class FzCredentialValidatorService(IServiceProvider provider) : IC
     {
       UserId = userId,
       CredentialTypeId = (int)CredentialTypes.FzDomain,
-      CredentialValue = JsonSerializer.SerializeToElement(new { Username = username }),
+      CredentialValue = username,
       CredentialConfirmed = false,
       TwoFactorEnabled = false
     };
@@ -66,7 +66,6 @@ public sealed class FzCredentialValidatorService(IServiceProvider provider) : IC
           .AsEnumerable()
           .Select(row => new CredentialDto(
             row.CredentialValue,
-            row.CredentialValue.GetProperty("Username").GetString()!,
             password,
             row.CredentialTypeId,
             row.UserId

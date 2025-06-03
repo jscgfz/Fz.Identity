@@ -7,12 +7,12 @@ public class User : Entity<Guid>
   public string Name { get; set; }
   public string Surname { get; set; }
   public string Username { get; set; }
-  public string IdentificationNumber { get; set; }
+  public string? IdentificationNumber { get; set; }
   public string PrincipalEmail { get; set; }
   public bool PrincipalEmailConfirmed { get; set; }
-  public string PrincipalPhoneNumber { get; set; }
+  public string? PrincipalPhoneNumber { get; set; }
   public bool PrincipalPhoneNumberConfirmed { get; set; }
-  public string DocumentType { get; set; }
+  public string? DocumentType { get; set; }
 
   public virtual IEnumerable<UserClaim> UserClaims { get; set; } = default!;
   public virtual IEnumerable<Credential> Credentials { get; set; } = default!;

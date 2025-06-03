@@ -26,6 +26,10 @@ public sealed class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         new UserRole { UserId = Guid.Parse("f465489e-f743-40c2-8585-3ebdc982ac5e"), RoleId = Guid.Parse("07fcaa8e-7062-4c31-b582-8285784afd68") },
         new UserRole { UserId = Guid.Parse("aa6a6abd-4c02-45ee-92e4-9ad4cc31169c"), RoleId = Guid.Parse("89789f4a-570d-451d-b99b-69127421f1fe") },
         new UserRole { UserId = Guid.Parse("8d7e4c06-16d7-4448-b145-bda5f1af0776"), RoleId = Guid.Parse("8c187a8e-a65a-45a1-a29b-49c99e1b3cff") },
+        new UserRole { UserId = Guid.Parse("FAC79991-0D25-F011-81D8-00505682ECA9"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
+        new UserRole { UserId = Guid.Parse("8D7E4C06-16D7-4448-B145-BDA5F1AF0776"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
+        new UserRole { UserId = Guid.Parse("71E13750-87BB-40A7-BB93-58E8F603B1A7"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
+        new UserRole { UserId = Guid.Parse("3181C2ED-7454-4C71-99A9-0797DAA0F32D"), RoleId = Guid.Parse("07D4316E-4834-48FD-8AFD-A96524C615ED") },
       ]);
   }
 }

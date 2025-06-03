@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250527221953_AteneaPtConfig")]
+    partial class AteneaPtConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2261,11 +2264,13 @@ namespace Fz.Identity.Api.Database.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DocumentType")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("C");
 
                     b.Property<string>("IdentificationNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -2291,6 +2296,7 @@ namespace Fz.Identity.Api.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PrincipalPhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("PrincipalPhoneNumberConfirmed")
@@ -2307,15 +2313,13 @@ namespace Fz.Identity.Api.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdentificationNumber")
-                        .IsUnique()
-                        .HasFilter("[IdentificationNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PrincipalEmail")
                         .IsUnique();
 
                     b.HasIndex("PrincipalPhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PrincipalPhoneNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("Username")
                         .IsUnique();
