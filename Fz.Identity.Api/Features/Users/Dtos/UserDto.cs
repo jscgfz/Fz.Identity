@@ -7,7 +7,7 @@ public sealed record UserDto(
   Guid Id,
   string Name,
   string Surname,
-  string IdentificationNumber,
+  string? IdentificationNumber,
   string Email,
   bool? IsActive,
   IEnumerable<RoleDto>? Roles
