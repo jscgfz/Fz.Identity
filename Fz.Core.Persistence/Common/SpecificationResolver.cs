@@ -20,9 +20,11 @@ public sealed class SpecificationResolver
     IQueryable<TResult> query = spec.Apply(context.Repository<TQuery>());
     int count = await context.Repository<TQuery>().CountAsync();
     int pageCount = (int)Math.Ceiling((double)count / (parameters.PageSize ?? 10));
-    IEnumerable<TResult> data = await query
+    if (!parameters.FullSet)
+      query = query
       .Skip(((parameters.PageIndex ?? 1) - 1) * (parameters.PageSize ?? 1))
-      .Take(parameters.PageSize ?? 10)
+      .Take(parameters.PageSize ?? 10);
+    IEnumerable<TResult> data = await query
       .ToListAsync();
     
     return new PaginationSet<TResult>(data, pageCount, parameters.PageIndex ?? 1, parameters.PageSize ?? 10, count);
