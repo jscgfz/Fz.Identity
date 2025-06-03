@@ -2,4 +2,4 @@
 
 namespace Fz.Core.Domain.Primitives.Common;
 
-public abstract record PaginationParams(int? PageIndex, int? PageSize) : IPaginationParams;
+public abstract record PaginationParams(int? PageIndex, int? PageSize, bool FullSet = false) : IPaginationParams;

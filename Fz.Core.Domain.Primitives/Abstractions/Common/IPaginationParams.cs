@@ -4,4 +4,5 @@ public interface IPaginationParams
 {
   int? PageIndex { get; }
   int? PageSize { get; }
+  bool FullSet { get; }
 }
