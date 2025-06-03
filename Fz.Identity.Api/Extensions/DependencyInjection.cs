@@ -153,7 +153,9 @@ public static class DependencyInjection
 
     builder
       .Services
-      .AddKeyedScoped<ICredentialValidatorService, FzCredentialValidatorService>(CredentialTypes.FzDomain);
+      .AddKeyedScoped<ICredentialValidatorService, FzCredentialValidatorService>(CredentialTypes.FzDomain)
+      .AddKeyedScoped<ICredentialValidatorService, AsCredentialValidatorService>(CredentialTypes.AsDomain)
+      .AddKeyedScoped<ICredentialValidatorService, PtCredentialValidatorService>(CredentialTypes.PtDomain);
 
     builder
       .Services
