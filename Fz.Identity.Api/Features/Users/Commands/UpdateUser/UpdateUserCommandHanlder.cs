@@ -35,6 +35,18 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     _dbContext.Update(user);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+    IEnumerable<UserApplication> userApplications = _dbContext.Repository<UserApplication>()
+      .Where(row => row.UserId == request.id && row.ApplicationId == _identityManager.ApplicationId)
+      .IncludeDeleted();
+    if (userApplications.Any())
+    {
+      UserApplication userApplication = userApplications.FirstOrDefault();
+      userApplication.IsDeleted = !request.IsActive;
+      _dbContext.Update(userApplication);
+      await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+      
+
     IEnumerable<UserRole> userRoles = _dbContext.Repository<UserRole>()
       .Where(row => row.UserId == request.id && row.Role.ApplicationId == _identityManager.ApplicationId)
       .IncludeDeleted();

@@ -12,5 +12,6 @@ public sealed record UpdateUserCommand(
   string? PhoneNamuber,
   string? DocumentType,
   string UserName,
+  bool IsActive,
   List<Guid> RoleIds
   ) : ICommand<Result>;
