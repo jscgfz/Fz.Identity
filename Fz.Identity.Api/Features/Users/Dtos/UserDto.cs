@@ -11,6 +11,7 @@ public sealed record UserDto(
   string Email,
   bool? IsActive,
   string UserName,
+  DateTime? CreatedDate,
   IEnumerable<RoleDto>? Roles
 )
 {
@@ -23,6 +24,7 @@ public sealed record UserDto(
         user.PrincipalEmail,
         user.IsDeleted,
         user.Username,
+        TimeZoneInfo.ConvertTime(user.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")),
         (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null)
       );
 }
