@@ -1,4 +1,5 @@
-﻿namespace Fz.Core.Result;
+﻿
+namespace Fz.Core.Result;
 
 public sealed record Error
 {
@@ -11,8 +12,16 @@ public sealed record Error
   public Error(string code, string description)
     => (Code, Description) = (code, description);
 
-  public override int GetHashCode()
-  {
-    return HashCode.Combine(Code, Description);
-  }
+  //public override bool Equals(object? obj)
+  //{
+  //  return obj is Error error &&
+  //         Code == error.Code &&
+  //         Description == error.Description;
+  //}
+
+  //public override int GetHashCode()
+  //{
+  //  return HashCode.Combine(Code, Description);
+  //}
+
 }

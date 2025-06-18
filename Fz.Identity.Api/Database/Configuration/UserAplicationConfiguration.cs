@@ -34,7 +34,9 @@ public sealed class UserAplicationConfiguration : IEntityTypeConfiguration<UserA
         new() { UserId = Guid.Parse("d6b042e8-2476-447e-80b4-a8c2c7b32ace"), ApplicationId = 3 },
         new() { UserId = Guid.Parse("f015f137-5352-48e9-8120-609639131906"), ApplicationId = 3 },
         new() { UserId = Guid.Parse("0b9e3e25-3c8a-483a-a95c-ddf8b9969f40"), ApplicationId = 3 },
-        new() { UserId = Guid.Parse("72dddef4-4900-4aaa-9c40-3c24aee6b4d7"), ApplicationId = 3 }
+        new() { UserId = Guid.Parse("72dddef4-4900-4aaa-9c40-3c24aee6b4d7"), ApplicationId = 3 },
+        new() { UserId = Guid.Parse("9C5A2E53-4182-4743-A36D-CF116AD3B49E"), ApplicationId = 3 },
+        new() { UserId = Guid.Parse("5F7B3712-0829-4A4B-A3C5-F38F35E37CA8"), ApplicationId = 3 }
       ]);
   }
 }

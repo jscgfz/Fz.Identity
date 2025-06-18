@@ -17,7 +17,7 @@ public sealed class CredentialConfiguration : IEntityTypeConfiguration<Credentia
       .HasIndex(row => new { row.UserId, row.CredentialTypeId })
       .IsUnique();
     builder
-      .HasIndex(row => row.CredentialValue)
+      .HasIndex(row => new { row.CredentialValue, row.CredentialTypeId })
       .IsUnique();
     builder
       .Property(row => row.CredentialConfirmed)
@@ -173,6 +173,20 @@ public sealed class CredentialConfiguration : IEntityTypeConfiguration<Credentia
         UserId = Guid.Parse("f291a98b-36da-4651-bdb5-c7f60e20d802"),
         CredentialTypeId = ((int)CredentialTypes.AsDomain),
         CredentialValue = "oscar.vinasco"
+      },
+      new()
+      {
+        Id = 21,
+        UserId = Guid.Parse("9C5A2E53-4182-4743-A36D-CF116AD3B49E"),
+        CredentialTypeId = ((int)CredentialTypes.AsDomain),
+        CredentialValue = "cristhian.lopez"
+      },
+      new()
+      {
+        Id = 22,
+        UserId = Guid.Parse("5F7B3712-0829-4A4B-A3C5-F38F35E37CA8"),
+        CredentialTypeId = ((int)CredentialTypes.AsDomain),
+        CredentialValue = "carol.medina"
       },
     ]);
   }

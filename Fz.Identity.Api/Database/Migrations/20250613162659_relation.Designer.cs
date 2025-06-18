@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20250509225743_AddFzAppWebRoles")]
-    partial class AddFzAppWebRoles
+    [Migration("20250613162659_relation")]
+    partial class relation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,6 +176,11 @@ namespace Fz.Identity.Api.Database.Migrations
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("MultDomainEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -194,6 +199,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Central de identidad del grupo atenea",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Atenea Identity"
                         },
                         new
@@ -205,6 +211,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Aplicación principal de Atenea",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Atenea Iris"
                         },
                         new
@@ -216,6 +223,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Atenea para Asisya",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Atenea Asisya"
                         },
                         new
@@ -227,6 +235,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Atenea para Promotec",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Atenea Promotec"
                         },
                         new
@@ -238,6 +247,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Central de datos de telefonía",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Atenea Asterisk"
                         },
                         new
@@ -249,6 +259,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Sistema de Créditos Vehiculares",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Oriana"
                         },
                         new
@@ -260,7 +271,20 @@ namespace Fz.Identity.Api.Database.Migrations
                             Description = "Sistema de financiación de seguros",
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
                             Name = "Finanzaseguros"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Administrador de credenciales de usuarios de finanzauto web",
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            MultDomainEnabled = false,
+                            Name = "Finanzauto Web Admin"
                         });
                 });
 
@@ -484,6 +508,12 @@ namespace Fz.Identity.Api.Database.Migrations
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -496,7 +526,7 @@ namespace Fz.Identity.Api.Database.Migrations
 
                     b.HasIndex("CredentialTypeId");
 
-                    b.HasIndex("CredentialValue")
+                    b.HasIndex("CredentialValue", "CredentialTypeId")
                         .IsUnique();
 
                     b.HasIndex("UserId", "CredentialTypeId")
@@ -512,7 +542,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"jhon.cubillos\"}",
+                            CredentialValue = "jhon.cubillos",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -526,7 +556,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 2,
-                            CredentialValue = "{\"Username\":\"JCubillos\"}",
+                            CredentialValue = "JCubillos",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -540,7 +570,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"christian.chilatra\"}",
+                            CredentialValue = "christian.chilatra",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -554,7 +584,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"jesus.perez\"}",
+                            CredentialValue = "jesus.perez",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -568,7 +598,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"laura.roa\"}",
+                            CredentialValue = "laura.roa",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -582,7 +612,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"jose.bernal\"}",
+                            CredentialValue = "jose.bernal",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -596,7 +626,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"darcy.novoa\"}",
+                            CredentialValue = "darcy.novoa",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -610,7 +640,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"elizabeth.gamba\"}",
+                            CredentialValue = "elizabeth.gamba",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -624,7 +654,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"carlos.molano\"}",
+                            CredentialValue = "carlos.molano",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -638,7 +668,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"monica.infante\"}",
+                            CredentialValue = "monica.infante",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -652,7 +682,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"jeymmy.camelo\"}",
+                            CredentialValue = "jeymmy.camelo",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -666,7 +696,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 1,
-                            CredentialValue = "{\"Username\":\"johanna.riano\"}",
+                            CredentialValue = "johanna.riano",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -680,7 +710,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"jose.carrillo\"}",
+                            CredentialValue = "jose.carrillo",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -694,7 +724,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"nicolas.rico\"}",
+                            CredentialValue = "nicolas.rico",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -708,7 +738,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"astrid.meneses\"}",
+                            CredentialValue = "astrid.meneses",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -722,7 +752,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"arlein.pomar\"}",
+                            CredentialValue = "arlein.pomar",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -736,7 +766,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"julieth.quinones\"}",
+                            CredentialValue = "julieth.quinones",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -750,7 +780,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"laura.rueda\"}",
+                            CredentialValue = "laura.rueda",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -764,7 +794,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"paula.moreno\"}",
+                            CredentialValue = "paula.moreno",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -778,12 +808,40 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CredentialConfirmed = false,
                             CredentialTypeId = 5,
-                            CredentialValue = "{\"Username\":\"oscar.vinasco\"}",
+                            CredentialValue = "oscar.vinasco",
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             TwoFactorEnabled = false,
                             UserId = new Guid("f291a98b-36da-4651-bdb5-c7f60e20d802")
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CredentialConfirmed = false,
+                            CredentialTypeId = 5,
+                            CredentialValue = "cristhian.lopez",
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            TwoFactorEnabled = false,
+                            UserId = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e")
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CredentialConfirmed = false,
+                            CredentialTypeId = 5,
+                            CredentialValue = "carol.medina",
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            TwoFactorEnabled = false,
+                            UserId = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8")
                         });
                 });
 
@@ -987,19 +1045,8 @@ namespace Fz.Identity.Api.Database.Migrations
                         },
                         new
                         {
-                            Id = new Guid("05e9bea3-079c-4f42-bc78-72c045664ead"),
-                            ApplicationId = 1001,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Cliente"
-                        },
-                        new
-                        {
                             Id = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
-                            ApplicationId = 1001,
+                            ApplicationId = 8,
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -1010,13 +1057,35 @@ namespace Fz.Identity.Api.Database.Migrations
                         new
                         {
                             Id = new Guid("a4622c30-47a6-468b-a1ca-c2be50ca186d"),
-                            ApplicationId = 1001,
+                            ApplicationId = 8,
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Admin Usuarios"
+                            Name = "Admin TI"
+                        },
+                        new
+                        {
+                            Id = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            ApplicationId = 4,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Administrador"
+                        },
+                        new
+                        {
+                            Id = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            ApplicationId = 4,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Agente"
                         });
                 });
 
@@ -1244,6 +1313,296 @@ namespace Fz.Identity.Api.Database.Migrations
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ReadClaimId = 2
+                        },
+                        new
+                        {
+                            RoleId = new Guid("a4622c30-47a6-468b-a1ca-c2be50ca186d"),
+                            RouteId = 14,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("a4622c30-47a6-468b-a1ca-c2be50ca186d"),
+                            RouteId = 15,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 16,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 17,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 18,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 19,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 20,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
+                            RouteId = 21,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 22,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 23,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 24,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 25,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 26,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 27,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 28,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 22,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 23,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 24,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 25,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 26,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 27,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 28,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 40,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 40,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 45,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 45,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 46,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
+                            RouteId = 46,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            RouteId = 51,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -1308,7 +1667,7 @@ namespace Fz.Identity.Api.Database.Migrations
 
                     b.Property<string>("Path")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UrlImg")
                         .IsRequired()
@@ -1318,7 +1677,7 @@ namespace Fz.Identity.Api.Database.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.HasIndex("ApplitionId", "Name")
+                    b.HasIndex("ApplitionId", "Name", "Path")
                         .IsUnique();
 
                     b.ToTable("Routes", "conf");
@@ -1391,6 +1750,521 @@ namespace Fz.Identity.Api.Database.Migrations
                             Order = 0,
                             Path = "/credit-filing",
                             UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/76c401b9fc50c1d94bd6dbf81b85f679.jfif"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ApplitionId = 8,
+                            Component = "externalUser",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista de usuarios externos con cambio de estado.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Usuario externos",
+                            Order = 1,
+                            Path = "/external-user",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ApplitionId = 8,
+                            Component = "internalUser",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista de usuarios internos con cambio de estado y regristro.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Usuarios internos",
+                            Order = 2,
+                            Path = "/internal-user",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ApplitionId = 8,
+                            Component = "",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestor de Contenido",
+                            Order = 3,
+                            Path = "",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ApplitionId = 8,
+                            Component = "CarrouselImages",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista gestor de contenido para el carrousel con cambio de estado, orden, registro y detalle.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Carrusel de imagenes",
+                            Order = 1,
+                            ParentId = 16,
+                            Path = "/carrousel-images",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ApplitionId = 8,
+                            Component = "investors",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista gestor de contenido para inversionistas con cambio de estado y agregar hijos.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Inversionistas",
+                            Order = 2,
+                            ParentId = 16,
+                            Path = "/investors",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ApplitionId = 8,
+                            Component = "offices",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista gestor de contenido para oficinas con cambio de estado y registro.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Oficinas",
+                            Order = 3,
+                            ParentId = 16,
+                            Path = "/offices",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ApplitionId = 8,
+                            Component = "sustainability",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista gestor de contenido para sostenibilidad .",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Sostenibilidad",
+                            Order = 4,
+                            ParentId = 16,
+                            Path = "/sustainability",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ApplitionId = 8,
+                            Component = "policies",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Vista gestor de contenido para polizas.",
+                            ExcludeNav = false,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Polizas",
+                            Order = 5,
+                            ParentId = 16,
+                            Path = "/policies",
+                            UrlImg = ""
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ApplitionId = 4,
+                            Component = "home",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Inicio",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Inicio",
+                            Order = 0,
+                            Path = "/",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ApplitionId = 4,
+                            Component = "pqrs-management",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión PQRS",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión PQRS",
+                            Order = 0,
+                            Path = "/pqrs-management",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ApplitionId = 4,
+                            Component = "call-management",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión llamadas",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión llamadas",
+                            Order = 0,
+                            Path = "/call-management",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ApplitionId = 4,
+                            Component = "clients",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Clientes",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Clientes",
+                            Order = 0,
+                            Path = "/clients",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ApplitionId = 4,
+                            Component = "agent-manager",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Admin Agentes",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Admin Agentes",
+                            Order = 0,
+                            Path = "/agent-manager",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ApplitionId = 4,
+                            Component = "whatsapp",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "WhatsApp",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "WhatsApp",
+                            Order = 0,
+                            Path = "/whatsapp",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ApplitionId = 4,
+                            Component = "communications-manager",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Admin Comunicaciones",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Admin Comunicaciones",
+                            Order = 0,
+                            Path = "/communications-manager0",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ApplitionId = 4,
+                            Component = "historical",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Histórico",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Histórico",
+                            Order = 0,
+                            Path = "/historical",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ApplitionId = 4,
+                            Component = "reports",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Informes",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Informes",
+                            Order = 0,
+                            Path = "/reports",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ApplitionId = 4,
+                            Component = "pqrs-summary",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Resumen de caso PQRS",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Resumen de caso PQRS",
+                            Order = 0,
+                            Path = "/pqrs-management/pqrs-summary/:caseTypeId",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ApplitionId = 4,
+                            Component = "pqrs-management-detail",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Detalle de caso NO.",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Detalle de caso NO.",
+                            Order = 0,
+                            Path = "/pqrs-management/pqrs-detail/:pqrsId",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ApplitionId = 4,
+                            Component = "file-pqrs",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Radicar PQRS",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Radicar PQRS",
+                            Order = 0,
+                            Path = "/pqrs-management/file-pqrs",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ApplitionId = 4,
+                            Component = "client-detail",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Detalle de Cliente",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Detalle de Cliente",
+                            Order = 0,
+                            Path = "/client/client-detail/:clientId",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ApplitionId = 4,
+                            Component = "agent-detail",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Detalle Agente",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Detalle Agente",
+                            Order = 0,
+                            Path = "/agent-manager/agent-detail/:agentName",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ApplitionId = 4,
+                            Component = "calendar",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Calendario",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Calendario",
+                            Order = 0,
+                            Path = "/calendar",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            ApplitionId = 4,
+                            Component = "email",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Correos",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Correos",
+                            Order = 0,
+                            Path = "/email",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            ApplitionId = 4,
+                            Component = "user-management",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión de usuarios",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión de usuarios",
+                            Order = 0,
+                            Path = "/user-management",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            ApplitionId = 4,
+                            Component = "role-management",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión de roles",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión de roles",
+                            Order = 0,
+                            Path = "/role-management",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            ApplitionId = 4,
+                            Component = "history-management",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Histórico de gestiones",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Histórico de gestiones",
+                            Order = 0,
+                            Path = "/history-management",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            ApplitionId = 4,
+                            Component = "actions-user",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión de usuarios",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión de usuarios",
+                            Order = 0,
+                            Path = "/user-management/create-user",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            ApplitionId = 4,
+                            Component = "actions-user",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión de usuarios",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión de usuarios",
+                            Order = 0,
+                            Path = "/user-management/edit-user/:id",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            ApplitionId = 4,
+                            Component = "actions-user",
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Gestión de usuarios",
+                            ExcludeNav = true,
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Gestión de usuarios",
+                            Order = 0,
+                            Path = "/user-management/view-user/:id",
+                            UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif"
                         });
                 });
 
@@ -1418,13 +2292,11 @@ namespace Fz.Identity.Api.Database.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DocumentType")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("C");
 
                     b.Property<string>("IdentificationNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -1450,7 +2322,6 @@ namespace Fz.Identity.Api.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PrincipalPhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("PrincipalPhoneNumberConfirmed")
@@ -1467,13 +2338,15 @@ namespace Fz.Identity.Api.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdentificationNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdentificationNumber] IS NOT NULL");
 
                     b.HasIndex("PrincipalEmail")
                         .IsUnique();
 
                     b.HasIndex("PrincipalPhoneNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PrincipalPhoneNumber] IS NOT NULL");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -1803,6 +2676,40 @@ namespace Fz.Identity.Api.Database.Migrations
                             PrincipalPhoneNumberConfirmed = false,
                             Surname = "Carrillo Carrillo",
                             Username = "jose.carrillo"
+                        },
+                        new
+                        {
+                            Id = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IdentificationNumber = "1000000027",
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Cristhian",
+                            PrincipalEmail = "cristhian.lopez@asisya.com",
+                            PrincipalEmailConfirmed = false,
+                            PrincipalPhoneNumber = "1000000027",
+                            PrincipalPhoneNumberConfirmed = false,
+                            Surname = "López",
+                            Username = "cristhian.lopez"
+                        },
+                        new
+                        {
+                            Id = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IdentificationNumber = "1000000037",
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Carol",
+                            PrincipalEmail = "carol.medina@asisya.com",
+                            PrincipalEmailConfirmed = false,
+                            PrincipalPhoneNumber = "1000000037",
+                            PrincipalPhoneNumberConfirmed = false,
+                            Surname = "Medina",
+                            Username = "carol.medina"
                         });
                 });
 
@@ -1967,6 +2874,26 @@ namespace Fz.Identity.Api.Database.Migrations
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e"),
+                            ApplicationId = 3,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8"),
+                            ApplicationId = 3,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -2102,6 +3029,46 @@ namespace Fz.Identity.Api.Database.Migrations
                         {
                             UserId = new Guid("8d7e4c06-16d7-4448-b145-bda5f1af0776"),
                             RoleId = new Guid("8c187a8e-a65a-45a1-a29b-49c99e1b3cff"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("fac79991-0d25-f011-81d8-00505682eca9"),
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("8d7e4c06-16d7-4448-b145-bda5f1af0776"),
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("71e13750-87bb-40a7-bb93-58e8f603b1a7"),
+                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("3181c2ed-7454-4c71-99a9-0797daa0f32d"),
+                            RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),

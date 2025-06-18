@@ -205,6 +205,26 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         PrincipalEmail = "jose.carrillo@asisya.com.co",
         PrincipalPhoneNumber = "1000000007",
         IdentificationNumber = "1000000007"
+      },
+      new()
+      {
+        Id = Guid.Parse("9C5A2E53-4182-4743-A36D-CF116AD3B49E"),
+        Name = "Cristhian",
+        Surname = "López",
+        Username = "cristhian.lopez",
+        PrincipalEmail = "cristhian.lopez@asisya.com",
+        PrincipalPhoneNumber = "1000000027",
+        IdentificationNumber = "1000000027"
+      },
+      new()
+      {
+        Id = Guid.Parse("5F7B3712-0829-4A4B-A3C5-F38F35E37CA8"),
+        Name = "Carol",
+        Surname = "Medina",
+        Username = "carol.medina",
+        PrincipalEmail = "carol.medina@asisya.com",
+        PrincipalPhoneNumber = "1000000037",
+        IdentificationNumber = "1000000037"
       }
     ]);
   }

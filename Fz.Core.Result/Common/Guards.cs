@@ -4,12 +4,14 @@ namespace Fz.Core.Result.Common;
 
 public sealed class Guards
 {
-  public static void If(Expression<Func<bool>> predicate, Exception ex)
+  public static void If<TException>(Expression<Func<bool>> predicate, TException ex)
+    where TException : Exception
   {
     ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
     if(predicate.Compile().Invoke()) throw ex;
   }
-  public static void Not(Expression<Func<bool>> predicate, Exception ex)
+  public static void Not<TException>(Expression<Func<bool>> predicate, TException ex)
+    where TException : Exception
   {
     ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
     if (!predicate.Compile().Invoke()) throw ex;

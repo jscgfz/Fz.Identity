@@ -166,6 +166,13 @@ public static class DependencyInjection
 
     builder
       .Services
+      .AddOptions<AsCredentialSettings>()
+      .BindConfiguration(nameof(AsCredentialSettings))
+      .ValidateDataAnnotations()
+      .ValidateOnStart();
+
+    builder
+      .Services
       .AddKeyedScoped<ITokenProviderService, IdentityTokenProviderService>(ContextTypes.Identity);
 
     return builder;
