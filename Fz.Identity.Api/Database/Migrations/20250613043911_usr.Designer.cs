@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20250529213005_OptionalUserprops")]
-    partial class OptionalUserprops
+    [Migration("20250613043911_usr")]
+    partial class usr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -814,6 +814,34 @@ namespace Fz.Identity.Api.Database.Migrations
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             TwoFactorEnabled = false,
                             UserId = new Guid("f291a98b-36da-4651-bdb5-c7f60e20d802")
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CredentialConfirmed = false,
+                            CredentialTypeId = 5,
+                            CredentialValue = "cristhian.lopez",
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            TwoFactorEnabled = false,
+                            UserId = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e")
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CredentialConfirmed = false,
+                            CredentialTypeId = 5,
+                            CredentialValue = "carol.medina",
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            TwoFactorEnabled = false,
+                            UserId = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8")
                         });
                 });
 
@@ -2648,6 +2676,40 @@ namespace Fz.Identity.Api.Database.Migrations
                             PrincipalPhoneNumberConfirmed = false,
                             Surname = "Carrillo Carrillo",
                             Username = "jose.carrillo"
+                        },
+                        new
+                        {
+                            Id = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IdentificationNumber = "1000000027",
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Cristhian",
+                            PrincipalEmail = "cristhian.lopez@asisya.com",
+                            PrincipalEmailConfirmed = false,
+                            PrincipalPhoneNumber = "1000000027",
+                            PrincipalPhoneNumberConfirmed = false,
+                            Surname = "López",
+                            Username = "cristhian.lopez"
+                        },
+                        new
+                        {
+                            Id = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8"),
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IdentificationNumber = "1000000037",
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Carol",
+                            PrincipalEmail = "carol.medina@asisya.com",
+                            PrincipalEmailConfirmed = false,
+                            PrincipalPhoneNumber = "1000000037",
+                            PrincipalPhoneNumberConfirmed = false,
+                            Surname = "Medina",
+                            Username = "carol.medina"
                         });
                 });
 
@@ -2806,6 +2868,26 @@ namespace Fz.Identity.Api.Database.Migrations
                         new
                         {
                             UserId = new Guid("72dddef4-4900-4aaa-9c40-3c24aee6b4d7"),
+                            ApplicationId = 3,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("9c5a2e53-4182-4743-a36d-cf116ad3b49e"),
+                            ApplicationId = 3,
+                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeleted = false,
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            UserId = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8"),
                             ApplicationId = 3,
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),

@@ -20,6 +20,7 @@ public sealed class UserSpecifications
         row.PrincipalEmail.Contains(query.Filter)
       )
       .WithAndFilter(row => !query.ApplicationId.HasValue || row.Applications.Any(a => a.ApplicationId == query.ApplicationId))
+      .WithAndFilter(row => !row.IsDeleted)
       .WithInclude(row => row.Roles.Where(r => !query.ApplicationId.HasValue || r.Role.ApplicationId == query.ApplicationId))
       .WithOrderBy(row => row.Name)
       .WithSelect(row => new(
@@ -30,7 +31,12 @@ public sealed class UserSpecifications
         row.PrincipalEmail,
         row.Applications.Any(a => a.ApplicationId == query.ApplicationId) ? !row.Applications.First(a => a.ApplicationId == query.ApplicationId).IsDeleted : null,
         row.Username,
-        (row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null)
+        (row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null),
+        row.Credentials.Select(c => c.CredentialValue).Distinct(),
+        row.PrincipalEmailConfirmed,
+        row.PrincipalPhoneNumber,
+        row.PrincipalPhoneNumberConfirmed,
+        row.DocumentType
       ))
     .WithDeleted();
 }

@@ -72,7 +72,7 @@ public sealed class FzCredentialValidatorService(IServiceProvider provider) : IC
           ))
           .FirstOrDefault(row => row.CredentialTypeId == credentialType && row.UserName == userName),
         ResultTypes.NotFound,
-        [new Error("Credential.NotFound")]
+        [new Error("Credential.NotFound", "Credenciales no encontradas")]
       )
     );
   }

@@ -8,13 +8,16 @@ public sealed record UserDetailDto(
     Guid Id,
   string Name,
   string Surname,
-  string IdentificationNumber,
+  string? IdentificationNumber,
   string Email,
   bool? IsActive,
-  string DocumentType,
+  string? DocumentType,
   string UserName,
-  string PhoneNumber,
-  IEnumerable<RoleDto>? Roles
+  string? PhoneNumber,
+  bool PrincipalEmailConfirmed,
+  bool PrincipalPhoneNumberConfirmed,
+  IEnumerable<RoleDto>? Roles,
+  IEnumerable<string> UserNames
   )
 {
   public static UserDetailDto MapFrom(User user)
@@ -28,6 +31,9 @@ public sealed record UserDetailDto(
       user.DocumentType,
       user.Username,
       user.PrincipalPhoneNumber,
-      (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null)
+      user.PrincipalEmailConfirmed,
+      user.PrincipalPhoneNumberConfirmed,
+      (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null),
+      user.Credentials.Select(c => c.CredentialValue).Distinct()
     );
 }

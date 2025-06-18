@@ -11,11 +11,16 @@ public sealed record UserDto(
   string Email,
   bool? IsActive,
   string UserName,
-  IEnumerable<RoleDto>? Roles
+  IEnumerable<RoleDto>? Roles,
+  IEnumerable<string>? UserNames,
+  bool PrincipalEmailConfirmed,
+  string? PrincipalPhoneNumber,
+  bool PrincipalPhoneNumberConfirmed,
+  string? DocumentType
 )
 {
   public static UserDto MapFrom(User user)
-    => new UserDto(
+    => new(
         user.Id,
         user.Name,
         user.Surname,
@@ -23,6 +28,11 @@ public sealed record UserDto(
         user.PrincipalEmail,
         user.IsDeleted,
         user.Username,
-        (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null)
+        (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null),
+        user.Credentials.Select(c => c.CredentialValue).Distinct(),
+        user.PrincipalEmailConfirmed,
+        user.PrincipalPhoneNumber,
+        user.PrincipalPhoneNumberConfirmed,
+        user.DocumentType
       );
 }

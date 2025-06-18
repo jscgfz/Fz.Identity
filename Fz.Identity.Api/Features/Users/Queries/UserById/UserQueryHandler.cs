@@ -24,6 +24,7 @@ public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<
         .Include(row => row.Roles.Where(r => r.Role.ApplicationId == _identityManager.ApplicationId))
         .ThenInclude(ur => ur.Role)
         .Include(row => row.Applications.Where(a => a.ApplicationId == _identityManager.ApplicationId))
+        .Include(row => row.Credentials)
         .FirstOrDefaultAsync(),
       ResultTypes.NotFound,
       [new Error("Users.NotFound", "no se encontraron usuarios para la consulta")]

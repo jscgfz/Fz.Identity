@@ -63,6 +63,7 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
     return Task.FromResult(
       Result.From(
         _context.Repository<Credential>()
+          .Where(row => row.CredentialTypeId == credentialType)
           .AsEnumerable()
           .Select(row => new CredentialDto(
             row.CredentialValue,
@@ -70,9 +71,9 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
             row.CredentialTypeId,
             row.UserId
           ))
-          .FirstOrDefault(row => row.CredentialTypeId == credentialType && row.UserName == userName),
+          .FirstOrDefault(row => row.UserName == userName),
         ResultTypes.NotFound,
-        [new Error("Credential.NotFound")]
+        [new Error("Credential.NotFound", "Credenciales no encontradas")]
       )
     );
   }
@@ -94,9 +95,9 @@ public sealed class AsCredentialValidatorService(IServiceProvider provider) : IC
       return Result.Failure<User>(ResultTypes.BadRequest, [new Error("AsisyaDomain.RequestError", $"Validación fallida - respuesta servicio {response.StatusCode}")]);
 
     JsonElement serviceResp = JsonSerializer.Deserialize<JsonElement>(await response.Content.ReadAsStringAsync());
-    if (!serviceResp.TryGetProperty("Mensaje", out JsonElement message))
+    if (!serviceResp.TryGetProperty("mensaje", out JsonElement message))
       return Result.Failure<User>(ResultTypes.BadRequest, [new Error("AsisyaDomain.RequestError", "Validación fallida - respuesta servicio sin mensaje")]);
-    if (message.GetProperty("CodigoMensaje").GetInt32() != 0)
+    if (message.GetProperty("codigoMensaje").GetInt32() != 0)
       return Result.Failure<User>(ResultTypes.BadRequest, [new Error("AsisyaDomain.RequestError", $"Validación fallida - {message.GetProperty("DescMensaje").GetString()}")]);
 
     return Result.From(
