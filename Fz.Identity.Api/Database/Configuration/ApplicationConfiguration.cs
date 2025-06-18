@@ -20,6 +20,7 @@ public sealed class ApplicationConfiguration : IEntityTypeConfiguration<Applicat
       new Application { Id = 6, Name = "Oriana", Description = "Sistema de Créditos Vehiculares" },
       new Application { Id = 7, Name = "Finanzaseguros", Description = "Sistema de financiación de seguros" },
       new Application { Id = 8, Name = "Finanzauto Web Admin", Description = "Administrador de credenciales de usuarios de finanzauto web" },
+      new Application { Id = 9, Name = "Genesis Promotec", Description = "Aplicacion atención cliente de Promotec" },
     ]);
   }
 }
