@@ -36,9 +36,8 @@ public sealed class UserSpecifications
         row.PrincipalEmailConfirmed,
         row.PrincipalPhoneNumber,
         row.PrincipalPhoneNumberConfirmed,
-        row.DocumentType
-        row.CreatedAtUtc,
-        (row.Roles.Any() ? row.Roles.Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null)
+        row.DocumentType,
+        row.CreatedAtUtc
       ))
     .WithDeleted();
 }

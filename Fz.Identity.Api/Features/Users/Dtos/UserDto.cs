@@ -16,9 +16,8 @@ public sealed record UserDto(
   bool PrincipalEmailConfirmed,
   string? PrincipalPhoneNumber,
   bool PrincipalPhoneNumberConfirmed,
-  string? DocumentType
-  DateTime? CreatedDate,
-  IEnumerable<RoleDto>? Roles
+  string? DocumentType,
+  DateTime? CreatedDate
 )
 {
   public static UserDto MapFrom(User user)
@@ -35,8 +34,7 @@ public sealed record UserDto(
         user.PrincipalEmailConfirmed,
         user.PrincipalPhoneNumber,
         user.PrincipalPhoneNumberConfirmed,
-        user.DocumentType
-        TimeZoneInfo.ConvertTime(user.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")),
-        (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null)
+        user.DocumentType,
+        TimeZoneInfo.ConvertTime(user.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time"))
       );
 }
