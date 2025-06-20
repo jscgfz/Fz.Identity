@@ -17,10 +17,11 @@ public sealed record UserDetailDto(
   bool PrincipalEmailConfirmed,
   bool PrincipalPhoneNumberConfirmed,
   IEnumerable<RoleDto>? Roles,
-  IEnumerable<string> UserNames
+  IEnumerable<string> UserNames,
+  string? PhotoBase64
   )
 {
-  public static UserDetailDto MapFrom(User user)
+  public static UserDetailDto MapFrom(User user, string photoBase64)
   => new(
       user.Id,
       user.Name,
@@ -34,6 +35,7 @@ public sealed record UserDetailDto(
       user.PrincipalEmailConfirmed,
       user.PrincipalPhoneNumberConfirmed,
       (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null),
-      user.Credentials.Select(c => c.CredentialValue).Distinct()
+      user.Credentials.Select(c => c.CredentialValue).Distinct(),
+      photoBase64
     );
 }
