@@ -1,18 +1,10 @@
 ﻿using Fz.Core.Result;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Text;
-using System.Xml.Linq;
-using Fz.Identity.Api.Services.Identity.Settings;
-using Microsoft.Extensions.Options;
-using Fz.Identity.Api.Services.Alfresco.Settings;
-using Fz.Identity.Api.Features.Users.Dtos;
-using System.Text.RegularExpressions;
-using Fz.Identity.Api.Features.Users.Commands.AddUser;
-using Fz.Identity.Api.Database.Entities;
-using Azure;
 using Fz.Identity.Api.Abstractions.Services;
+using Fz.Identity.Api.Services.Alfresco.Settings;
+using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Fz.Identity.Api.Services.Alfresco;
 
@@ -20,9 +12,9 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
 {
   private readonly IOptions<AlfrescoSettings> _settings = provider.GetRequiredService<IOptions<AlfrescoSettings>>();
 
-  public async Task<Result> UploadFile(AddUserCommand user)
+  public async Task<Result> UploadFile(string username, string fileBase64)
   {
-    var match = Regex.Match(user.photoBase64, @"data:(?<type>.+?);base64,(?<data>.+)");
+    var match = Regex.Match(fileBase64, @"data:(?<type>.+?);base64,(?<data>.+)");
     if (match.Success)
     {
       string contentType = match.Groups["type"].Value;
@@ -34,7 +26,7 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
 
       var formData = new MultipartFormDataContent
       {
-        { new StringContent(user.UserName), "relativePath" },
+        { new StringContent(username), "relativePath" },
         { new StringContent("Foto"), "name" },
         { new StringContent("cm:content"), "nodeType" },
         { new StringContent("true"), "overwrite" }

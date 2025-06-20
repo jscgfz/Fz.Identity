@@ -5,5 +5,5 @@ namespace Fz.Identity.Api.Abstractions.Services;
 
 public interface IAlfrescoService
 {
-  Task<Result> UploadFile(AddUserCommand user);
+  Task<Result> UploadFile(string username, string fileBase64);
 }
