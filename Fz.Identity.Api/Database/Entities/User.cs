@@ -13,6 +13,7 @@ public class User : Entity<Guid>
   public string? PrincipalPhoneNumber { get; set; }
   public bool PrincipalPhoneNumberConfirmed { get; set; }
   public string? DocumentType { get; set; }
+  public string? PhotoNodeId { get; set; }
 
   public virtual IEnumerable<UserClaim> UserClaims { get; set; } = default!;
   public virtual IEnumerable<Credential> Credentials { get; set; } = default!;
