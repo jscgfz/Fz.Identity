@@ -32,6 +32,7 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
       var alfresoResult = await _alfresco.UploadFile(request.UserName, request.PhotoBase64);
       if (alfresoResult.IsFailure)
         return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
+      user.PhotoNodeId = alfresoResult.Value;
     }
 
     user.Name = request.Name;
