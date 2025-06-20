@@ -1,6 +1,9 @@
 ﻿using Fz.Core.Persistence.Abstractions;
 using Fz.Core.Result;
+using Fz.Core.Result.Extensions;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
+using Fz.Identity.Api.Abstractions.Identity;
+using Fz.Identity.Api.Abstractions.Services;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
@@ -14,6 +17,8 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
     = provider.GetRequiredKeyedService<IDbContext>(ContextTypes.Identity);
   private readonly IUnitOfWork _unitOfWork
     = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
+  private readonly IAlfrescoService _alfresco
+    = provider.GetRequiredService<IAlfrescoService>();
 
   public async Task<Result<UserAddedResponseDto>> Handle(AddUserCommand request, CancellationToken cancellationToken)
   {
@@ -35,6 +40,13 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
     if (validations.Any(row => row.Value))
       return Result.Failure<UserAddedResponseDto>(ResultTypes.BadRequest, validations.Where(row => row.Value).Select(row => row.Key));
 
+    if (request.photoBase64 is not null)
+    {
+      var alfresoResult = await _alfresco.UploadFile(request);
+      if (alfresoResult.IsFailure)
+        return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
+    }
+
     User user = new()
     {
       Name = request.Name,
@@ -51,15 +63,20 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
     _dbContext.Add(user);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-    List<UserRole> userRoles = new();
-    foreach (var roleId in request.RoleIds)
+    if (request.RoleIds is not null)
     {
-      UserRole userRole = new()
+      List<UserRole> userRoles = new();
+      foreach (var roleId in request.RoleIds)
       {
-        RoleId = roleId,
-        UserId = user.Id,
-      };
-      userRoles.Add(userRole);
+        UserRole userRole = new()
+        {
+          RoleId = roleId,
+          UserId = user.Id,
+        };
+        userRoles.Add(userRole);
+      }
+      _dbContext.AddRange(userRoles);
+      await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     List<UserApplication> userApplications = new();
@@ -72,9 +89,6 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
       };
       userApplications.Add(userApplication);
     }
-
-    _dbContext.AddRange(userRoles);
-    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     _dbContext.AddRange(userApplications);
     await _unitOfWork.SaveChangesAsync(cancellationToken);

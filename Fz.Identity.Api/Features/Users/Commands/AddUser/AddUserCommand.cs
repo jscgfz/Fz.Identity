@@ -12,6 +12,7 @@ public sealed record AddUserCommand(
   string? IdentificationNumber,
   string? PhoneNamuber,
   string? DocumentType,
-  List<Guid> RoleIds,
-  List<int> ApplicationIds
+  List<Guid>? RoleIds,
+  List<int> ApplicationIds,
+  string? photoBase64
 ) : ICommand<Result<UserAddedResponseDto>>;
