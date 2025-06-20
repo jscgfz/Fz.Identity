@@ -57,6 +57,17 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 49, ApplitionId = 4, Name = "Gestión de usuarios", Description = "Gestión de usuarios", UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif", Path = "/user-management/create-user", ExcludeNav = true, Component = "actions-user" },
         new() { Id = 50, ApplitionId = 4, Name = "Gestión de usuarios", Description = "Gestión de usuarios", UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif", Path = "/user-management/edit-user/:id", ExcludeNav = true, Component = "actions-user" },
         new() { Id = 51, ApplitionId = 4, Name = "Gestión de usuarios", Description = "Gestión de usuarios", UrlImg = "https://www.finanzauto.info/finanzauto.finanzaseguros.api/files/3d8d9f7c0e622acad670eb3530fd6196.jfif", Path = "/user-management/view-user/:id", ExcludeNav = true, Component = "actions-user" },
+        new() { Id = 52, ApplitionId = 9, Name = "Inicio", Description = "Inicio", UrlImg = "Home", Path = "/", ExcludeNav = false, Component = "home" },
+        new() { Id = 53, ApplitionId = 9, Name = "Gestión de llamadas", Description = "Gestión de llamadas", UrlImg = "Call", Path = "/call_management", ExcludeNav = false, Component = "call-management" },
+        new() { Id = 54, ApplitionId = 9, Name = "Informes", Description = "Informes", UrlImg = "Report", Path = "/reports", ExcludeNav = false, Component = "reports" },
+        new() { Id = 55, ApplitionId = 9, Name = "Campañas", Description = "Campañas", UrlImg = "Campaign", Path = "/campaigns", ExcludeNav = false, Component = "campaigns" },
+        new() { Id = 56, ApplitionId = 9, Name = "Gestión de llamada seleccionada", Description = "Gestión de llamada seleccionada", UrlImg = string.Empty, Path = "/call_management/user_info/:customerId", ExcludeNav = true, Component = "customer-id" },
+        new() { Id = 57, ApplitionId = 9, Name = "Editar perfil", Description = "Editar perfil", UrlImg = string.Empty, Path = "/agent/edit_agent/:agentId", ExcludeNav = true, Component = "agent-edit" },
+        new() { Id = 58, ApplitionId = 9, Name = "Detalle panel agente", Description = "Detalle panel agente", UrlImg = string.Empty, Path = "/agent/agent_panel/:agentId", ExcludeNav = true, Component = "agent-panel" },
+        new() { Id = 59, ApplitionId = 9, Name = "Gestión de llamada seleccionada", Description = "Gestión de llamada seleccionada", UrlImg = string.Empty, Path = "/call_management/detail_call_management/:customerId", ExcludeNav = true, Component = "deatil-call-management" },
+        new() { Id = 60, ApplitionId = 9, Name = "asd", Description = "asd", UrlImg = "sdf", Path = "/deatil_call_management/:agentId", ExcludeNav = false, Component = "sdfsdf" },
+        new() { Id = 61, ApplitionId = 9, Name = "Colas", Description = "Colas", UrlImg = "Queue", Path = "/queue", ExcludeNav = false, Component = "queue" },
+        new() { Id = 62, ApplitionId = 9, Name = "Información del cliente", Description = "Información del cliente", UrlImg = string.Empty, Path = "/call_management/client_information/:identificationNumber", ExcludeNav = true, Component = "client-information" },
       ]);
   }
 }

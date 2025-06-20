@@ -81,6 +81,21 @@ public sealed class RoleRouteConfiguration : IEntityTypeConfiguration<RoleRoute>
         new() { RouteId = 46, RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
         new() { RouteId = 46, RoleId = Guid.Parse("07D4316E-4834-48FD-8AFD-A96524C615ED") },
         new() { RouteId = 51, RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
+        new() { RouteId = 52, RoleId = Guid.Parse("0085E762-9A41-4867-942A-0E1B3F892E3F") },
+        new() { RouteId = 53, RoleId = Guid.Parse("0085E762-9A41-4867-942A-0E1B3F892E3F") },
+        new() { RouteId = 56, RoleId = Guid.Parse("0085E762-9A41-4867-942A-0E1B3F892E3F") },
+        new() { RouteId = 59, RoleId = Guid.Parse("0085E762-9A41-4867-942A-0E1B3F892E3F") },
+        new() { RouteId = 62, RoleId = Guid.Parse("0085E762-9A41-4867-942A-0E1B3F892E3F") },
+        new() { RouteId = 52, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 53, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 54, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 55, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 56, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 57, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 58, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 59, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 61, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
+        new() { RouteId = 62, RoleId = Guid.Parse("79DFB3C0-05C5-40C0-93F5-A9A8984DEED4") },
       ]);
   }
 }
