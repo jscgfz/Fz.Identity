@@ -1,6 +1,7 @@
 ﻿using Fz.Core.Persistence.Abstractions;
 using Fz.Core.Persistence.Common;
 using Fz.Identity.Api.Database.Entities;
+using Fz.Identity.Api.Database.Migrations;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Features.Users.Queries.Users;
 
@@ -37,7 +38,7 @@ public sealed class UserSpecifications
         row.PrincipalPhoneNumber,
         row.PrincipalPhoneNumberConfirmed,
         row.DocumentType,
-        row.CreatedAtUtc
+        row.CreatedAtUtc.ToString("dd/MM/yyyy hh:mm tt")
       ))
     .WithDeleted();
 }

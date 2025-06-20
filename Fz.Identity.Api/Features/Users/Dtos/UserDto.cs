@@ -17,7 +17,7 @@ public sealed record UserDto(
   string? PrincipalPhoneNumber,
   bool PrincipalPhoneNumberConfirmed,
   string? DocumentType,
-  DateTime? CreatedDate
+  string? CreatedDate
 )
 {
   public static UserDto MapFrom(User user)
@@ -35,6 +35,6 @@ public sealed record UserDto(
         user.PrincipalPhoneNumber,
         user.PrincipalPhoneNumberConfirmed,
         user.DocumentType,
-        TimeZoneInfo.ConvertTime(user.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time"))
+        TimeZoneInfo.ConvertTime(user.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")).ToString("dd/MM/yyyy hh:mm tt")
       );
 }
