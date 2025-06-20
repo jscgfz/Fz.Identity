@@ -13,5 +13,6 @@ public sealed record UpdateUserCommand(
   string? DocumentType,
   string UserName,
   bool IsActive,
-  List<Guid> RoleIds
+  List<Guid>? RoleIds,
+  string PhotoBase64
   ) : ICommand<Result>;

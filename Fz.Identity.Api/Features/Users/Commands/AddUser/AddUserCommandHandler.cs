@@ -42,7 +42,7 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
 
     if (request.photoBase64 is not null)
     {
-      var alfresoResult = await _alfresco.UploadFile(request);
+      var alfresoResult = await _alfresco.UploadFile(request.UserName, request.photoBase64);
       if (alfresoResult.IsFailure)
         return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
     }

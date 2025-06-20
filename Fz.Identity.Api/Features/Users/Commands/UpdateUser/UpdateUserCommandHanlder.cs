@@ -3,6 +3,7 @@ using Fz.Core.Persistence.Extensions;
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Abstractions.Services;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
@@ -18,11 +19,20 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
   private readonly IIdentityContextControlFieldsManager _identityManager
     = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
+  private readonly IAlfrescoService _alfresco
+    = provider.GetRequiredService<IAlfrescoService>();
   public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
   {
     User user = await _dbContext.Repository<User>().FirstOrDefaultAsync(row => row.Id == request.id, cancellationToken);
     if (user is null)
       return Result.Failure(type: ResultTypes.NotFound, [new Error("User.NotFound", "No se encontró el usuario")]);
+
+    if (request.PhotoBase64 is not null)
+    {
+      var alfresoResult = await _alfresco.UploadFile(request.UserName, request.PhotoBase64);
+      if (alfresoResult.IsFailure)
+        return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
+    }
 
     user.Name = request.Name;
     user.Surname = request.Surname;
@@ -46,6 +56,8 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
       await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
       
+    if (request.RoleIds is null)
+      return Result.Success(ResultTypes.NoContent);
 
     IEnumerable<UserRole> userRoles = _dbContext.Repository<UserRole>()
       .Where(row => row.UserId == request.id && row.Role.ApplicationId == _identityManager.ApplicationId)
