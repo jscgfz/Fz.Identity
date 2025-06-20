@@ -18,11 +18,11 @@ public sealed class SpecificationResolver
   {
     ISpecification<TQuery, TResult> spec = func(parameters);
     IQueryable<TResult> query = spec.Apply(context.Repository<TQuery>());
-    int count = await context.Repository<TQuery>().CountAsync();
+    int count = await query.CountAsync();
     int pageCount = (int)Math.Ceiling((double)count / (parameters.PageSize ?? 10));
     if (!parameters.FullSet)
       query = query
-      .Skip(((parameters.PageIndex ?? 1) - 1) * (parameters.PageSize ?? 1))
+      .Skip(((parameters.PageIndex ?? 1) - 1) * (parameters.PageSize ?? 10))
       .Take(parameters.PageSize ?? 10);
     IEnumerable<TResult> data = await query
       .ToListAsync();
