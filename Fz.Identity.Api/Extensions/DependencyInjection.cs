@@ -2,13 +2,17 @@
 using Fz.Core.Persistence.Abstractions;
 using Fz.Identity.Api.Abstractions.Identity;
 using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Abstractions.Services;
 using Fz.Identity.Api.Database;
 using Fz.Identity.Api.Database.Managers;
+using Fz.Identity.Api.Services.Alfresco;
+using Fz.Identity.Api.Services.Alfresco.Settings;
 using Fz.Identity.Api.Services.Identity;
 using Fz.Identity.Api.Services.Identity.Settings;
 using Fz.Identity.Api.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -122,7 +126,7 @@ public static class DependencyInjection
 
     builder
       .Services
-      .AddKeyedScoped<IReadOnlyDbContext>(ContextTypes.Identity, (provider, ob) => 
+      .AddKeyedScoped<IReadOnlyDbContext>(ContextTypes.Identity, (provider, ob) =>
         provider.GetRequiredService<IdentityReadOnlyContext>());
 
     builder.Services.AddDbContext<IdentityContext>(optionBuilder =>
@@ -145,7 +149,7 @@ public static class DependencyInjection
       .Services
       .AddKeyedScoped<IDbContext>(ContextTypes.Identity,
         (provider, ob) => provider.GetRequiredService<IdentityContext>());
-    
+
     builder
       .Services
       .AddKeyedScoped<IUnitOfWork>(ContextTypes.Identity,
@@ -175,6 +179,21 @@ public static class DependencyInjection
       .Services
       .AddKeyedScoped<ITokenProviderService, IdentityTokenProviderService>(ContextTypes.Identity);
 
+    return builder;
+  }
+
+  public static WebApplicationBuilder WithClientExternalQueryServices(this WebApplicationBuilder builder)
+  {
+    builder
+   .Services
+   .AddOptions<AlfrescoSettings>()
+   .BindConfiguration(nameof(AlfrescoSettings))
+   .ValidateDataAnnotations()
+   .ValidateOnStart();
+
+    builder.Services.TryAddEnumerable([
+        ServiceDescriptor.Scoped<IAlfrescoService, AlfrescoService>()
+      ]);
     return builder;
   }
 }

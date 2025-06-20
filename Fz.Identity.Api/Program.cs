@@ -11,6 +11,7 @@ var app = WebApplication
   .WithIdentityStore()
   .WithProblemDetails()
   .WithEndpointModulesFromAssembly<IIdentityModule>(Assembly.GetExecutingAssembly())
+  .WithClientExternalQueryServices()
   .WithInMemoryCache()
   .WithIdentityOpenApi()
   .WithJsonWebToken()
