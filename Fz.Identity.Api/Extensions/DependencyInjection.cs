@@ -1,5 +1,6 @@
 ﻿using Fz.Core.Http.Extensions;
 using Fz.Core.Persistence.Abstractions;
+using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Abstractions.Identity;
 using Fz.Identity.Api.Abstractions.Persistence;
 using Fz.Identity.Api.Abstractions.Services;
@@ -7,6 +8,7 @@ using Fz.Identity.Api.Database;
 using Fz.Identity.Api.Database.Managers;
 using Fz.Identity.Api.Services.Alfresco;
 using Fz.Identity.Api.Services.Alfresco.Settings;
+using Fz.Identity.Api.Managers;
 using Fz.Identity.Api.Services.Identity;
 using Fz.Identity.Api.Services.Identity.Settings;
 using Fz.Identity.Api.Settings;
@@ -159,7 +161,10 @@ public static class DependencyInjection
       .Services
       .AddKeyedScoped<ICredentialValidatorService, FzCredentialValidatorService>(CredentialTypes.FzDomain)
       .AddKeyedScoped<ICredentialValidatorService, AsCredentialValidatorService>(CredentialTypes.AsDomain)
-      .AddKeyedScoped<ICredentialValidatorService, PtCredentialValidatorService>(CredentialTypes.PtDomain);
+      .AddKeyedScoped<ICredentialValidatorService, PtCredentialValidatorService>(CredentialTypes.PtDomain)
+      .AddKeyedScoped<ICredentialValidatorService, SignleCredentialValidatorService>(CredentialTypes.PassWord)
+      .AddScoped<IHashManager, HashManager>()
+      .AddScoped<ISignatureKeyManager, SignatureKeyManager>();
 
     builder
       .Services
