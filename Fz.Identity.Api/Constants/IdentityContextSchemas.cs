@@ -4,4 +4,5 @@ public sealed class IdentityContextSchemas
 {
   public const string Auth = "auth";
   public const string Configuration = "conf";
+  public const string Audit = "audit";
 }
