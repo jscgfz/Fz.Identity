@@ -11,5 +11,11 @@ public sealed record UsersQuery(
   string? Filter,
   int? PageIndex,
   int? PageSize,
+  string? FullNameShort,
+  string? Email,
+  string? Rol,
+  bool? IsActive,
+  DateTime? DateFrom,
+  DateTime? DateTo,
   bool FullSet = false
 ) : PaginationParams(PageIndex, PageSize, FullSet), IQuery<Result<IPaginatedResult<UserDto>>>;

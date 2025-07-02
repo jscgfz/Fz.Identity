@@ -34,6 +34,8 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
         return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
       user.PhotoNodeId = alfresoResult.Value;
     }
+    else
+      user.PhotoNodeId = null;
 
     user.Name = request.Name;
     user.Surname = request.Surname;
@@ -56,7 +58,7 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
       _dbContext.Update(userApplication);
       await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
-      
+
     if (request.RoleIds is null)
       return Result.Success(ResultTypes.NoContent);
 
