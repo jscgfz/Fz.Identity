@@ -22,7 +22,7 @@ public sealed record ManagementDto(
     var module = GetModule(auditLog.Endpoint);
     var description = GetDescription(action, module, auditLog.Payload);
     return new ManagementDto(
-       auditLog.User.Name,
+        $"{auditLog.User.Name} {auditLog.User.Surname}",
         module,
         action,
        TimeZoneInfo.ConvertTime(auditLog.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")).ToString("dd/MM/yyyy hh:mm tt"),
