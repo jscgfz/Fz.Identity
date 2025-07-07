@@ -68,6 +68,15 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 60, ApplitionId = 9, Name = "asd", Description = "asd", UrlImg = "sdf", Path = "/deatil_call_management/:agentId", ExcludeNav = false, Component = "sdfsdf" },
         new() { Id = 61, ApplitionId = 9, Name = "Colas", Description = "Colas", UrlImg = "Queue", Path = "/queue", ExcludeNav = false, Component = "queue" },
         new() { Id = 62, ApplitionId = 9, Name = "Información del cliente", Description = "Información del cliente", UrlImg = string.Empty, Path = "/call_management/client_information/:identificationNumber", ExcludeNav = true, Component = "client-information" },
+        new() { Id = 63, ApplitionId = 3, Name = "Inicio", Description = string.Empty, UrlImg = string.Empty, Path = "/", ExcludeNav = false, Component = "home" },
+        new() { Id = 64, ApplitionId = 3, Name = "Indicadores", Description = string.Empty, UrlImg = string.Empty, Path = "/indicators", ExcludeNav = false, Component = "indicators" },
+        new() { Id = 65, ApplitionId = 3, Name = "Proveedores", Description = string.Empty, UrlImg = string.Empty, Path = "/providers", ExcludeNav = false, Component = "providers" },
+        new() { Id = 66, ApplitionId = 3, Name = "Registro proveedor", Description = string.Empty, UrlImg = string.Empty, Path = "/providers/create-provider", ExcludeNav = true, Component = "create-provider" },
+        new() { Id = 67, ApplitionId = 3, Name = "Detalle proveedor", Description = string.Empty, UrlImg = string.Empty, Path = "/providers/:providerId", ExcludeNav = true, Component = "detail-provider" },
+        new() { Id = 68, ApplitionId = 3, Name = "Aseguradoras", Description = string.Empty, UrlImg = string.Empty, Path = "/insurers", ExcludeNav = false, Component = "insurers" },
+        new() { Id = 69, ApplitionId = 3, Name = "Registro aseguradora", Description = string.Empty, UrlImg = string.Empty, Path = "/insurers/create-insurer", ExcludeNav = true, Component = "create-insurer" },
+        new() { Id = 70, ApplitionId = 3, Name = "Aseguradoras", Description = string.Empty, UrlImg = string.Empty, Path = "/insurers/:insurerId", ExcludeNav = true, Component = "detail-insurer" },
+        new() { Id = 71, ApplitionId = 3, Name = "Gestiones", Description = string.Empty, UrlImg = string.Empty, Path = "/", ExcludeNav = false, Component = "home" },
       ]);
   }
 }
