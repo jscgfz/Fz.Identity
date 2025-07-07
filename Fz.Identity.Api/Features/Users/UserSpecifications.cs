@@ -13,6 +13,7 @@ public sealed class UserSpecifications
     => new Specification<User, UserDto>()
       .WithFilter(row =>
         string.IsNullOrWhiteSpace(query.Filter) ||
+        row.Id.ToString().Contains(query.Filter) ||
         row.Name.Contains(query.Filter) ||
         row.Surname.Contains(query.Filter) ||
         row.Username.Contains(query.Filter) ||
