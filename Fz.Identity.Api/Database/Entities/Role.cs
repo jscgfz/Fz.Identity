@@ -6,6 +6,7 @@ public class Role : Entity<Guid>
 {
   public int ApplicationId { get; set; }
   public string Name { get; set; }
+  public string? ActiveDirectoryName { get; set; }
   public virtual Application Application { get; set; } = default!;
   public virtual IEnumerable<RoleClaim> RoleClaims { get; set; } = default!;
   public virtual IEnumerable<UserRole> UserRoles { get; set; } = default!;

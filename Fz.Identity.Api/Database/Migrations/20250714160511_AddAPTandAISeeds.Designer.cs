@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250714160511_AddAPTandAISeeds")]
+    partial class AddAPTandAISeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2157,16 +2160,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
-                            RouteId = 82,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -2340,7 +2333,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista de usuarios internos con cambio de estado, regristro y edición.",
+                            Description = "Vista de usuarios internos con cambio de estado y regristro.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2381,7 +2374,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Name = "Carrusel de imagenes",
                             Order = 1,
                             ParentId = 16,
-                            Path = "/carousel-images",
+                            Path = "/carrousel-images",
                             UrlImg = ""
                         },
                         new
@@ -2410,7 +2403,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para oficinas con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para oficinas con cambio de estado y registro.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2428,7 +2421,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para sostenibilidad con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para sostenibilidad .",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2446,11 +2439,11 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para polizas con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para polizas.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Políticas",
+                            Name = "Polizas",
                             Order = 5,
                             ParentId = 16,
                             Path = "/policies",
@@ -3339,24 +3332,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             Name = "Historial de cambios",
                             Order = 5,
                             Path = "/change-history",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 82,
-                            ApplitionId = 8,
-                            Component = "insurancePolicies",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para pólizas de seguros con cambio de estado, registro y edición.",
-                            ExcludeNav = false,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Pólizas de seguros",
-                            Order = 6,
-                            ParentId = 16,
-                            Path = "/insurance-policies",
                             UrlImg = ""
                         });
                 });

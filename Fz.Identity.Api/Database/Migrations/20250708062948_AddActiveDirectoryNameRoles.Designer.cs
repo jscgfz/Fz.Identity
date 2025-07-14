@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250708062948_AddActiveDirectoryNameRoles")]
+    partial class AddActiveDirectoryNameRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1997,176 +2000,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"),
-                            RouteId = 72,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"),
-                            RouteId = 73,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"),
-                            RouteId = 74,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"),
-                            RouteId = 75,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 76,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 77,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 78,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 79,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 80,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"),
-                            RouteId = 81,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 76,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 77,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 78,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 79,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 80,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("a1b62929-957c-4ee6-a02c-dd0aee3555ee"),
-                            RouteId = 81,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("1e219934-094f-48ee-9360-2ad224160120"),
-                            RouteId = 82,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -2340,7 +2173,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista de usuarios internos con cambio de estado, regristro y edición.",
+                            Description = "Vista de usuarios internos con cambio de estado y regristro.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2381,7 +2214,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             Name = "Carrusel de imagenes",
                             Order = 1,
                             ParentId = 16,
-                            Path = "/carousel-images",
+                            Path = "/carrousel-images",
                             UrlImg = ""
                         },
                         new
@@ -2410,7 +2243,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para oficinas con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para oficinas con cambio de estado y registro.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2428,7 +2261,7 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para sostenibilidad con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para sostenibilidad .",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -2446,11 +2279,11 @@ namespace Fz.Identity.Api.Database.Migrations
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para polizas con cambio de estado, registro y edición.",
+                            Description = "Vista gestor de contenido para polizas.",
                             ExcludeNav = false,
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Políticas",
+                            Name = "Polizas",
                             Order = 5,
                             ParentId = 16,
                             Path = "/policies",
@@ -3168,195 +3001,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             Name = "Gestiones",
                             Order = 0,
                             Path = "/",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 72,
-                            ApplitionId = 4,
-                            Component = "TemplateManagement",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Gestión de plantillas",
-                            Order = 1,
-                            ParentId = 28,
-                            Path = "/template-management",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 73,
-                            ApplitionId = 4,
-                            Component = "rol-actions",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Detalle rol",
-                            Order = 0,
-                            Path = "/role-management/view-rol/:id",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 74,
-                            ApplitionId = 4,
-                            Component = "rol-actions",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Editar rol",
-                            Order = 0,
-                            Path = "/role-management/edit-rol/:id ",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 75,
-                            ApplitionId = 4,
-                            Component = "horol-actionsme",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Crear rol",
-                            Order = 0,
-                            Path = "/role-management/create-rol",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 76,
-                            ApplitionId = 2,
-                            Component = "my-calendar",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Mi calendario.",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Mi calendario",
-                            Order = 0,
-                            Path = "/my-calendar",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 77,
-                            ApplitionId = 2,
-                            Component = "detail-management",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Gestión detallada",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Gestión detallada",
-                            Order = 1,
-                            Path = "/detail-management",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 78,
-                            ApplitionId = 2,
-                            Component = "validate-customer-info",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Validar los datos del cliente",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Validar de datos",
-                            Order = 2,
-                            Path = "/validate-customer-info",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 79,
-                            ApplitionId = 2,
-                            Component = "thirdparty-request",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Gestionar las solicitudes de terceros",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Solicitud de terceros",
-                            Order = 3,
-                            Path = "/thirdparty-request",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 80,
-                            ApplitionId = 2,
-                            Component = "role-management",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Administrar los roles del sistema",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Gestión de roles",
-                            Order = 4,
-                            Path = "/role-management",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 81,
-                            ApplitionId = 2,
-                            Component = "change-history",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Visualizar los cambios realizados en el sistema",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Historial de cambios",
-                            Order = 5,
-                            Path = "/change-history",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 82,
-                            ApplitionId = 8,
-                            Component = "insurancePolicies",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Vista gestor de contenido para pólizas de seguros con cambio de estado, registro y edición.",
-                            ExcludeNav = false,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Pólizas de seguros",
-                            Order = 6,
-                            ParentId = 16,
-                            Path = "/insurance-policies",
                             UrlImg = ""
                         });
                 });
