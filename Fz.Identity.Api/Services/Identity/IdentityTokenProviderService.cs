@@ -108,7 +108,7 @@ public sealed class IdentityTokenProviderService(IServiceProvider provider) : IT
   {
     byte[] securityKey = _jwt.GetValue<Guid>(nameof(TokenValidationParameters.IssuerSigningKey))!.ToByteArray();
     SymmetricSecurityKey key = new([.. securityKey, .. securityKey]);
-    SigningCredentials creds = new(key, SecurityAlgorithms.HmacSha256);
+    SigningCredentials creds = new(key, SecurityAlgorithms.HmacSha256Signature);
     DateTime expires = DateTime.UtcNow.AddMinutes(_jwt.GetValue<int>("TokenExpirationInMinutes"));
     JwtSecurityToken securityToken = new(
       _jwt.GetValue<string>(nameof(TokenValidationParameters.ValidIssuer)),
