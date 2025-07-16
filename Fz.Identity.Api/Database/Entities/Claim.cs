@@ -8,6 +8,8 @@ public class Claim : Entity<int>
   public int CalimTypeId { get; set; }
   public string Value { get; set; }
   public string Description { get; set; }
+  public int? ModuleId { get; set; }
+  public int? ActionId { get; set; }
 
   public virtual Claim? Parent { get; set; }
   public virtual ClaimType ClaimType { get; set; } = default!;
@@ -21,6 +23,8 @@ public class Claim : Entity<int>
   public virtual IEnumerable<RoleRoute> StatusRoutes { get; set; } = default!;
   public virtual IEnumerable<RoleRoute> DownloadRoutes { get; set; } = default!;
   public virtual IEnumerable<RoleRoute> SpecialConditionRoutes { get; set; } = default!;
+  public virtual Module? Module { get; set; }
+  public virtual Action? Action { get; set; }
 
   public Claim(int calimTypeId, string value, string description)
   {

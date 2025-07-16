@@ -49,6 +49,8 @@ public class IdentityContext(DbContextOptions options, IServiceProvider provider
       .ApplyConfiguration(new RouteConfiguration())
       .ApplyConfiguration(new RoleRouteConfiguration())
       .ApplyConfiguration(new UserRoleConfiguration())
-      .ApplyConfiguration(new AuditLogConfiguration());
+      .ApplyConfiguration(new AuditLogConfiguration())
+      .ApplyConfiguration(new ActionConfiguration())
+      .ApplyConfiguration(new ModuleConfiguration());
   }
 }
