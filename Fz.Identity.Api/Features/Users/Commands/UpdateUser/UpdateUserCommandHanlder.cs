@@ -54,7 +54,7 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     if (userApplications.Any())
     {
       UserApplication userApplication = userApplications.FirstOrDefault();
-      userApplication.IsDeleted = !request.IsActive;
+      userApplication.IsDeleted = !(request.IsActive ?? !userApplication.IsDeleted);
       _dbContext.Update(userApplication);
       await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
