@@ -30,11 +30,13 @@ public sealed class LoginCommandHandler(IServiceProvider provider) : ICommandHan
       if(!app.MultDomainEnabled)
         return Result.Failure<IdentityResponseDto>(ResultTypes.NotFound, [new Error("Domain.Error", $"La aplicación no es multidominio {app.Name}")]);
 
-      IEnumerable<Result<User>> results = await Task.WhenAll(
-        app.AllowedCredentials
-        .Select(allowedCredential => _provider.GetRequiredKeyedService<ICredentialValidatorService>((CredentialTypes)allowedCredential.CredentialTypeId)
-          .ValidateCredentials(request.Credentials))
-      );
+      IEnumerable<Result<User>> results = [];
+      
+      foreach(AllowedCredential allowedCredential in app.AllowedCredentials)
+      {
+        results = results.Append(await _provider.GetRequiredKeyedService<ICredentialValidatorService>((CredentialTypes)allowedCredential.CredentialTypeId)
+          .ValidateCredentials(request.Credentials));
+      }
 
       Result<User>? success = results.FirstOrDefault(result => result.IsSuccess);
       if (success is null)

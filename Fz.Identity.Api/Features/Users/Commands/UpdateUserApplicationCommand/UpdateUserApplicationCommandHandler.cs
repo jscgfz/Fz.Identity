@@ -4,6 +4,7 @@ using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Settings;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fz.Identity.Api.Features.Users.Commands.UpdateUserApplicationCommand;
@@ -22,10 +23,21 @@ public class UpdateUserApplicationCommandHandler(IServiceProvider provider) : IC
       .FirstOrDefaultAsync();
 
     if(userApplication is null)
-      return Result.Failure(type: ResultTypes.NotFound, [new Error("UserApplication.NotFound", "No se enecnotró la aplicacion asociada al usuario")]);
+    {
+      userApplication = new()
+      {
+        UserId = request.UserId,
+        ApplicationId = request.ApplicationId,
+        IsDeleted = !request.IsActive
+      };
+      _dbContext.Add(userApplication);
+    }
+    else
+    {
+      userApplication.IsDeleted = !request.IsActive;
+      _dbContext.Update(userApplication);
+    }
 
-    userApplication.IsDeleted = !request.IsActive;
-    _dbContext.Update(userApplication);
     await _unitOfWork.SaveChangesAsync();
 
     return Result.Success(ResultTypes.NoContent);

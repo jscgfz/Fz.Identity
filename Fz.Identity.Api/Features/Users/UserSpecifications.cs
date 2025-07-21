@@ -19,7 +19,8 @@ public sealed class UserSpecifications
         row.Username.Contains(query.Filter) ||
         (row.Name + " " + row.Surname).Trim().Contains(query.Filter) ||
         (!string.IsNullOrWhiteSpace(row.IdentificationNumber) && row.IdentificationNumber.Contains(query.Filter)) ||
-        row.PrincipalEmail.Contains(query.Filter)
+        row.PrincipalEmail.Contains(query.Filter) ||
+        row.Roles.Any(r => r.Role.Name.Contains(query.Filter))
       )
       .WithAndFilter(row => !query.ApplicationId.HasValue || row.Applications.Any(a => a.ApplicationId == query.ApplicationId))
       .WithAndFilter(row => !row.IsDeleted)

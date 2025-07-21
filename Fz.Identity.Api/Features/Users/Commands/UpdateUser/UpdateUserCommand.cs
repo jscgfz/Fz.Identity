@@ -12,7 +12,7 @@ public sealed record UpdateUserCommand(
   string? PhoneNamuber,
   string? DocumentType,
   string UserName,
-  bool IsActive,
+  bool? IsActive,
   List<Guid>? RoleIds,
   string PhotoBase64
   ) : ICommand<Result>;
