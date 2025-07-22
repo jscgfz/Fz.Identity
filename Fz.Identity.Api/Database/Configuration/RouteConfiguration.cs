@@ -79,7 +79,7 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 71, ApplitionId = 3, Name = "Gestiones", Description = string.Empty, UrlImg = string.Empty, Path = "/", ExcludeNav = false, Component = "home" },
         new() { Id = 72, ApplitionId = 4, Name = "Gestión de plantillas", Description = string.Empty, UrlImg = string.Empty, Path = "/template-management", Order = 1, ExcludeNav = true, Component = "TemplateManagement", ParentId = 28 },
         new() { Id = 73, ApplitionId = 4, Name = "Detalle rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/view-rol/:id", ExcludeNav = true, Component = "rol-actions" },
-        new() { Id = 74, ApplitionId = 4, Name = "Editar rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/edit-rol/:id ", ExcludeNav = true, Component = "rol-actions" },
+        new() { Id = 74, ApplitionId = 4, Name = "Editar rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/edit-rol/:id", ExcludeNav = true, Component = "rol-actions" },
         new() { Id = 75, ApplitionId = 4, Name = "Crear rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/create-rol", ExcludeNav = true, Component = "rol-actions" },
         new() { Id = 76, ApplitionId = 2, Name = "Mi calendario", Description = "Mi calendario.", UrlImg = string.Empty, Path = "/my-calendar", Order = 0, ExcludeNav = true, Component = "my-calendar" },
         new() { Id = 77, ApplitionId = 2, Name = "Gestión detallada", Description = "Gestión detallada", UrlImg = string.Empty, Path = "/detail-management", Order = 1, ExcludeNav = true, Component = "detail-management" },

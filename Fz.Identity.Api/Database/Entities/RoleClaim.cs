@@ -8,4 +8,14 @@ public class RoleClaim : Entity<int>
   public int ClaimId { get; set; }
   public virtual Role Role { get; set; } = default!;
   public virtual Claim Claim { get; set; } = default!;
+
+  public RoleClaim(Guid roleId, int claimId)
+  {
+    RoleId = roleId;
+    ClaimId = claimId;
+  }
+
+  public RoleClaim()
+  {
+  }
 }
