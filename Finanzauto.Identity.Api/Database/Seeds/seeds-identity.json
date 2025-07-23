@@ -1,0 +1,517 @@
+[
+  {
+    "schema": "sec",
+    "name": "LoginTypes",
+    "data": [
+      {
+        "id": 1,
+        "authenticationType": 2,
+        "name": "Finanzauto",
+        "description": "Login using a FZCORP credential",
+        "DomainName": "FZCORP",
+        "key": "KdNESJeIadQ+U+Q5Qs+8BQ=="
+      },
+      {
+        "id": 2,
+        "authenticationType": 2,
+        "name": "Quantum Data",
+        "description": "Login using a QBTA credential",
+        "domainName": "QBTA",
+        "key": "KdNESJeIadQ+U+Q5Qs+8BQ=="
+      },
+      {
+        "id": 3,
+        "authenticationType": 2,
+        "name": "Promotec",
+        "description": "Login using a PTSEGUROS credential",
+        "domainName": "PTSEGUROS",
+        "key": "KdNESJeIadQ+U+Q5Qs+8BQ=="
+      },
+      {
+        "id": 4,
+        "authenticationType": 2,
+        "name": "Control Next",
+        "description": "Login using a FZCORP credential",
+        "domainName": "FZCORP",
+        "key": "KdNESJeIadQ+U+Q5Qs+8BQ=="
+      },
+      {
+        "id": 5,
+        "authenticationType": 2,
+        "name": "Asisya",
+        "description": "Login using a ASISYA credential",
+        "domainName": "FZCORP",
+        "key": "SWJF7E+6Grf63Co9Djy2Jw=="
+      },
+      {
+        "Id": 6,
+        "authenticationType": 1,
+        "name": "User-Password",
+        "description": "Login using a user and password"
+      }
+    ]
+  },
+  {
+    "schema": "sec",
+    "name": "ClaimSections",
+    "data": [
+      {
+        "id": 1,
+        "name": "read",
+        "description": "Permisos relacionados a la lectura de datos"
+      },
+      {
+        "id": 2,
+        "name": "create",
+        "description": "Permisos relacionados a la creación de datos"
+      },
+      {
+        "id": 3,
+        "name": "modify",
+        "description": "Permisos relacionados a la modificación de datos"
+      },
+      {
+        "id": 4,
+        "name": "delete",
+        "description": "Permisos relacionados a la eliminación de datos"
+      },
+      {
+        "id": 5,
+        "name": "listen",
+        "description": "Permisos relacionados a la escucha de grabaciones"
+      },
+      {
+        "id": 6,
+        "name": "download",
+        "description": "Permisos relacionados a la descarga de datos"
+      },
+      {
+        "id": 7,
+        "name": "security",
+        "description": "Permisos relacionados al acceso a datos de seguridad"
+      },
+      {
+        "id": 8,
+        "name": "upload",
+        "description": "Permisos relacionados a la carga de datos"
+      }
+    ]
+  },
+  {
+    "schema": "sec",
+    "name": "ClaimActions",
+    "data": [
+      {
+        "id": 1,
+        "name": "users",
+        "description": "Permisos relacionados al control de usuarios"
+      },
+      {
+        "id": 2,
+        "name": "roles",
+        "description": "Permisos relacionados al control de roles"
+      },
+      {
+        "id": 3,
+        "name": "routes",
+        "description": "Permisos relacionados al control de rutas"
+      },
+      {
+        "id": 4,
+        "name": "apikeys",
+        "description": "Permisos relacionados al control de api keys"
+      },
+      {
+        "id": 5,
+        "name": "credentials",
+        "description": "Permisos relacionados al control de credenciales"
+      },
+      {
+        "id": 6,
+        "name": "apps",
+        "description": "Permisos relacionados al control de aplicaciones"
+      },
+      {
+        "id": 7,
+        "name": "endpoints",
+        "description": "Permisos relacionados al control de endpoints de orden superior"
+      },
+      {
+        "id": 8,
+        "name": "calls",
+        "description": "Permisos relacionados al control de llamadas"
+      },
+      {
+        "id": 9,
+        "name": "config",
+        "description": "Permisos relacionados al control de ajustes del sistema"
+      }
+    ]
+  },
+  {
+    "schema": "sec",
+    "name": "ClaimValues",
+    "data": [
+      {
+        "id": "192140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 1
+      },
+      {
+        "id": "222140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 2
+      },
+      {
+        "id": "2B2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 3
+      },
+      {
+        "id": "342140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 4
+      },
+      {
+        "id": "3D2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 5
+      },
+      {
+        "id": "462140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 6
+      },
+      {
+        "id": "4F2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 7
+      },
+      {
+        "id": "582140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 1,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1A2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 1
+      },
+      {
+        "id": "232140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 2
+      },
+      {
+        "id": "2C2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 3
+      },
+      {
+        "id": "352140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 4
+      },
+      {
+        "id": "3E2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 5
+      },
+      {
+        "id": "472140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 6
+      },
+      {
+        "id": "502140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 7
+      },
+      {
+        "id": "592140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 2,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1B2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 1
+      },
+      {
+        "id": "242140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 2
+      },
+      {
+        "id": "2D2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 3
+      },
+      {
+        "id": "362140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 4
+      },
+      {
+        "id": "3F2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 5
+      },
+      {
+        "id": "482140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 6
+      },
+      {
+        "id": "512140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5A2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 3,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1C2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 1
+      },
+      {
+        "id": "252140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 2
+      },
+      {
+        "id": "2E2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 3
+      },
+      {
+        "id": "372140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 4
+      },
+      {
+        "id": "402140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 5
+      },
+      {
+        "id": "492140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 6
+      },
+      {
+        "id": "522140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5B2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 4,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1D2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 1
+      },
+      {
+        "id": "262140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 2
+      },
+      {
+        "id": "2F2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 3
+      },
+      {
+        "id": "382140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 4
+      },
+      {
+        "id": "412140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 5
+      },
+      {
+        "id": "4A2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 6
+      },
+      {
+        "id": "532140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5C2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 5,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1E2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 1
+      },
+      {
+        "id": "272140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 2
+      },
+      {
+        "id": "302140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 3
+      },
+      {
+        "id": "392140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 4
+      },
+      {
+        "id": "422140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 5
+      },
+      {
+        "id": "4B2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 6
+      },
+      {
+        "id": "542140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5D2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 6,
+        "claimSectionId": 8
+      },
+      {
+        "id": "1F2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 1
+      },
+      {
+        "id": "282140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 2
+      },
+      {
+        "id": "312140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 3
+      },
+      {
+        "id": "3A2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 4
+      },
+      {
+        "id": "432140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 5
+      },
+      {
+        "id": "4C2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 6
+      },
+      {
+        "id": "552140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5E2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 7,
+        "claimSectionId": 8
+      },
+      {
+        "id": "202140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 1
+      },
+      {
+        "id": "292140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 2
+      },
+      {
+        "id": "322140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 3
+      },
+      {
+        "id": "3B2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 4
+      },
+      {
+        "id": "442140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 5
+      },
+      {
+        "id": "4D2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 6
+      },
+      {
+        "id": "562140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 7
+      },
+      {
+        "id": "5F2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 8,
+        "claimSectionId": 8
+      },
+      {
+        "id": "212140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 1
+      },
+      {
+        "id": "2A2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 2
+      },
+      {
+        "id": "332140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 3
+      },
+      {
+        "id": "3C2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 4
+      },
+      {
+        "id": "452140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 5
+      },
+      {
+        "id": "4E2140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 6
+      },
+      {
+        "id": "572140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 7
+      },
+      {
+        "id": "602140F7-3167-F011-81DC-00505682ECA9",
+        "claimActionId": 9,
+        "claimSectionId": 8
+      }
+    ]
+  }
+]

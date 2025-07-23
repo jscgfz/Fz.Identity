@@ -1,0 +1,8 @@
+﻿[*.cs]
+
+indent_style = space
+indent_size = 2
+csharp_style_namespace_declarations = file_scoped:error
+dotnet_diagnostic.NU1608.severity = none
+# SYSLIB1045: Convertir en 'GeneratedRegexAttribute'.
+dotnet_diagnostic.SYSLIB1045.severity = none
