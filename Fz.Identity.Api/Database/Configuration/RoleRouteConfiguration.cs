@@ -123,6 +123,12 @@ public sealed class RoleRouteConfiguration : IEntityTypeConfiguration<RoleRoute>
         new() { RouteId = 80, RoleId = Guid.Parse("A1B62929-957C-4EE6-A02C-DD0AEE3555EE") },
         new() { RouteId = 81, RoleId = Guid.Parse("A1B62929-957C-4EE6-A02C-DD0AEE3555EE") },
         new() { RouteId = 82, RoleId = Guid.Parse("1e219934-094f-48ee-9360-2ad224160120") },
+        new() { RouteId = 83, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
+        new() { RouteId = 84, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
+        new() { RouteId = 72, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
+        new() { RouteId = 73, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
+        new() { RouteId = 74, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
+        new() { RouteId = 75, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
       ]);
   }
 }

@@ -88,6 +88,8 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 80, ApplitionId = 2, Name = "Gestión de roles", Description = "Administrar los roles del sistema", UrlImg = string.Empty, Path = "/role-management", Order = 4, ExcludeNav = true, Component = "role-management" },
         new() { Id = 81, ApplitionId = 2, Name = "Historial de cambios", Description = "Visualizar los cambios realizados en el sistema", UrlImg = string.Empty, Path = "/change-history", Order = 5, ExcludeNav = true, Component = "change-history" },
         new() { Id = 82, ApplitionId = 8, Name = "Pólizas de seguros", Description = "Vista gestor de contenido para pólizas de seguros con cambio de estado, registro y edición.", UrlImg = string.Empty, Path = "/insurance-policies", ExcludeNav = false, Component = "insurancePolicies", Order = 6, ParentId = 16 },
+        new() { Id = 83, ApplitionId = 4, Name = "Solciitud editar", Description = string.Empty, UrlImg = string.Empty, Path = "/request-editing", ExcludeNav = true, Component = "request-editing" },
+        new() { Id = 84, ApplitionId = 4, Name = "Detalle solciitud edición", Description = string.Empty, UrlImg = string.Empty, Path = "/detail-request-editing/:id", ExcludeNav = true, Component = "detail-request-editing" },
       ]);
   }
 }
