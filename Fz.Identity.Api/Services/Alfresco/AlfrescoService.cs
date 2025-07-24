@@ -53,7 +53,48 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
     return Result.Failure<string>(ResultTypes.BadRequest, [new Error("PhotoBase64.Invalid", "Formato foto base 64 invalido")]);
   }
 
-  public async Task<Result<string>> GetBase64File(string nodeId)
+  public async Task<Result<string>> UploadAuthFile(Guid roleId, int requestId, IFormFile authorizationFile)
+  {
+    string contentType = authorizationFile.ContentType;
+    HttpClient client = new();
+    // Crear el encabezado de autenticación básica
+    var authToken = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Value.Username}:{_settings.Value.Password}"));
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
+
+    var formData = new MultipartFormDataContent
+      {
+        { new StringContent(roleId.ToString()), "relativePath" },
+        { new StringContent(authorizationFile.Name), "name" },
+        { new StringContent("cm:content"), "nodeType" },
+        { new StringContent("false"), "overwrite" }
+      };
+
+    using (var ms = new MemoryStream())
+    {
+      if (authorizationFile == null || authorizationFile.Length == 0)
+        return Result.Failure<string>(ResultTypes.BadRequest, [new Error("File", "El archivo está vacio")]);
+
+      await authorizationFile.CopyToAsync(ms);
+      byte[] fileBytes = ms.ToArray();
+      var fileContent = new ByteArrayContent(fileBytes);
+      fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+      formData.Add(fileContent, "filedata", authorizationFile.Name);
+    }
+
+    HttpResponseMessage response = await client.PostAsync($"{_settings.Value.BaseUrl}/nodes/{_settings.Value.AuthorizationNode}/children", formData);
+    string result = await response.Content.ReadAsStringAsync();
+
+    if (!response.IsSuccessStatusCode)
+      return Result.Failure<string>(ResultTypes.BadRequest, [new Error("Alfresco.CreateNode", $"Creación fallida- respuesta servicio {response.StatusCode}")]);
+    using var doc = JsonDocument.Parse(result);
+
+    string nodeId = doc.RootElement
+                   .GetProperty("entry").GetProperty("id").GetString();
+
+    return Result.Success(nodeId);
+  }
+
+  public async Task<Result<byte[]>> GetFileBytes(string nodeId)
   {
     HttpClient client = new();
     // Crear el encabezado de autenticación básica
@@ -61,8 +102,7 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
 
     var documentBytes = await client.GetByteArrayAsync($"{_settings.Value.BaseUrl}/nodes/{nodeId}/content");
-    var base64Content = Convert.ToBase64String(documentBytes);
 
-    return base64Content;
+    return documentBytes;
   }
 }
