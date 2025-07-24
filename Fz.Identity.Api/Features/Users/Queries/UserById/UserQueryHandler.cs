@@ -36,8 +36,8 @@ public sealed class UserQueryHandler(IServiceProvider provider) : IQueryHandler<
     string? photoBase64 = null;
     if(user.PhotoNodeId is not null)
     {
-      var alfrescoResult = await _alfresco.GetBase64File(user.PhotoNodeId);
-      photoBase64 = alfrescoResult.Value;
+      var alfrescoResult = await _alfresco.GetFileBytes(user.PhotoNodeId);
+      photoBase64 = Convert.ToBase64String(alfrescoResult.Value);
     }
 
     return Result.Success(UserDetailDto.MapFrom(user, photoBase64));
