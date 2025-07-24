@@ -1,6 +1,8 @@
 ﻿using Fz.Core.Result.Extensions;
 using Fz.Identity.Api.Abstractions;
+using Fz.Identity.Api.Features.Roles.Commands.AddRole;
 using Fz.Identity.Api.Features.Roles.Dtos;
+using Fz.Identity.Api.Features.Roles.Queries.RoleById;
 using Fz.Identity.Api.Features.Roles.Queries.Roles;
 using MediatR;
 
@@ -19,5 +21,18 @@ public sealed class RoleModule : IIdentityModule
       .RequireAuthorization()
       .Produces<IEnumerable<RoleDto>>()
       .WithDescription("Obtiene los roles disponibles en el sistema");
+
+    group.MapGet("/active-directory", async ([AsParameters] RolesQuery query, ISender sender) => await sender.Send(query).ToResult())
+      .RequireAuthorization()
+      .WithDescription("Obtiene los roles del directorio activo");
+
+    group.MapPost(string.Empty, async(AddRoleCommand cmd, ISender sender) => await sender.Send(cmd).ToResult())
+      .RequireAuthorization()
+      .WithDescription("Crea un nuevo rol en el sistema");
+
+    group.MapGet("/{roleId}", async (Guid roleId, ISender sender) => await sender.Send(new RoleByIdQuery(roleId)).ToResult())
+      .RequireAuthorization()
+      .Produces<RoleDetailDto>()
+      .WithDescription("Obtiene rol por su id");
   }
 }
