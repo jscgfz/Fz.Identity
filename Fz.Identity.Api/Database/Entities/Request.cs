@@ -14,6 +14,7 @@ public class Request : Entity<int>
   public string AuthorizationFileName { get; set; }
   public string? RejectionReason{ get; set; }
   public int ApplicationId { get; set; }
+  public Guid? ProcessedBy { get; set; }
 
   public virtual RequestStatus Status { get; set; }
   public virtual Application Application { get; set; }
