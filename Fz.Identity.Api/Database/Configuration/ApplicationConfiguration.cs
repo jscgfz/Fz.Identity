@@ -21,6 +21,8 @@ public sealed class ApplicationConfiguration : IEntityTypeConfiguration<Applicat
       new Application { Id = 7, Name = "Finanzaseguros", Description = "Sistema de financiación de seguros" , CompanyId = 1 },
       new Application { Id = 8, Name = "Finanzauto Web Admin", Description = "Administrador de credenciales de usuarios de finanzauto web" , CompanyId = 1 },
       new Application { Id = 9, Name = "Genesis Promotec", Description = "Aplicacion atención cliente de Promotec" , CompanyId = 2 },
+      //new Application { Id = 10, Name = "KPI Management", Description = "Gestión de indicadores" },
+      new Application { Id = 11, Name = "Atenea Carfiao", Description = "Atenea para Carfiao" , CompanyId = 4 },
     ]);
   }
 }

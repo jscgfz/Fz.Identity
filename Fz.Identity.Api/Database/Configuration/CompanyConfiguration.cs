@@ -13,6 +13,7 @@ public sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
       new Company{ Id = 1,  Name = "Finanzauto", Description = string.Empty },
       new Company{ Id = 2,  Name = "Promotec", Description = string.Empty },
       new Company{ Id = 3,  Name = "Asisya", Description = string.Empty },
+      new Company{ Id = 4,  Name = "Carfiao", Description = string.Empty },
       ]);
   }
 }
