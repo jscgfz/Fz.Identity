@@ -3,6 +3,7 @@ using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Features.Auth.Commands.Login;
 using Fz.Identity.Api.Features.Auth.Commands.Refresh;
 using Fz.Identity.Api.Features.Auth.Dtos;
+using Fz.Identity.Api.Features.Auth.Queries.Modules;
 using Fz.Identity.Api.Features.Auth.Queries.Routes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,5 +38,11 @@ public sealed class AuthModule : IIdentityModule
       .Produces<IEnumerable<RouteDto>>()
       .ProducesProblem(StatusCodes.Status404NotFound)
       .WithDescription("Obtiene las rutas configuradas para el usuario");
+
+    group
+      .MapGet("/modules", async ([FromServices] ISender sender) => await sender.Send(new ModulesQuery()).ToResult())
+      .RequireAuthorization()
+      .Produces<IEnumerable<ModuleDto>>()
+      .WithDescription("Obtiene los modulos configurados");
   }
 }
