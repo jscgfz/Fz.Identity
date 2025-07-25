@@ -15,6 +15,7 @@ public class Request : Entity<int>
   public string? RejectionReason{ get; set; }
   public int ApplicationId { get; set; }
   public Guid? ProcessedBy { get; set; }
+  public bool RequiresConfirmation { get; set; }
 
   public virtual RequestStatus Status { get; set; }
   public virtual Application Application { get; set; }

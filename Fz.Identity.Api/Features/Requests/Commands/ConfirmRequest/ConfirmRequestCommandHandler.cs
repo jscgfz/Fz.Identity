@@ -19,7 +19,7 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
     = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
   public async Task<Result> Handle(ConfirmRequestCommand request, CancellationToken cancellationToken)
   {
-    var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Approved).FirstOrDefaultAsync(cancellationToken);
+    var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Approved && r.RequiresConfirmation).FirstOrDefaultAsync(cancellationToken);
 
     if (requestEntity is null)
       return Result.Failure(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
@@ -62,6 +62,7 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
       }
       _dbContext.AddRange(newRoleClaims);
     }
+    requestEntity.RequiresConfirmation = false;
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success();

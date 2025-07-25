@@ -1,28 +1,47 @@
-﻿using Fz.Core.Persistence.Abstractions;
+﻿using Fz.Core.Domain.Primitives.Abstractions.Common;
+using Fz.Core.Domain.Primitives.Common;
+using Fz.Core.Persistence.Abstractions;
 using Fz.Core.Result;
-using Fz.Core.Result.Extensions;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Roles.Dtos;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Error = Fz.Core.Result.Error;
 
 namespace Fz.Identity.Api.Features.Roles.Queries.Roles;
 
-public sealed class RolesQueryHandler(IServiceProvider provider) : IQueryHandler<RolesQuery, Result<IEnumerable<RoleDto>>>
+public sealed class RolesQueryHandler(IServiceProvider provider) : IQueryHandler<RolesQuery, Result<IPaginatedResult<RoleDto>>>
 {
   private readonly IReadOnlyDbContext _context
     = provider.GetRequiredKeyedService<IReadOnlyDbContext>(ContextTypes.Identity);
 
-  public Task<Result<IEnumerable<RoleDto>>> Handle(RolesQuery request, CancellationToken cancellationToken)
-#pragma warning disable CS8620 // El argumento no se puede usar para el parámetro debido a las diferencias en la nulabilidad de los tipos de referencia.
-    => Result.From(
-        _context.Repository<Role>()
-          .Where(row => request.ApplicationId == null || row.ApplicationId == request.ApplicationId)
-          .Select(row => new RoleDto(row.Id, row.Name, row.ApplicationId))
-          .ToListAsync(cancellationToken),
-        ResultTypes.NotFound,
-        [new Error("roles not found", "no se encontraron roles")]
-      ).Map(result => result.AsEnumerable());
-#pragma warning restore CS8620 // El argumento no se puede usar para el parámetro debido a las diferencias en la nulabilidad de los tipos de referencia.
+  public async Task<Result<IPaginatedResult<RoleDto>>> Handle(RolesQuery request, CancellationToken cancellationToken)
+  {
+    var q = _context.Repository<Role>().Where(r => request.ApplicationId == null || r.ApplicationId == request.ApplicationId)
+      .GroupJoin(
+      _context.Repository<Request>().Where(r => request.ApplicationId == null || r.ApplicationId == request.ApplicationId)
+      .Include(r => r.Status),
+      role => role.Id,
+      requestEntity => requestEntity.ResourceId,
+      (role, requests) => new RoleWithRequestDto
+      {
+          Role = role,
+          Request = requests.OrderByDescending(r => r.Id).FirstOrDefault()
+        }
+      );
+
+    IQueryable<RoleDto> query = RoleSpecifications.ByRolesQuery(request).Apply(q);
+    int count = await query.CountAsync();
+    int pageCount = (int)Math.Ceiling((double)count / (request.PageSize ?? 10));
+    if (!request.FullSet)
+      query = query
+      .Skip(((request.PageIndex ?? 1) - 1) * (request.PageSize ?? 10))
+      .Take(request.PageSize ?? 10);
+    var data = await query.ToListAsync();
+    IPaginatedResult<RoleDto> result = new PaginationSet<RoleDto>(data, pageCount, request.PageIndex ?? 1, request.PageSize ?? 10, count);
+
+    return result.Data.Any() ? Result.Success(result) : Result.Failure<IPaginatedResult<RoleDto>>(type:ResultTypes.NotFound, [new Error("Roles.NotFound", "no se encontraron roles para la consulta")]);
+  }
 }

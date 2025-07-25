@@ -11,14 +11,11 @@ public class RequestStatusConfiguration : IEntityTypeConfiguration<RequestStatus
   public void Configure(EntityTypeBuilder<RequestStatus> builder)
   {
     builder.ToTable("RequestStatuses", IdentityContextSchemas.Configuration);
-    builder.Property(row => row.Name)
-      .HasField("_name");
-    builder.Ignore(row => row.Type);
     builder.HasData([
-      new RequestStatus { Id = 1, Type = RequestStatuses.Approved, Description = "Solicitud aprobada, puede hacerse la edición" },
-      new RequestStatus { Id = 2, Type = RequestStatuses.Pending, Description = "Solicitud pendiente por gestión" },
-      new RequestStatus { Id = 3, Type = RequestStatuses.Rejected, Description = "Solicitud rechazada, no puede hacerse la edición" },
-      new RequestStatus { Id = 4, Type = RequestStatuses.Expired, Description = "Solicitud vencida, no se atendió dentro de los tiempos" },
+      new RequestStatus { Id = (int)RequestStatuses.Approved, Name = "Aprobado", Description = "Solicitud aprobada, puede hacerse la edición" },
+      new RequestStatus { Id = (int)RequestStatuses.Pending,  Name = "Pendiente", Description = "Solicitud pendiente por gestión" },
+      new RequestStatus { Id = (int)RequestStatuses.Rejected, Name = "Rechazado", Description = "Solicitud rechazada, no puede hacerse la edición" },
+      new RequestStatus { Id = (int)RequestStatuses.Expired,  Name = "Vencido", Description = "Solicitud vencida, no se atendió dentro de los tiempos" },
       ]);
   }
 }

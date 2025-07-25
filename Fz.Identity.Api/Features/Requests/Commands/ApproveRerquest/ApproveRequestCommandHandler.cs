@@ -26,6 +26,7 @@ public class ApproveRequestCommandHandler(IServiceProvider provider) : ICommandH
     requestEntity.StatusId = (int)RequestStatuses.Approved;
     requestEntity.ProcessedAt = DateTime.UtcNow;
     requestEntity.ProcessedBy = _identityManager.CurrentUserId;
+    requestEntity.RequiresConfirmation = true;
     _dbContext.Update(requestEntity);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
