@@ -34,7 +34,7 @@ public class AddRequestCommandHandler(IServiceProvider provider) : ICommandHandl
       ApplicationId = (int)_identityManager.ApplicationId,
       ChangesJson = request.ChangesJson,
       StatusId = (int)RequestStatuses.Pending,
-      AuthorizationFileName = request.AuthorizationFile.Name,
+      AuthorizationFileName = request.AuthorizationFile.FileName,
     };
 
     _dbContext.Add(requestEntity);

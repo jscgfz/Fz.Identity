@@ -64,7 +64,7 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
     var formData = new MultipartFormDataContent
       {
         { new StringContent(roleId.ToString()), "relativePath" },
-        { new StringContent(authorizationFile.Name), "name" },
+        { new StringContent(authorizationFile.FileName), "name" },
         { new StringContent("cm:content"), "nodeType" },
         { new StringContent("false"), "overwrite" }
       };
