@@ -24,6 +24,6 @@ public sealed class RoleSpecifications
       row.Role.ApplicationId,
       row.Request == null || (!row.Request.RequiresConfirmation && row.Request.StatusId == (int)RequestStatuses.Approved) ? ManagementRequestStatuses.Without : row.Request.Status.Name,
       row.Request.RequiresConfirmation ? ManagementRequestStatuses.Pending : ManagementRequestStatuses.DoesNotApply,
-      row.Request == null ? null : RequestDetailDto.GettRemainingTime(row.Request.CreatedAtUtc, row.Request.ExpireAt)
+      row.Request == null ? null : RequestDetailDto.GettRemainingTime(row.Request.ExpireAt)
       ));
 }

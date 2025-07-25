@@ -23,15 +23,18 @@ public sealed record RequestDetailDto(
   string AuthorizationFileId,
   string? Reason,
   IEnumerable<ModuleDto> CurrentModules,
-  IEnumerable<ModuleDto> RequestedModules
+  IEnumerable<ModuleDto> RequestedModules,
+  string? ManagementUser,
+  string? ManagementDate,
+  string? RejectionReason
   )
 {
-  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role)
+  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role, User user, User? managementUser)
   => new(
-      request.CreatedBy.ToString(),
-      TimeZoneInfo.ConvertTime(request.CreatedAtUtc, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")).ToString("dd/MM/yyyy hh:mm tt"),
+      $"{user.Name} {user.Surname}",
+      request.CreatedAtUtc.ToString("dd/MM/yyyy hh:mm tt"),
       request.Status.Name,
-      GettRemainingTime(request.CreatedAtUtc, request.ExpireAt),
+      GettRemainingTime(request.ExpireAt),
       role.Name,
       GetChanges(request.ChangesJson).Name,
       role.ActiveDirectoryName,
@@ -40,15 +43,19 @@ public sealed record RequestDetailDto(
       request.AuthorizationFileId,
       request.Reason,
       role.Modules,
-      GetChanges(request.ChangesJson).Modules
+      GetChanges(request.ChangesJson).Modules,
+      managementUser != null ? $"{managementUser.Name} {managementUser.Surname}" : null,
+      request.ProcessedAt?.ToString("dd/MM/yyyy hh:mm tt"),
+      request.RejectionReason
     );
 
-  public static string? GettRemainingTime(DateTime createdDate, DateTime expireDate)
+  public static string? GettRemainingTime(DateTime expireDate)
   {
-    if (expireDate > createdDate)
+    DateTime currentdate = DateTime.Now;
+    if (currentdate > expireDate)
       return null;
 
-    var diff = createdDate - expireDate;
+    var diff = expireDate - currentdate;
 
     if (diff.TotalDays >= 1)
     {

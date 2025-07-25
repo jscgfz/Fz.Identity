@@ -22,6 +22,6 @@ public sealed record RequestDto(
         request.CreatedBy.ToString(),
         request.Reason,
         request.Status.Name,
-        RequestDetailDto.GettRemainingTime(request.CreatedAtUtc, request.ExpireAt)
+        RequestDetailDto.GettRemainingTime(request.ExpireAt)
       );
 }
