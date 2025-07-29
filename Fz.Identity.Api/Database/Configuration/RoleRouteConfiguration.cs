@@ -131,6 +131,8 @@ public sealed class RoleRouteConfiguration : IEntityTypeConfiguration<RoleRoute>
         new() { RouteId = 75, RoleId = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3") },
         new() { RouteId = 85, RoleId = Guid.Parse("e8a76b3f-c104-4d69-a6ec-18a392bfcaa5") },
         new() { RouteId = 85, RoleId = Guid.Parse("d502d91b-7514-4e87-81e5-173584c7bd4a") },
+        new() { RouteId = 86, RoleId = Guid.Parse("e8a76b3f-c104-4d69-a6ec-18a392bfcaa5") },
+        new() { RouteId = 86, RoleId = Guid.Parse("d502d91b-7514-4e87-81e5-173584c7bd4a") },
       ]);
   }
 }
