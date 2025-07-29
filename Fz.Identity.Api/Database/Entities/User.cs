@@ -14,11 +14,13 @@ public class User : Entity<Guid>
   public bool PrincipalPhoneNumberConfirmed { get; set; }
   public string? DocumentType { get; set; }
   public string? PhotoNodeId { get; set; }
+  public int? AreaId { get; set; }
 
   public virtual IEnumerable<UserClaim> UserClaims { get; set; } = default!;
   public virtual IEnumerable<Credential> Credentials { get; set; } = default!;
   public virtual IEnumerable<UserRole> Roles { get; set; } = default!;
   public virtual IEnumerable<UserApplication> Applications { get; set; } = default!;
+  public virtual Area? Area { get; set; }
 
   public User(
     string name,

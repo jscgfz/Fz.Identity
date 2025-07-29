@@ -54,6 +54,7 @@ public class IdentityContext(DbContextOptions options, IServiceProvider provider
       .ApplyConfiguration(new ModuleConfiguration())
       .ApplyConfiguration(new RequestConfiguration())
       .ApplyConfiguration(new RequestStatusConfiguration())
-      .ApplyConfiguration(new CompanyConfiguration());
+      .ApplyConfiguration(new CompanyConfiguration())
+      .ApplyConfiguration(new AreaConfiguration());
   }
 }
