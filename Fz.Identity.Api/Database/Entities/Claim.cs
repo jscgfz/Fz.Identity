@@ -10,6 +10,7 @@ public class Claim : Entity<int>
   public string Description { get; set; }
   public int? ModuleId { get; set; }
   public int? ActionId { get; set; }
+  public int? Order { get; set; }
 
   public virtual Claim? Parent { get; set; }
   public virtual ClaimType ClaimType { get; set; } = default!;
