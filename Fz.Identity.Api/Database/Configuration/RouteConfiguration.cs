@@ -101,6 +101,8 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 93, ApplitionId = 9, Name = "Gestión de usuarios", Description = "Gestión de usuarios", UrlImg = string.Empty, Path = "/user_management", ExcludeNav = false, Component = "user_management", Order = 1 },
         new() { Id = 94, ApplitionId = 9, Name = "Gestión de roles", Description = "Gestión de roles", UrlImg = string.Empty, Path = "/role_management", ExcludeNav = false, Component = "role_management", Order = 2 },
         new() { Id = 95, ApplitionId = 9, Name = "Histórico de gestiones", Description = "Histórico de gestiones", UrlImg = string.Empty, Path = "/management_history", ExcludeNav = false, Component = "management_history", Order = 3 },
+        new() { Id = 96, ApplitionId = 11, Name = "Resumen de caso PQRS", Description = "Resumen de caso PQRS", UrlImg = string.Empty, Path = "/pqrs-management/pqrs-summary/:caseTypeId", ExcludeNav = true, Component = "pqrs-summary", Order = 1 },
+        new() { Id = 97, ApplitionId = 11, Name = "Detalle de caso NO.", Description = "Detalle de caso NO.", UrlImg = string.Empty, Path = "/pqrs-management/pqrs-detail/:pqrsId", ExcludeNav = true, Component = "pqrs-management-detail", Order = 2 },
       ]);
   }
 }
