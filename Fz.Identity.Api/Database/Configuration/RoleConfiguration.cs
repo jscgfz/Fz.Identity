@@ -37,10 +37,12 @@ public sealed class RoleConfiguration(IIdentityContextControlFieldsManager manag
         new Role { Id = Guid.Parse("d525cf87-3c00-48dc-992d-284d2a12772f"), ApplicationId = 3, Name = "Agente" },
         new Role { Id = Guid.Parse("2513a3ec-519a-437c-9f47-d3ed69b5cd06"), ApplicationId = 3, Name = "Administrador" },
         new Role { Id = Guid.Parse("22526b31-4f44-4775-b5b4-6b07005dda60"), ApplicationId = 3, Name = "Calidad" },
-        new Role { Id = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3"), ApplicationId = 4, Name = "S.I" },
+        new Role { Id = Guid.Parse("b3bb793d-4386-4f98-bcc0-c3844f61c9e3"), ApplicationId = 4, Name = "S.I", ActiveDirectoryRoleId = Guid.Parse("1ff15957-dc97-4618-9a60-00ba9058a171") },
         new Role { Id = Guid.Parse("e8a76b3f-c104-4d69-a6ec-18a392bfcaa5"), ApplicationId = 11, Name = "Asesor" },
         new Role { Id = Guid.Parse("d502d91b-7514-4e87-81e5-173584c7bd4a"), ApplicationId = 11, Name = "Coordinador" },
         new Role { Id = Guid.Parse("ded75b0d-570d-4687-ba95-e9348d29e37e"), ApplicationId = 9, Name = "T.I" },
+        new Role { Id = Guid.Parse("66818ace-8c12-4588-be9a-0343922e7623"), ApplicationId = 4, Name = "T.I", ActiveDirectoryRoleId = Guid.Parse("1635c724-2c22-40b8-80e8-01b5da129dba") },
+        new Role { Id = Guid.Parse("66551899-cf82-4548-8c4b-052745d2869a"), ApplicationId = 4, Name = "Área", ActiveDirectoryRoleId = Guid.Parse("d9965f5b-0c20-40c5-94a7-e508f8a88e0a") },
       ]);
   }
 }
