@@ -2,6 +2,7 @@
 using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Features.Masters.Dtos;
 using Fz.Identity.Api.Features.Masters.Queries.Applications;
+using Fz.Identity.Api.Features.Masters.Queries.Areas;
 using Fz.Identity.Api.Features.Masters.Queries.CredentialTypes;
 using MediatR;
 
@@ -26,6 +27,12 @@ public sealed class MasterModule : IIdentityModule
       .MapGet("/applications", async ([AsParameters] ApplicationsQuery query, ISender sender) => await sender.Send(query).ToResult())
       .AllowAnonymous()
       .Produces<IEnumerable<ApplicationDto>>()
+      .WithDescription("Obtiene las aplicaciones disponibles en el sistema");
+
+    group
+      .MapGet("/areas", async ([AsParameters] AreasQuery query, ISender sender) => await sender.Send(query).ToResult())
+      .AllowAnonymous()
+      .Produces<IEnumerable<AreaDto>>()
       .WithDescription("Obtiene las aplicaciones disponibles en el sistema");
   }
 }

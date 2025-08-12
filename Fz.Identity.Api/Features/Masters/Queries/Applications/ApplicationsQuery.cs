@@ -4,4 +4,4 @@ using Fz.Identity.Api.Features.Masters.Dtos;
 
 namespace Fz.Identity.Api.Features.Masters.Queries.Applications;
 
-public sealed record ApplicationsQuery() : IQuery<Result<IEnumerable<ApplicationDto>>>;
+public sealed record ApplicationsQuery(bool OnlyGroup = false) : IQuery<Result<IEnumerable<ApplicationDto>>>;
