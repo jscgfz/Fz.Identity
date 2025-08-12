@@ -61,6 +61,7 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
       PrincipalPhoneNumberConfirmed = false,
       DocumentType = request.DocumentType,
       PhotoNodeId = photoNodeId,
+      AreaId = request.AreaId,
     };
 
     _dbContext.Add(user);

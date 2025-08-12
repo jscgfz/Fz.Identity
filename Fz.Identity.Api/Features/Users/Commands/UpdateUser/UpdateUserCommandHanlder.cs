@@ -44,6 +44,7 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     user.PrincipalPhoneNumber = request.PhoneNamuber;
     user.DocumentType = request.DocumentType;
     user.Username = request.UserName;
+    user.AreaId = request.AreaId;
 
     _dbContext.Update(user);
     await _unitOfWork.SaveChangesAsync(cancellationToken);

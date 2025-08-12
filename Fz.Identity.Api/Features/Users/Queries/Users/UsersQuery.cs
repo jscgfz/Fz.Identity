@@ -13,7 +13,7 @@ public sealed record UsersQuery(
   int? PageSize,
   string? FullNameShort,
   string? Email,
-  string? Rol,
+  string? Role,
   bool? IsActive,
   DateTime? DateFrom,
   DateTime? DateTo,

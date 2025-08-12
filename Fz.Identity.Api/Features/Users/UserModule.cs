@@ -5,6 +5,7 @@ using Fz.Identity.Api.Features.Users.Commands.AddCredential;
 using Fz.Identity.Api.Features.Users.Commands.AddUser;
 using Fz.Identity.Api.Features.Users.Commands.UpdateUser;
 using Fz.Identity.Api.Features.Users.Commands.UpdateUserApplicationCommand;
+using Fz.Identity.Api.Features.Users.Commands.ValidateUser;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Features.Users.Queries.UserById;
 using Fz.Identity.Api.Features.Users.Queries.Users;
@@ -54,5 +55,10 @@ public sealed class UserModule : IIdentityModule
       .Produces(StatusCodes.Status204NoContent)
       .ProducesProblem(StatusCodes.Status409Conflict)
       .WithDescription("Actualiza el estado de un usuario en una aplicaión por su id");
+
+    group.MapPost("/validate-user", async (ValidateUserCommand cmd, ISender sender) => await sender.Send(cmd).ToResult())
+      .RequireAuthorization()
+      .Produces<ValidateUserDto>()
+      .WithDescription("Valida que un usuario exista y si pertence a un area, obtiene rol del usuario");
   }
 }
