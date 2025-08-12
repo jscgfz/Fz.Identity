@@ -20,6 +20,7 @@ public sealed record ModuleDto(
       PermissionId = c.Id,
       ActionName = c.Action.Name,
       PermissionEnbaled = roleId.HasValue && c.RoleClaims.Any(rc => rc.RoleId == roleId),
+      Order = c.Order
     });
 
     var claimsWithoutParent = claims
@@ -32,6 +33,7 @@ public sealed record ModuleDto(
           PermissionId = c.Id,
           ActionName = c.Action.Name,
           PermissionEnbaled = roleId.HasValue && c.RoleClaims.Any(rc => rc.RoleId == roleId),
+          Order = c.Order
         });
 
     var allClaims = claimsWithParent.Concat(claimsWithoutParent);
@@ -50,8 +52,11 @@ public sealed record ModuleDto(
                   (
                     c.PermissionId,
                     c.ActionName,
-                    c.PermissionEnbaled
-                  )).ToList()
+                    c.PermissionEnbaled,
+                    c.Order
+                  ))
+                .OrderBy(dto => dto.Order)
+                .ToList()
                 )).ToList()
         )).ToList();
 

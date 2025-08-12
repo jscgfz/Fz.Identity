@@ -6,5 +6,6 @@ namespace Fz.Identity.Api.Features.Auth.Dtos;
 public sealed record PermissionDto(
   int Id,
   string Name,
-  bool Enabled
+  bool Enabled,
+  int? Order
   ) : MasterDto<int>(Id, Name);
