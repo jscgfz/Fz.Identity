@@ -19,7 +19,9 @@ public sealed class RoleByIdQueryHandler(IServiceProvider provider) : IQueryHand
     = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
   public async Task<Result<RoleDetailDto>> Handle(RoleByIdQuery request, CancellationToken cancellationToken)
   {
-    var role = await _dbContext.Repository<Role>().Where(r => r.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+    var role = await _dbContext.Repository<Role>().Where(r => r.Id == request.Id)
+      .Include(r => r.ActiveDirectoryRole)
+      .FirstOrDefaultAsync(cancellationToken);
 
     if (role is null)
       return Result.Failure<RoleDetailDto>(type: ResultTypes.NotFound, [new Error("Role.NotFound", "No se encontró el rol")]);
@@ -35,8 +37,12 @@ public sealed class RoleByIdQueryHandler(IServiceProvider provider) : IQueryHand
       .ToListAsync();
 
     var moduleIds = roleClaims.Select(c => c.ModuleId).Distinct();
-    var claims = await _dbContext.Repository<Claim>()
-      .Where(c => moduleIds.Contains(c.ModuleId))
+
+    var claimsQuery = _dbContext.Repository<Claim>();
+    if (!request.IncludeAllModules)
+      claimsQuery = claimsQuery.Where(c => moduleIds.Contains(c.ModuleId));
+
+      var claims = await claimsQuery.Where(c => c.Module.ApplicationId == _identityManager.ApplicationId)
       .Include(c => c.Module)
       .Include(c => c.Action)
       .Include(c => c.RoleClaims)
@@ -44,6 +50,11 @@ public sealed class RoleByIdQueryHandler(IServiceProvider provider) : IQueryHand
 
     var modules = roleClaims.Concat(claims.Where(c => !roleClaims.Any(rc => rc.Id == c.Id))).ToList();
 
-    return Result.Success(RoleDetailDto.MapFrom(role, modules));
+    Request requestEntity = await _dbContext.Repository<Request>().Where(r => r.ResourceId == role.Id)
+      .OrderByDescending(r => r.Id)
+      .Include(r => r.Status)
+      .FirstOrDefaultAsync(); 
+
+    return Result.Success(RoleDetailDto.MapFrom(role, modules, requestEntity));
   }
 }

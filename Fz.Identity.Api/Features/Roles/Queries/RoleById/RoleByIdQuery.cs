@@ -5,5 +5,6 @@ using Fz.Identity.Api.Features.Roles.Dtos;
 namespace Fz.Identity.Api.Features.Roles.Queries.RoleById;
 
 public sealed record RoleByIdQuery(
-  Guid Id
+  Guid? Id,
+  bool IncludeAllModules = false
   ) : IQuery<Result<RoleDetailDto>>;

@@ -26,7 +26,7 @@ public sealed class AddRoleCommandHandler(IServiceProvider provider) : ICommandH
         await _dbContext.Repository<Role>().AnyAsync(row => row.Name == request.Name && row.ApplicationId == _identityManager.ApplicationId, cancellationToken)),
       KeyValuePair.Create(
         new Error("ActiveDirectoryName.Registered", "El nombre de directorio activo ya se encuentra registrado en la base de datos"),
-        await _dbContext.Repository<Role>().AnyAsync(row => row.ActiveDirectoryName == request.ActiveDirectoryRole && row.ApplicationId == _identityManager.ApplicationId, cancellationToken)),
+        await _dbContext.Repository<Role>().AnyAsync(row => row.ActiveDirectoryRoleId == request.ActiveDirectoryRoleId && row.ApplicationId == _identityManager.ApplicationId, cancellationToken)),
     ];
 
     if (validations.Any(row => row.Value))
@@ -35,7 +35,7 @@ public sealed class AddRoleCommandHandler(IServiceProvider provider) : ICommandH
     Role role = new()
     {
       Name = request.Name,
-      ActiveDirectoryName = request.ActiveDirectoryRole,
+      ActiveDirectoryRoleId = request.ActiveDirectoryRoleId,
       ApplicationId = (int)_identityManager.ApplicationId,
     };
 

@@ -6,6 +6,6 @@ namespace Fz.Identity.Api.Features.Roles.Commands.AddRole;
 
 public sealed record AddRoleCommand(
   string Name,
-  string ActiveDirectoryRole,
+  Guid ActiveDirectoryRoleId,
   IEnumerable<ModuleDto> Modules
   ): ICommand<Result>;

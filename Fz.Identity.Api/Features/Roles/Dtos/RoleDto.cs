@@ -9,8 +9,9 @@ public sealed record RoleDto(
   int? ApplicationId,
   string? SIManagementStatus,
   string? TiManagementStatus,
-  string? RemainingTime
+  string? RemainingTime,
+  int? RequestId
   ) : MasterDto<Guid>(Id, Name)
 {
-  public RoleDto(Guid Id, string Name, int? ApplicationId) : this(Id, Name, null, ApplicationId, null, null, null) { }
+  public RoleDto(Guid Id, string Name, int? ApplicationId) : this(Id, Name, null, ApplicationId, null, null, null, null) { }
 }

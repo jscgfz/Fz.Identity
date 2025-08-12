@@ -16,7 +16,7 @@ public sealed class RoleSpecifications
     => new Specification<RoleWithRequestDto, RoleDto>()
     .WithFilter(row => string.IsNullOrEmpty(query.Name) || row.Role.Name.Contains(query.Name))
     .WithAndFilter(row => (!query.DateFrom.HasValue || row.Role.CreatedAtUtc.Date >= query.DateFrom.Value.Date) && (!query.DateTo.HasValue || row.Role.CreatedAtUtc.Date <= query.DateTo.Value.Date))
-    .WithAndFilter(row => string.IsNullOrEmpty(query.SIManagementStatus) || row.Request.Status.Name.Contains(query.SIManagementStatus))
+    .WithAndFilter(row => string.IsNullOrEmpty(query.SIManagementStatus) || row.Request.Status.Name.Contains(query.SIManagementStatus) || (ManagementRequestStatuses.Without.Contains(query.SIManagementStatus) ? !row.Request.RequiresConfirmation && row.Request.StatusId == (int)RequestStatuses.Approved : row.Request == null ))
     .WithSelect(row => new(
       row.Role.Id,
       row.Role.Name,
@@ -24,6 +24,7 @@ public sealed class RoleSpecifications
       row.Role.ApplicationId,
       row.Request == null || (!row.Request.RequiresConfirmation && row.Request.StatusId == (int)RequestStatuses.Approved) ? ManagementRequestStatuses.Without : row.Request.Status.Name,
       row.Request.RequiresConfirmation ? ManagementRequestStatuses.Pending : ManagementRequestStatuses.DoesNotApply,
-      row.Request == null ? null : RequestDetailDto.GettRemainingTime(row.Request.ExpireAt)
+      row.Request == null || row.Request.StatusId != (int)RequestStatuses.Pending ? null : RequestDetailDto.GettRemainingTime(row.Request.ExpireAt),
+      row.Request.Id
       ));
 }
