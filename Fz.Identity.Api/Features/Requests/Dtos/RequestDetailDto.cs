@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database.Migrations;
 using Fz.Identity.Api.Features.Auth.Dtos;
 using Fz.Identity.Api.Features.Roles.Commands.AddRole;
 using Fz.Identity.Api.Features.Roles.Dtos;
+using Fz.Identity.Api.Settings;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Request = Fz.Identity.Api.Database.Entities.Request;
@@ -14,7 +15,7 @@ public sealed record RequestDetailDto(
   string User,
   string CreatedDate,
   string Status,
-  string RemainingTime,
+  string? RemainingTime,
   string CurrentName,
   string RequestedName,
   string CurrentADName,
@@ -29,16 +30,16 @@ public sealed record RequestDetailDto(
   string? RejectionReason
   )
 {
-  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role, User user, User? managementUser)
+  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role, User user, ActiveDirectoryRole activeDirectoryRole, User? managementUser)
   => new(
       $"{user.Name} {user.Surname}",
       request.CreatedAtUtc.ToString("dd/MM/yyyy hh:mm tt"),
       request.Status.Name,
-      GettRemainingTime(request.ExpireAt),
+      request.StatusId == (int)RequestStatuses.Pending ? GettRemainingTime(request.ExpireAt) : null,
       role.Name,
       GetChanges(request.ChangesJson).Name,
-      role.ActiveDirectoryName,
-      GetChanges(request.ChangesJson).ActiveDirectoryRole,
+      role.ActiveDirectoryRoleName,
+      activeDirectoryRole.Name,
       request.AuthorizationFileName,
       request.AuthorizationFileId,
       request.Reason,
@@ -67,7 +68,7 @@ public sealed record RequestDetailDto(
     }
   }
 
-  private static AddRoleCommand GetChanges(string changesJson)
+  public static AddRoleCommand GetChanges(string changesJson)
   {
     var options = new JsonSerializerOptions
     {

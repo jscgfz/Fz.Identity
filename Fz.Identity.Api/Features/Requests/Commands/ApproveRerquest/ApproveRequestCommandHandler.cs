@@ -24,7 +24,7 @@ public class ApproveRequestCommandHandler(IServiceProvider provider) : ICommandH
       return Result.Failure(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
 
     requestEntity.StatusId = (int)RequestStatuses.Approved;
-    requestEntity.ProcessedAt = DateTime.UtcNow;
+    requestEntity.ProcessedAt = DateTime.Now;
     requestEntity.ProcessedBy = _identityManager.CurrentUserId;
     requestEntity.RequiresConfirmation = true;
     _dbContext.Update(requestEntity);

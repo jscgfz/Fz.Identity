@@ -25,7 +25,7 @@ public class RejectRequestCommandHandler(IServiceProvider provider) : ICommandHa
 
     requestEntity.StatusId = (int)RequestStatuses.Rejected;
     requestEntity.RejectionReason = request.Reason;
-    requestEntity.ProcessedAt = DateTime.UtcNow;
+    requestEntity.ProcessedAt = DateTime.Now;
     requestEntity.ProcessedBy = _identityManager.CurrentUserId;
     _dbContext.Update(requestEntity);
     await _unitOfWork.SaveChangesAsync(cancellationToken);

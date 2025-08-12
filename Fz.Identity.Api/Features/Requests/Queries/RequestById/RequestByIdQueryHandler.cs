@@ -31,7 +31,7 @@ public class RequestByIdQueryHandler(IServiceProvider provider) : IQueryHandler<
     if (requestEntity is null)
       return Result.Failure<RequestDetailDto>(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
 
-    var roleByIdResult = await _sender.Send(new RoleByIdQuery(requestEntity.ResourceId));
+    var roleByIdResult = await _sender.Send(new RoleByIdQuery(requestEntity.ResourceId, true));
     if (roleByIdResult.IsFailure)
       return Result.ValidationError<RequestDetailDto>(roleByIdResult.Errors);
 
@@ -46,6 +46,8 @@ public class RequestByIdQueryHandler(IServiceProvider provider) : IQueryHandler<
       .IncludeDeleted()
       .FirstOrDefaultAsync(cancellationToken);
 
-    return Result.Success(RequestDetailDto.MapFrom(requestEntity, roleByIdResult.Value, user, managementUser));
+    var activeDirectoryRole = await _dbContext.Repository<ActiveDirectoryRole>().FirstOrDefaultAsync( adr => adr.Id == RequestDetailDto.GetChanges(requestEntity.ChangesJson).ActiveDirectoryRoleId); 
+
+    return Result.Success(RequestDetailDto.MapFrom(requestEntity, roleByIdResult.Value, user, activeDirectoryRole, managementUser));
   }
 }

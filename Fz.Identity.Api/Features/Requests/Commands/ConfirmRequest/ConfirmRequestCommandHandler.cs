@@ -28,8 +28,8 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
     {
       PropertyNameCaseInsensitive = true
     };
-    var requestedPermissions = JsonSerializer.Deserialize<AddRoleCommand>(requestEntity.ChangesJson, options);
-    var requestedPermissionIds = requestedPermissions.Modules.SelectMany(m => m.Actions).SelectMany(a => a.Permissions.Where(p => p.Enabled)).Select(p => p.Id).ToList();
+    var requestedChanges = JsonSerializer.Deserialize<AddRoleCommand>(requestEntity.ChangesJson, options);
+    var requestedPermissionIds = requestedChanges.Modules.SelectMany(m => m.Actions).SelectMany(a => a.Permissions.Where(p => p.Enabled)).Select(p => p.Id).ToList();
 
     IEnumerable<RoleClaim> permissions = await _dbContext.Repository<RoleClaim>().Where(rc => rc.RoleId == requestEntity.ResourceId)
       .IncludeDeleted()
@@ -63,7 +63,11 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
       _dbContext.AddRange(newRoleClaims);
     }
     requestEntity.RequiresConfirmation = false;
-    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    Role role = await _dbContext.Repository<Role>().FirstOrDefaultAsync(r => r.Id == requestEntity.ResourceId);
+    role.Name = requestedChanges.Name;
+    role.ActiveDirectoryRoleId = requestedChanges.ActiveDirectoryRoleId;
+    await _unitOfWork.SaveChangesAsync();
 
     return Result.Success();
   }
