@@ -111,6 +111,20 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 103, ApplitionId = 9, Name = "Detalle rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/view-rol/:id", ExcludeNav = true, Component = "rol-actions" },
         new() { Id = 104, ApplitionId = 9, Name = "Editar rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/edit-rol/:id", ExcludeNav = true, Component = "rol-actions" },
         new() { Id = 105, ApplitionId = 9, Name = "Crear rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/create-rol", ExcludeNav = true, Component = "rol-actions" },
+        new() { Id = 106, ApplitionId = 3, Name = "Solicitudes de edición", Description = string.Empty, UrlImg = "https://reporteriapbx.finanzauto.com.co/asisya.atenea.dev/icons/edit-requests.svg", Path = "/", ExcludeNav = false, Component = "home" },
+        new() { Id = 107, ApplitionId = 3, Name = "Detalle solicitud", Description = string.Empty, UrlImg = string.Empty, Path = "/edit-requests/:requestId", ExcludeNav = true, Component = "request-detail" },
+        new() { Id = 108, ApplitionId = 3, Name = "Gestión de usuarios", Description = string.Empty, UrlImg = "https://reporteriapbx.finanzauto.com.co/asisya.atenea.dev/icons/user-management.svg", Path = "/user-management", ExcludeNav = false, Component = "user-management" },
+        new() { Id = 109, ApplitionId = 3, Name = "Nuevo usuario", Description = string.Empty, UrlImg = string.Empty, Path = "/user-managment/create-user", ExcludeNav = true, Component = "create-user" },
+        new() { Id = 110, ApplitionId = 3, Name = "Detalle del usuario", Description = string.Empty, UrlImg = string.Empty, Path = "/user-managment/detail-user/:userId", ExcludeNav = true, Component = "detail-user" },
+        new() { Id = 111, ApplitionId = 3, Name = "Editar usuario", Description = string.Empty, UrlImg = string.Empty, Path = "/user-managment/edit-user/:userId", ExcludeNav = true, Component = "edit-user" },
+        new() { Id = 112, ApplitionId = 3, Name = "Gestión de roles", Description = string.Empty, UrlImg = "https://reporteriapbx.finanzauto.com.co/asisya.atenea.dev/icons/role-management.svg", Path = "/role-management", ExcludeNav = false, Component = "role-management" },
+        new() { Id = 113, ApplitionId = 3, Name = "Detalle de rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/role-detail/:roleId", ExcludeNav = true, Component = "role-detail" },
+        new() { Id = 114, ApplitionId = 3, Name = "Editar rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/edit-role/:roleId", ExcludeNav = true, Component = "edit-role" },
+        new() { Id = 115, ApplitionId = 3, Name = "Histórico de gestiones", Description = string.Empty, UrlImg = "https://reporteriapbx.finanzauto.com.co/asisya.atenea.dev/icons/history-management.svg", Path = "/history-management", ExcludeNav = false, Component = "history-management" },
+        new() { Id = 116, ApplitionId = 3, Name = "Detalle solicitud", Description = string.Empty, UrlImg = string.Empty, Path = "/history-management/:managementId", ExcludeNav = true, Component = "management-detail" },
+        new() { Id = 117, ApplitionId = 4, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 98 },
+        new() { Id = 118, ApplitionId = 4, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 98 },
+        new() { Id = 119, ApplitionId = 4, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 98 },
       ]);
   }
 }
