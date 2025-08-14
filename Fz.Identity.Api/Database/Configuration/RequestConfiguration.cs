@@ -10,5 +10,11 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
   public void Configure(EntityTypeBuilder<Request> builder)
   {
     builder.ToTable("Requests", IdentityContextSchemas.Configuration);
+
+    builder
+      .HasOne(row => row.Role)
+      .WithMany(row => row.Requests)
+      .HasForeignKey(row => row.RoleId)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }

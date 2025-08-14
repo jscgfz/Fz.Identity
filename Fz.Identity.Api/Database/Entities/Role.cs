@@ -12,6 +12,7 @@ public class Role : Entity<Guid>
   public virtual IEnumerable<UserRole> UserRoles { get; set; } = default!;
   public virtual IEnumerable<RoleRoute> Routes { get; set; } = default!;
   public virtual ActiveDirectoryRole? ActiveDirectoryRole { get; set; }
+  public virtual IEnumerable<Request> Requests { get; set; } = default!;
 
   public Role(int applicationId, string name)
   {

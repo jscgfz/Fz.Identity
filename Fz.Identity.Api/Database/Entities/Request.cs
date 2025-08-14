@@ -4,7 +4,7 @@ namespace Fz.Identity.Api.Database.Entities;
 
 public class Request : Entity<int>
 {
-  public Guid ResourceId { get; set; }
+  public Guid RoleId { get; set; }
   public string ChangesJson { get; set; }
   public string Reason { get; set; }
   public int StatusId { get; set; }
@@ -19,4 +19,5 @@ public class Request : Entity<int>
 
   public virtual RequestStatus Status { get; set; }
   public virtual Application Application { get; set; }
+  public virtual Role Role { get; set; }
 }
