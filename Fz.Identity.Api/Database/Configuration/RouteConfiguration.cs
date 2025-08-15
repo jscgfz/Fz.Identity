@@ -126,9 +126,9 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 114, ApplitionId = 3, Name = "Editar rol", Description = string.Empty, UrlImg = string.Empty, Path = "/role-management/edit-role/:roleId", ExcludeNav = true, Component = "edit-role" },
         new() { Id = 115, ApplitionId = 3, Name = "Histórico de gestiones", Description = string.Empty, UrlImg = "https://reporteriapbx.finanzauto.com.co/asisya.atenea.dev/icons/history-management.svg", Path = "/history-management", ExcludeNav = false, Component = "history-management" },
         new() { Id = 116, ApplitionId = 3, Name = "Detalle solicitud", Description = string.Empty, UrlImg = string.Empty, Path = "/history-management/:managementId", ExcludeNav = true, Component = "management-detail" },
-        new() { Id = 117, ApplitionId = 4, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 98 },
-        new() { Id = 118, ApplitionId = 4, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 98 },
-        new() { Id = 119, ApplitionId = 4, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 98 },
+        new() { Id = 117, ApplitionId = 4, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 34 },
+        new() { Id = 118, ApplitionId = 4, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 34 },
+        new() { Id = 119, ApplitionId = 4, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 34 },
       ]);
   }
 }
