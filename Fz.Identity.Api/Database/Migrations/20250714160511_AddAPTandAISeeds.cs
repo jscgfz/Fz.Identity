@@ -37,10 +37,10 @@ namespace Fz.Identity.Api.Database.Migrations
                 columns: new[] { "RoleId", "RouteId", "CreateClaimId", "DeletedAtUtc", "DeletedBy", "DownloadClaimId", "EditClaimId", "ModifiedAtUtc", "ModifiedBy", "ReadClaimId", "SpecialConditionClaimId", "StatusClaimId" },
                 values: new object[,]
                 {
-                    { new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 72, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
-                    { new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 73, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
-                    { new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 74, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
-                    { new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 75, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
+                    //{ new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 72, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
+                    //{ new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 73, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
+                    //{ new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 74, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
+                    //{ new Guid("2514961b-2fb5-4494-95b9-64787b3a5ca7"), 75, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
                     { new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"), 76, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
                     { new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"), 77, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
                     { new Guid("9b9d01c9-9ec8-46ae-8030-62112e045ea4"), 78, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null },
