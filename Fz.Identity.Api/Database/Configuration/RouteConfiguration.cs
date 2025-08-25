@@ -129,6 +129,12 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         new() { Id = 117, ApplitionId = 4, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 34 },
         new() { Id = 118, ApplitionId = 4, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 34 },
         new() { Id = 119, ApplitionId = 4, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 34 },
+        new() { Id = 120, ApplitionId = 4, Name = "Alfasis", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "alfasis", ParentId = 34 },
+        new() { Id = 121, ApplitionId = 11, Name = "Clientes", Description = "Clientes", UrlImg = "https://reporteriapbx.finanzauto.com.co/carfiao.atenea.dev/icons/icon-clients-atenea-carfiao.svg", Path = "/clients", ExcludeNav = false, Component = "clients" },
+        new() { Id = 122, ApplitionId = 11, Name = "Detalle de Cliente", Description = "Detalle de Cliente No.", UrlImg = string.Empty, Path = "/clients/client-detail/:clientId", ExcludeNav = true, Component = "client-detail" },
+        new() { Id = 123, ApplitionId = 11, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 122 },
+        new() { Id = 124, ApplitionId = 11, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 122 },
+        new() { Id = 125, ApplitionId = 11, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 122 },
       ]);
   }
 }
