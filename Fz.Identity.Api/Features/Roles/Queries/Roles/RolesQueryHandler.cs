@@ -7,6 +7,7 @@ using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Roles.Dtos;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Error = Fz.Core.Result.Error;
 
@@ -20,17 +21,14 @@ public sealed class RolesQueryHandler(IServiceProvider provider) : IQueryHandler
   public async Task<Result<IPaginatedResult<RoleDto>>> Handle(RolesQuery request, CancellationToken cancellationToken)
   {
     var q = _context.Repository<Role>().Where(r => request.ApplicationId == null || r.ApplicationId == request.ApplicationId)
-      .GroupJoin(
-      _context.Repository<Request>().Where(r => request.ApplicationId == null || r.ApplicationId == request.ApplicationId)
-      .Include(r => r.Status),
-      role => role.Id,
-      requestEntity => requestEntity.ResourceId,
-      (role, requests) => new RoleWithRequestDto
+      .OrderByDescending(r => r.CreatedAtUtc)
+      .Include(r => r.Requests)
+      .ThenInclude(re => re.Status)
+      .Select(r => new RoleWithRequestDto
       {
-          Role = role,
-          Request = requests.OrderByDescending(r => r.Id).FirstOrDefault()
-        }
-      );
+        Role = r,
+        Request = r.Requests.OrderByDescending(r => r.Id).FirstOrDefault()
+      });
 
     IQueryable<RoleDto> query = RoleSpecifications.ByRolesQuery(request).Apply(q);
     int count = await query.CountAsync();
