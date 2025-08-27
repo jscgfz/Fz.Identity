@@ -31,7 +31,7 @@ public class RequestByIdQueryHandler(IServiceProvider provider) : IQueryHandler<
     if (requestEntity is null)
       return Result.Failure<RequestDetailDto>(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
 
-    var roleByIdResult = await _sender.Send(new RoleByIdQuery(requestEntity.ResourceId, true));
+    var roleByIdResult = await _sender.Send(new RoleByIdQuery(requestEntity.RoleId, true));
     if (roleByIdResult.IsFailure)
       return Result.ValidationError<RequestDetailDto>(roleByIdResult.Errors);
 

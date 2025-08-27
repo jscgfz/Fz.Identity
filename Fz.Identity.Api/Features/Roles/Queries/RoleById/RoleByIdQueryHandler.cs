@@ -50,7 +50,7 @@ public sealed class RoleByIdQueryHandler(IServiceProvider provider) : IQueryHand
 
     var modules = roleClaims.Concat(claims.Where(c => !roleClaims.Any(rc => rc.Id == c.Id))).ToList();
 
-    Request requestEntity = await _dbContext.Repository<Request>().Where(r => r.ResourceId == role.Id)
+    Request requestEntity = await _dbContext.Repository<Request>().Where(r => r.RoleId == role.Id)
       .OrderByDescending(r => r.Id)
       .Include(r => r.Status)
       .FirstOrDefaultAsync(); 
