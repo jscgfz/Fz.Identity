@@ -23,7 +23,7 @@ public sealed class RoutesQueryHandler(IServiceProvider provider) : IQueryHandle
         _context.Repository<RoleRoute>().Where(row => _identityManager.RoleIds.Contains(row.RoleId))
           .Include(row => row.Route).ToListAsync(cancellationToken),
         ResultTypes.NotFound,
-        [new Error("Routes.NotFound", "no se encontraron rutas para el usuario")]
+        [new Error("Routes.NotFound", "No tiene un perfil asociado dentro del sistema, por favor valide con el equipo de soporte")]
       )
     .Map(result => RouteDto.MapFrom(result, null));
 #pragma warning restore CS8620 // El argumento no se puede usar para el parámetro debido a las diferencias en la nulabilidad de los tipos de referencia.
