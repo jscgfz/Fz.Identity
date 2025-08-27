@@ -16,7 +16,7 @@ public sealed class RoleSpecifications
     => new Specification<RoleWithRequestDto, RoleDto>()
     .WithFilter(row => string.IsNullOrEmpty(query.Name) || row.Role.Name.Contains(query.Name))
     .WithAndFilter(row => (!query.DateFrom.HasValue || row.Role.CreatedAtUtc.Date >= query.DateFrom.Value.Date) && (!query.DateTo.HasValue || row.Role.CreatedAtUtc.Date <= query.DateTo.Value.Date))
-    .WithAndFilter(row => string.IsNullOrEmpty(query.SIManagementStatus) || row.Request.Status.Name.Contains(query.SIManagementStatus) || (ManagementRequestStatuses.Without.Contains(query.SIManagementStatus) ? !row.Request.RequiresConfirmation && row.Request.StatusId == (int)RequestStatuses.Approved : row.Request == null ))
+    .WithAndFilter(row => string.IsNullOrEmpty(query.SIManagementStatus) || row.Request.Status.Name.Contains(query.SIManagementStatus) || (ManagementRequestStatuses.Without.ToLower().Contains(query.SIManagementStatus) ? !row.Request.RequiresConfirmation && row.Request.StatusId == (int)RequestStatuses.Approved || row.Request == null : false ))
     .WithSelect(row => new(
       row.Role.Id,
       row.Role.Name,
