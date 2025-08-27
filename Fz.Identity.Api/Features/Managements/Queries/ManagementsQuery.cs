@@ -12,6 +12,7 @@ public sealed record class ManagementsQuery(
   string? Action,
   DateTime? DateFrom,
   DateTime? DateTo,
+  int? ApplicationId,
   int? PageIndex,
   int? PageSize,
   bool FullSet = false
