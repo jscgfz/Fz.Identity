@@ -1,17 +1,31 @@
 ﻿using Fz.Core.Domain.Primitives;
+using System.ComponentModel.DataAnnotations;
 
 namespace Fz.Identity.Api.Database.Entities;
 
 public class User : Entity<Guid>
 {
+  [Display(Name = "Nombres")]
   public string Name { get; set; }
+
+  [Display(Name = "Apellidos")]
   public string Surname { get; set; }
+
+  [Display(Name = "Usuario")]
   public string Username { get; set; }
+
+  [Display(Name = "Número de identificación")]
   public string? IdentificationNumber { get; set; }
+
+  [Display(Name = "Correo")]
   public string PrincipalEmail { get; set; }
   public bool PrincipalEmailConfirmed { get; set; }
+
+  [Display(Name = "Número de teléfono")]
   public string? PrincipalPhoneNumber { get; set; }
   public bool PrincipalPhoneNumberConfirmed { get; set; }
+
+  [Display(Name = "Tipo documento")]
   public string? DocumentType { get; set; }
   public string? PhotoNodeId { get; set; }
   public int? AreaId { get; set; }
