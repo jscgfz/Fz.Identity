@@ -56,6 +56,8 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
   public async Task<Result<string>> UploadAuthFile(Guid roleId, int requestId, IFormFile authorizationFile)
   {
     string contentType = authorizationFile.ContentType;
+    string timePart = DateTime.Now.ToString("yyyyMMdd");
+    var randomPart = Guid.NewGuid().ToString("N").Substring(0, 8);
     HttpClient client = new();
     // Crear el encabezado de autenticación básica
     var authToken = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Value.Username}:{_settings.Value.Password}"));
@@ -64,7 +66,7 @@ public class AlfrescoService(IServiceProvider provider) : IAlfrescoService
     var formData = new MultipartFormDataContent
       {
         { new StringContent(roleId.ToString()), "relativePath" },
-        { new StringContent(authorizationFile.FileName), "name" },
+        { new StringContent($"{timePart}_{randomPart}_{authorizationFile.FileName}"), "name" },
         { new StringContent("cm:content"), "nodeType" },
         { new StringContent("false"), "overwrite" }
       };
