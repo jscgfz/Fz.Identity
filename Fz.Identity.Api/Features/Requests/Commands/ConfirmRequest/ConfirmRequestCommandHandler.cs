@@ -2,6 +2,8 @@
 using Fz.Core.Persistence.Extensions;
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
+using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Database.Migrations;
 using Fz.Identity.Api.Features.Roles.Commands.AddRole;
@@ -17,6 +19,8 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
      = provider.GetRequiredKeyedService<IDbContext>(ContextTypes.Identity);
   private readonly IUnitOfWork _unitOfWork
     = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
+  private readonly IIdentityContextControlFieldsManager _identityManager
+    = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
   public async Task<Result> Handle(ConfirmRequestCommand request, CancellationToken cancellationToken)
   {
     var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Approved && r.RequiresConfirmation).FirstOrDefaultAsync(cancellationToken);
@@ -31,7 +35,7 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
     var requestedChanges = JsonSerializer.Deserialize<AddRoleCommand>(requestEntity.ChangesJson, options);
     var requestedPermissionIds = requestedChanges.Modules.SelectMany(m => m.Actions).SelectMany(a => a.Permissions.Where(p => p.Enabled)).Select(p => p.Id).ToList();
 
-    IEnumerable<RoleClaim> permissions = await _dbContext.Repository<RoleClaim>().Where(rc => rc.RoleId == requestEntity.ResourceId)
+    IEnumerable<RoleClaim> permissions = await _dbContext.Repository<RoleClaim>().Where(rc => rc.RoleId == requestEntity.RoleId)
       .IncludeDeleted()
       .ToListAsync(cancellationToken);
 
@@ -55,7 +59,7 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
       {
         RoleClaim roleClaim = new()
         {
-          RoleId = requestEntity.ResourceId,
+          RoleId = requestEntity.RoleId,
           ClaimId = claimId,
         };
         newRoleClaims.Add(roleClaim);
@@ -64,10 +68,23 @@ public class ConfirmRequestCommandHandler(IServiceProvider provider) : ICommandH
     }
     requestEntity.RequiresConfirmation = false;
 
-    Role role = await _dbContext.Repository<Role>().FirstOrDefaultAsync(r => r.Id == requestEntity.ResourceId);
+    Role role = await _dbContext.Repository<Role>().FirstOrDefaultAsync(r => r.Id == requestEntity.RoleId);
     role.Name = requestedChanges.Name;
     role.ActiveDirectoryRoleId = requestedChanges.ActiveDirectoryRoleId;
     await _unitOfWork.SaveChangesAsync();
+
+    AuditLog auditLog = new AuditLog
+    {
+      Action = Actions.Edit,
+      Module = "Gestión de roles",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Confirmación de edición rol {requestEntity.Role.Name}",
+      Entity = "request",
+      EntityId = requestEntity.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success();
   }

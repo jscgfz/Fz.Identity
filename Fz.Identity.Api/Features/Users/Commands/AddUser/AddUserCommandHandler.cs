@@ -3,7 +3,9 @@ using Fz.Core.Result;
 using Fz.Core.Result.Extensions;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Identity;
+using Fz.Identity.Api.Abstractions.Persistence;
 using Fz.Identity.Api.Abstractions.Services;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
@@ -19,15 +21,17 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
     = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
   private readonly IAlfrescoService _alfresco
     = provider.GetRequiredService<IAlfrescoService>();
+  private readonly IIdentityContextControlFieldsManager _identityManager
+  = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
 
   public async Task<Result<UserAddedResponseDto>> Handle(AddUserCommand request, CancellationToken cancellationToken)
   {
     IEnumerable<KeyValuePair<Error, bool>> validations = [
       KeyValuePair.Create(
-        new Error("Email.Registered", "El email ya se encuentra registrado en la base de datos"),
+        new Error("Email.Registered", "El correo ya se encuentra registrado en la base de datos"),
         await _dbContext.Repository<User>().AnyAsync(row => row.PrincipalEmail == request.Email, cancellationToken)),
       KeyValuePair.Create(
-        new Error("Username.Registered", "El username ya se encuentra registrado en la base de datos"),
+        new Error("Username.Registered", "El nombre de usuario ya se encuentra registrado en la base de datos"),
         await _dbContext.Repository<User>().AnyAsync(row => row.Username == request.UserName, cancellationToken)),
       KeyValuePair.Create(
         new Error("PhoneNumber.Registered", "El número de telefono ya se encuentra registrado en la base de datos"),
@@ -95,6 +99,19 @@ public sealed class AddUserCommandHandler(IServiceProvider provider) : ICommandH
     }
 
     _dbContext.AddRange(userApplications);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    AuditLog auditLog = new AuditLog
+    {
+      Action = Actions.Create,
+      Module = "Gestión de usuarios",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Creación de usuario {request.Name} {request.Surname}",
+      Entity = "user",
+      EntityId = user.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return new UserAddedResponseDto(user.Id, user.Username);

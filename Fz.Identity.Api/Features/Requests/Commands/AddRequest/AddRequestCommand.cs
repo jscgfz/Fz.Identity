@@ -4,7 +4,7 @@ using Fz.Core.Result.Extensions.Abstractions;
 namespace Fz.Identity.Api.Features.Requests.Commands.AddRequest;
 
 public sealed record AddRequestCommand(
-  Guid ResourceId,
+  Guid RoleId,
   string Reason,
   IFormFile AuthorizationFile,
   string ChangesJson

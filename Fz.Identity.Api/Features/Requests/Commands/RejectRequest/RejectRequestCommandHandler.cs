@@ -2,6 +2,7 @@
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,19 @@ public class RejectRequestCommandHandler(IServiceProvider provider) : ICommandHa
     requestEntity.ProcessedAt = DateTime.Now;
     requestEntity.ProcessedBy = _identityManager.CurrentUserId;
     _dbContext.Update(requestEntity);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    AuditLog auditLog = new AuditLog
+    {
+      Action = Actions.ApproveReject,
+      Module = "Soliciitudes de edición",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Rechazo de solicitud {request.RequestId}, rol {requestEntity.Role.Name}",
+      Entity = "request",
+      EntityId = requestEntity.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success();

@@ -2,9 +2,11 @@
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Fz.Identity.Api.Features.Requests.Commands.ApproveRerquest;
 
@@ -18,7 +20,10 @@ public class ApproveRequestCommandHandler(IServiceProvider provider) : ICommandH
     = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
   public async Task<Result> Handle(ApproveRequestCommand request, CancellationToken cancellationToken)
   {
-    var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Pending).FirstOrDefaultAsync(cancellationToken);
+    var requestEntity = await _dbContext.Repository<Request>()
+      .Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Pending)
+      .Include(r => r.Role)
+      .FirstOrDefaultAsync(cancellationToken);
 
     if (requestEntity is null)
       return Result.Failure(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
@@ -28,6 +33,19 @@ public class ApproveRequestCommandHandler(IServiceProvider provider) : ICommandH
     requestEntity.ProcessedBy = _identityManager.CurrentUserId;
     requestEntity.RequiresConfirmation = true;
     _dbContext.Update(requestEntity);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    AuditLog auditLog = new AuditLog
+    {
+      Action = Actions.ApproveReject,
+      Module = "Soliciitudes de edición",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Aprobación de solicitud {request.RequestId}, rol {requestEntity.Role.Name}",
+      Entity = "request",
+      EntityId = requestEntity.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success();

@@ -2,6 +2,7 @@
 using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
@@ -53,6 +54,20 @@ public sealed class AddRoleCommandHandler(IServiceProvider provider) : ICommandH
     }
     _dbContext.AddRange(roleClaims);
     await _unitOfWork.SaveChangesAsync();
+
+    AuditLog auditLog = new AuditLog
+    {
+      Action = Actions.Create,
+      Module = "Gestión de roles",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Creación de rol {request.Name}",
+      Entity = "role",
+      EntityId = role.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
     return Result.Success();
   }
 }

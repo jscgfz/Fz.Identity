@@ -4,7 +4,9 @@ using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions.Persistence;
 using Fz.Identity.Api.Abstractions.Services;
+using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
+using Fz.Identity.Api.Features.Requests.Dtos;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -23,13 +25,17 @@ public class AddRequestCommandHandler(IServiceProvider provider) : ICommandHandl
     = provider.GetRequiredService<IAlfrescoService>();
   public async Task<Result> Handle(AddRequestCommand request, CancellationToken cancellationToken)
   {
-    Request? pendingRequest = await _dbContext.Repository<Request>().Where(r => r.ResourceId == request.ResourceId && r.StatusId == (int)RequestStatuses.Pending).FirstOrDefaultAsync();
+    Request? pendingRequest = await _dbContext.Repository<Request>().Where(r => r.RoleId == request.RoleId && r.StatusId == (int)RequestStatuses.Pending).FirstOrDefaultAsync();
     if (pendingRequest != null)
       return Result.Failure(ResultTypes.BadRequest, [new Error("Request.Create", "Creación fallida - ya existe un solicitud pendiente")]);
 
+    Role? role = await _dbContext.Repository<Role>().FirstOrDefaultAsync(r => r.Id == request.RoleId);
+    if(role is null)
+      return Result.Failure<RequestDetailDto>(type: ResultTypes.NotFound, [new Error("Role.NotFound", "No se encontró el rol solicitado")]);
+
     Request requestEntity = new()
     {
-      ResourceId = request.ResourceId,
+      RoleId = request.RoleId,
       Reason = request.Reason,
       ApplicationId = (int)_identityManager.ApplicationId,
       ChangesJson = request.ChangesJson,
@@ -41,14 +47,26 @@ public class AddRequestCommandHandler(IServiceProvider provider) : ICommandHandl
 
     string? authorizationFileId = null;
 
-    var alfresoResult = await _alfresco.UploadAuthFile(request.ResourceId, requestEntity.Id, request.AuthorizationFile);
+    var alfresoResult = await _alfresco.UploadAuthFile(request.RoleId, requestEntity.Id, request.AuthorizationFile);
     if (alfresoResult.IsFailure)
       return Result.ValidationError<UserAddedResponseDto>(alfresoResult.Errors);
     authorizationFileId = alfresoResult.Value;
 
     requestEntity.AuthorizationFileId = authorizationFileId;
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-    await _unitOfWork.SaveChangesAsync();
+    AuditLog auditLog = new AuditLog { 
+      Action = Actions.Create,
+      Module = "Gestión de roles",
+      UserId = _identityManager.CurrentUserId,
+      ApplicationId = (int)_identityManager.ApplicationId,
+      Description = $"Creación de solicitud edición rol {role.Name} ",
+      Entity = "request",
+      EntityId = requestEntity.Id.ToString()
+    };
+    _dbContext.Add(auditLog);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+
     return Result.Success(requestEntity);
   }
 }
