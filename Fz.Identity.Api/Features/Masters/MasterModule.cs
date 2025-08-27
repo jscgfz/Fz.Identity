@@ -4,6 +4,7 @@ using Fz.Identity.Api.Features.Masters.Dtos;
 using Fz.Identity.Api.Features.Masters.Queries.Applications;
 using Fz.Identity.Api.Features.Masters.Queries.Areas;
 using Fz.Identity.Api.Features.Masters.Queries.CredentialTypes;
+using Fz.Identity.Api.Features.Masters.Queries.Roles;
 using MediatR;
 
 namespace Fz.Identity.Api.Features.Masters;
@@ -34,5 +35,11 @@ public sealed class MasterModule : IIdentityModule
       .AllowAnonymous()
       .Produces<IEnumerable<AreaDto>>()
       .WithDescription("Obtiene las aplicaciones disponibles en el sistema");
+
+    group
+      .MapGet("/roles", async ([AsParameters] RolesQuery query, ISender sender) => await sender.Send(query).ToResult())
+      .AllowAnonymous()
+      .Produces<IEnumerable<RoleMasterDto>>()
+      .WithDescription("Obtiene los roles disponibles en el sistema");
   }
 }
