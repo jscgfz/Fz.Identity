@@ -4,7 +4,6 @@ using Fz.Core.Http.Extensions;
 using Fz.Core.Result.Extensions.Extensions;
 using Fz.Identity.Api.Abstractions;
 using Fz.Identity.Api.Extensions;
-using Fz.Identity.Api.Middlewares;
 using System.Reflection;
 
 var app = WebApplication
@@ -47,5 +46,4 @@ app.MapOpenApiDocument(
   .UseAuthentication()
   .UseAuthorization();
 
-app.UseMiddleware<AuditMiddleware>();
 app.Run();
