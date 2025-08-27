@@ -18,6 +18,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Fz.Identity.Api.Services.LDAP.Settings;
+using Fz.Identity.Api.Services.LDAP;
 
 namespace Fz.Identity.Api.Extensions;
 
@@ -190,14 +192,22 @@ public static class DependencyInjection
   public static WebApplicationBuilder WithClientExternalQueryServices(this WebApplicationBuilder builder)
   {
     builder
-   .Services
-   .AddOptions<AlfrescoSettings>()
-   .BindConfiguration(nameof(AlfrescoSettings))
-   .ValidateDataAnnotations()
-   .ValidateOnStart();
+      .Services
+      .AddOptions<AlfrescoSettings>()
+      .BindConfiguration(nameof(AlfrescoSettings))
+      .ValidateDataAnnotations()
+      .ValidateOnStart();
+
+    builder
+      .Services
+      .AddOptions<LDAPSettings>()
+      .BindConfiguration(nameof(LDAPSettings))
+      .ValidateDataAnnotations()
+      .ValidateOnStart();
 
     builder.Services.TryAddEnumerable([
-        ServiceDescriptor.Scoped<IAlfrescoService, AlfrescoService>()
+        ServiceDescriptor.Scoped<IAlfrescoService, AlfrescoService>(),
+        ServiceDescriptor.Scoped<ILDAPService, LDAPService>()
       ]);
     return builder;
   }

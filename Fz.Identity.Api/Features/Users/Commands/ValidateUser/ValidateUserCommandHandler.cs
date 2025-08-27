@@ -15,8 +15,8 @@ public class ValidateUserCommandHandler(IServiceProvider provider) : ICommandHan
 {
   private readonly IDbContext _dbContext
      = provider.GetRequiredKeyedService<IDbContext>(ContextTypes.Identity);
-  private readonly ILDAPAuthService _ldapAuth
-    = provider.GetRequiredService<ILDAPAuthService>();
+  private readonly ILDAPService _ldapAuth
+    = provider.GetRequiredService<ILDAPService>();
   private readonly IIdentityContextControlFieldsManager _identityManager
     = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
   public async Task<Result<ValidateUserDto>> Handle(ValidateUserCommand request, CancellationToken cancellationToken)
