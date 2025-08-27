@@ -20,7 +20,7 @@ public sealed record RoleDetailDto(
       role.Id,
       role.Name,
       request == null || (!request.RequiresConfirmation && request.StatusId == (int)RequestStatuses.Approved) ? ManagementRequestStatuses.Without : request.Status.Name,
-      role.ActiveDirectoryRole.Name,
+      role.ActiveDirectoryRole?.Name,
       request == null || (!request.RequiresConfirmation && request.StatusId == (int)RequestStatuses.Approved) ? null : request.Id,
       ModuleDto.MapFrom(claims, role.Id),
       role.ActiveDirectoryRoleId

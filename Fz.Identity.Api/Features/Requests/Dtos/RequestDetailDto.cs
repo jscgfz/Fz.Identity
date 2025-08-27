@@ -30,7 +30,7 @@ public sealed record RequestDetailDto(
   string? RejectionReason
   )
 {
-  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role, User user, ActiveDirectoryRole activeDirectoryRole, User? managementUser)
+  public static RequestDetailDto MapFrom(Request request, RoleDetailDto role, User user, ActiveDirectoryRole? activeDirectoryRole, User? managementUser)
   => new(
       $"{user.Name} {user.Surname}",
       request.CreatedAtUtc.ToString("dd/MM/yyyy hh:mm tt"),
@@ -39,7 +39,7 @@ public sealed record RequestDetailDto(
       role.Name,
       GetChanges(request.ChangesJson).Name,
       role.ActiveDirectoryRoleName,
-      activeDirectoryRole.Name,
+      activeDirectoryRole?.Name,
       request.AuthorizationFileName,
       request.AuthorizationFileId,
       request.Reason,
