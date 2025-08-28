@@ -1,12 +1,6 @@
 ﻿using Fz.Core.Result;
 using Fz.Core.Result.Extensions.Abstractions.Handlers;
-using Fz.Identity.Api.Common.Mappers;
-using Fz.Identity.Api.Features.Managements.Queries;
 using Fz.Identity.Api.Features.Requests.Dtos;
-using Fz.Identity.Api.Features.Requests.Queries.Requests;
-using Fz.Identity.Api.Features.Roles.Queries.Roles;
-using Fz.Identity.Api.Features.Users.Dtos;
-using Fz.Identity.Api.Features.Users.Queries.Users;
 using Fz.Identity.Api.Services.Excel;
 using MediatR;
 
