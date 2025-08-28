@@ -9,7 +9,7 @@ public class Request : Entity<int>
   public string Reason { get; set; }
   public int StatusId { get; set; }
   public DateTime? ProcessedAt { get; set; }
-  public DateTime ExpireAt => CreatedAtUtc.AddDays(3);
+  public DateTime ExpireAt => CreatedAtUtc.Date.AddDays(4);
   public string AuthorizationFileId { get; set; }
   public string AuthorizationFileName { get; set; }
   public string? RejectionReason{ get; set; }
