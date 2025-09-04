@@ -19,7 +19,9 @@ public class RejectRequestCommandHandler(IServiceProvider provider) : ICommandHa
   = provider.GetRequiredKeyedService<IIdentityContextControlFieldsManager>(ContextTypes.Identity);
   public async Task<Result> Handle(RejectRequestCommand request, CancellationToken cancellationToken)
   {
-    var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Pending).FirstOrDefaultAsync(cancellationToken);
+    var requestEntity = await _dbContext.Repository<Request>().Where(r => r.Id == request.RequestId && r.StatusId == (int)RequestStatuses.Pending)
+      .Include(row => row.Role)
+      .FirstOrDefaultAsync(cancellationToken);
 
     if (requestEntity is null)
       return Result.Failure(type: ResultTypes.NotFound, [new Error("Request.NotFound", "No se encontró la solicitud")]);
