@@ -11,7 +11,7 @@ public static class ExcelExporter
     using var workbook = new XLWorkbook();
     var worksheet = workbook.Worksheets.Add(sheetName);
 
-    var props = typeof(T).GetProperties();
+    var props = data.GetType().GetGenericArguments().First().GetProperties();
 
     for (int i = 0; i < props.Length; i++)
     {
@@ -25,7 +25,7 @@ public static class ExcelExporter
     {
       for (int i = 0; i < props.Length; i++)
       {
-        worksheet.Cell(row, i + 1).Value = (XLCellValue)props[i].GetValue(item);
+        worksheet.Cell(row, i + 1).Value = props[i].GetValue(item)?.ToString();
       }
       row++;
     }
