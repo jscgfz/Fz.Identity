@@ -27,7 +27,7 @@ public class ExportFileCommandHandler(IServiceProvider provider) : ICommandHandl
     return Result.Success(new FileDto(
      $"{request.Entity}.xlsx",
      excelBytes,
-     "application / vnd.openxmlformats - officedocument.spreadsheetml.sheet"
+     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
      ));
   }
 }
