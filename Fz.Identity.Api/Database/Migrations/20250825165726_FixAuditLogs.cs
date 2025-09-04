@@ -27,7 +27,7 @@ namespace Fz.Identity.Api.Database.Migrations
                 table: "AuditLogs",
                 type: "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 1);
 
             migrationBuilder.AddColumn<string>(
                 name: "Description",

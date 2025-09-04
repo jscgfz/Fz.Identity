@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250902144618_ClientsPermissions2")]
+    partial class ClientsPermissions2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2111,21 +2114,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             ModuleId = 7,
                             Order = 1,
                             Value = "clents.aprove"
-                        },
-                        new
-                        {
-                            Id = 86,
-                            ActionId = 6,
-                            CalimTypeId = 1,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Radicar PQRS - aprovar",
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModuleId = 8,
-                            Order = 1,
-                            Value = "pqrs.create-aprove1"
                         });
                 });
 
