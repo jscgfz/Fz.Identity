@@ -4,6 +4,7 @@ using Claim = Fz.Identity.Api.Database.Entities.Claim;
 namespace Fz.Identity.Api.Features.Auth.Dtos;
 
 public sealed record ModuleDto(
+  int Id,
   string Name,
   IEnumerable<SubmoduleDto>? Actions
   )
@@ -42,11 +43,13 @@ public sealed record ModuleDto(
         .GroupBy(c => new { c.ParentId, c.ParentName })
         .Select(parentGroup => new ModuleDto
         (
+          parentGroup.Key.ParentId,
           parentGroup.Key.ParentName,
           parentGroup
                 .GroupBy(c => new { c.SubId, c.SubName })
                 .Select(subGroup => new SubmoduleDto
                 (
+                  subGroup.Key.SubId,
                   subGroup.Key.SubName,
                   subGroup.Select(c => new PermissionDto
                   (
