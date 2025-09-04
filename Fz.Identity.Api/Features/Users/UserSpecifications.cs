@@ -30,7 +30,7 @@ public sealed class UserSpecifications
       .WithAndFilter(row => string.IsNullOrWhiteSpace(query.Role) || row.Roles.Where(r => r.Role.ApplicationId == query.ApplicationId).Any(r => r.Role.Name.Contains(query.Role)))
       .WithAndFilter(row => !query.IsActive.HasValue || !row.Applications.First(a => a.ApplicationId == query.ApplicationId).IsDeleted == query.IsActive)
       .WithAndFilter(row => (!query.DateFrom.HasValue || row.CreatedAtUtc.Date >= query.DateFrom.Value.Date) && (!query.DateTo.HasValue || row.CreatedAtUtc.Date <= query.DateTo.Value.Date))
-      .WithAndFilter(row => !row.Credentials.Any(c => c.CredentialTypeId == (int)CredentialTypes.PassWord))
+      //.WithAndFilter(row => !row.Credentials.Any(c => c.CredentialTypeId == (int)CredentialTypes.PassWord))
       .WithInclude(row => row.Roles.Where(r => !query.ApplicationId.HasValue || r.Role.ApplicationId == query.ApplicationId))
       .WithOrderBy(row => row.Name)
       .WithSelect(row => new(
