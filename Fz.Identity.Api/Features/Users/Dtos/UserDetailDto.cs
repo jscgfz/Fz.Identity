@@ -35,7 +35,7 @@ public sealed record UserDetailDto(
       user.PrincipalPhoneNumber,
       user.PrincipalEmailConfirmed,
       user.PrincipalPhoneNumberConfirmed,
-      (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, null)) : null),
+      (user.Roles.Any() ? user.Roles.Select(r => new RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null),
       user.Credentials.Select(c => c.CredentialValue).Distinct(),
       photoBase64,
       user.AreaId
