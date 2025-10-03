@@ -225,6 +225,14 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         PrincipalEmail = "carol.medina@asisya.com",
         PrincipalPhoneNumber = "1000000037",
         IdentificationNumber = "1000000037"
+      },
+      new()
+      {
+        Id = Guid.Parse("C08A4028-3BF6-4B94-8F97-89982F217EB2"),
+        Name = "Atenea",
+        Surname = "Promotec",
+        Username = "atenea.promotec",
+        PrincipalEmail = "atenea.promotec@finanzatuo.com.co"
       }
     ]);
   }

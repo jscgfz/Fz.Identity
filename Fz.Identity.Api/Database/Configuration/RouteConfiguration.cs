@@ -11,7 +11,7 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
   {
 
     builder.ToTable("Routes", IdentityContextSchemas.Configuration);
-    builder.HasIndex(row => new { row.ApplitionId, row.Name, row.Path }).IsUnique();
+    builder.HasIndex(row => new { row.ApplitionId, row.Name, row.Path, row.Component }).IsUnique();
     builder.HasOne(row => row.Application)
       .WithMany(row => row.Routes)
       .HasForeignKey(row => row.ApplitionId)
@@ -136,6 +136,8 @@ public sealed class RouteConfiguration : IEntityTypeConfiguration<Route>
         //new() { Id = 123, ApplitionId = 11, Name = "Información del negocio", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "GeneralSummary", ParentId = 122 },
         //new() { Id = 124, ApplitionId = 11, Name = "Histórico", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "Historic" , ParentId = 122 },
         //new() { Id = 125, ApplitionId = 11, Name = "Historial de comunicación", Description = string.Empty, UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "CommunicationHistory", ParentId = 122 },
+        new() { Id = 148, ApplitionId = 4, Name = "Gestión agentes", Description = "Gestión agentes", UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "PqrsManagamentDetail", ParentId = 26 },
+        new() { Id = 149, ApplitionId = 4, Name = "Gestión horarios", Description = "Gestión agentes", UrlImg = string.Empty, Path = string.Empty, ExcludeNav = true, Component = "PqrsManagamentDetail", ParentId = 26 },
       ]);
   }
 }

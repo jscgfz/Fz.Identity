@@ -12,7 +12,7 @@ public sealed class RequestDto
   public string? User { get; set; }
   public string Reason { get; set; }
   public string Status { get; set; }
-  string? RemainingTime { get; set; }
+  public string? RemainingTime { get; set; }
   public Guid UserId { get; set; }
 
   public RequestDto(int id, string createdDate, string application, string? user, string reason, string status, string? remainingTime, Guid userId)

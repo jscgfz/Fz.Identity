@@ -26,17 +26,15 @@ public class ValidateUserCommandHandler(IServiceProvider provider) : ICommandHan
       return Result.Failure<ValidateUserDto>(type: ResultTypes.NotFound, [new Error("Application.NotFound", "No se encontró la applicación")]);
 
     var userResult = await _ldapAuth.GetDetailUSer(request.UserName, application.Alias);
-    bool hasArea = false;
     if (userResult.IsFailure || userResult.Value.Message.Code != 0)
-      hasArea = Random.Shared.Next(2) == 1;
+      return Result.Failure<ValidateUserDto>(ResultTypes.NotFound, [new Error("Role.NotFound", "Rol no asignado, comuniquese con tecnología")]);
 
+    IEnumerable<string> rolesDa = userResult.Value.Roles.Select(r => r.Description);
     var roleId = Random.Shared.Next(4);
-    var roles = await _dbContext.Repository<Role>().Where(r => r.ApplicationId == _identityManager.ApplicationId && !r.ActiveDirectoryRole.Name.Contains("area")).ToListAsync();
-    var role = roles[roleId];
+    var roles = await _dbContext.Repository<Role>().Where(r => r.ApplicationId == _identityManager.ApplicationId && rolesDa.Contains(r.ActiveDirectoryRole!.Name)).ToListAsync();
+    if(roles.FirstOrDefault() is not Role role)
+      return Result.Failure<ValidateUserDto>(ResultTypes.NotFound, [new Error("Role.NotFound", "Rol no asignado, comuniquese con tecnología")]);
 
-    if(hasArea)
-      role = await _dbContext.Repository<Role>().FirstOrDefaultAsync(r => r.ActiveDirectoryRole.Name.Contains("area") && r.ApplicationId == _identityManager.ApplicationId);
-
-    return Result.Success(new ValidateUserDto(role.Name, role.Id, hasArea));
+    return Result.Success(new ValidateUserDto(role.Name, role.Id, role.Name.Contains("área", StringComparison.CurrentCultureIgnoreCase)));
   }
 }

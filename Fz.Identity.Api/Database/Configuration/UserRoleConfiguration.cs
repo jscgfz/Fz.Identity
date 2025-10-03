@@ -30,6 +30,7 @@ public sealed class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         new UserRole { UserId = Guid.Parse("8D7E4C06-16D7-4448-B145-BDA5F1AF0776"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
         new UserRole { UserId = Guid.Parse("71E13750-87BB-40A7-BB93-58E8F603B1A7"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
         new UserRole { UserId = Guid.Parse("3181C2ED-7454-4C71-99A9-0797DAA0F32D"), RoleId = Guid.Parse("07D4316E-4834-48FD-8AFD-A96524C615ED") },
+        new UserRole { UserId = Guid.Parse("C08A4028-3BF6-4B94-8F97-89982F217EB2"), RoleId = Guid.Parse("8149C0B3-18DB-4C79-8DF3-81300B7C5CFB") },
       ]);
   }
 }

@@ -1,16 +1,26 @@
-﻿using Fz.Core.Http.Extensions;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Fz.Core.Http.Extensions;
 using Fz.Core.Persistence.Abstractions;
+using Fz.Core.Result;
+using Fz.Core.Result.Extensions.Abstractions.Handlers;
 using Fz.Identity.Api.Abstractions;
+using Fz.Identity.Api.Abstractions.Common;
 using Fz.Identity.Api.Abstractions.Identity;
 using Fz.Identity.Api.Abstractions.Persistence;
 using Fz.Identity.Api.Abstractions.Services;
+using Fz.Identity.Api.Common.Files;
 using Fz.Identity.Api.Database;
 using Fz.Identity.Api.Database.Managers;
+using Fz.Identity.Api.Features.Files.Commands.ExportFile;
+using Fz.Identity.Api.Features.Requests.Dtos;
+using Fz.Identity.Api.Features.Users.Dtos;
+using Fz.Identity.Api.Managers;
 using Fz.Identity.Api.Services.Alfresco;
 using Fz.Identity.Api.Services.Alfresco.Settings;
-using Fz.Identity.Api.Managers;
 using Fz.Identity.Api.Services.Identity;
 using Fz.Identity.Api.Services.Identity.Settings;
+using Fz.Identity.Api.Services.LDAP;
+using Fz.Identity.Api.Services.LDAP.Settings;
 using Fz.Identity.Api.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +28,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using Fz.Identity.Api.Services.LDAP.Settings;
-using Fz.Identity.Api.Services.LDAP;
 
 namespace Fz.Identity.Api.Extensions;
 
@@ -167,6 +175,10 @@ public static class DependencyInjection
       .AddKeyedScoped<ICredentialValidatorService, SignleCredentialValidatorService>(CredentialTypes.PassWord)
       .AddScoped<IHashManager, HashManager>()
       .AddScoped<ISignatureKeyManager, SignatureKeyManager>();
+
+    builder
+      .Services
+      .AddKeyedTransient<IFileRenderer, UserFileRenderer>(typeof(UserDto).FullName);
 
     builder
       .Services

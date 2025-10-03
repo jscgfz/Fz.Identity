@@ -17,7 +17,10 @@ var app = WebApplication
   .WithJsonWebToken()
   .WithResultExtensions(options =>
   {
-    options.RegisterServicesFromAssemblies([Assembly.GetExecutingAssembly()]);
+    options
+      .RegisterServicesFromAssemblies([Assembly.GetExecutingAssembly()]);
+    options
+      .RegisterGenericHandlers = true;
   })
   .WithApiVersioning()
   .WithCors()

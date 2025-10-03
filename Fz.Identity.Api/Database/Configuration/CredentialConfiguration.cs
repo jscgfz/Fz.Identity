@@ -188,6 +188,15 @@ public sealed class CredentialConfiguration : IEntityTypeConfiguration<Credentia
         CredentialTypeId = ((int)CredentialTypes.AsDomain),
         CredentialValue = "carol.medina"
       },
+      new()
+      {
+        Id = 1052,
+        UserId = Guid.Parse("C08A4028-3BF6-4B94-8F97-89982F217EB2"),
+        CredentialTypeId = ((int)CredentialTypes.PassWord),
+        CredentialValue = "atenea.promotec",
+        PasswordHash = Convert.FromBase64String("B+EFtngSzv7jn3GFgr/iI6H9F4n9ccn+Bbh95odsQNo="),
+        PasswordSalt = Convert.FromBase64String("bo/1h0o9eHXKTmWoFHm8TtxiiGt0UpP74SD45H0jiLk=")
+      },
     ]);
   }
 }
