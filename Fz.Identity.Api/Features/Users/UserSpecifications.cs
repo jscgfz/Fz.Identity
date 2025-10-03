@@ -41,7 +41,7 @@ public sealed class UserSpecifications
         row.PrincipalEmail,
         row.Applications.Any(a => a.ApplicationId == query.ApplicationId) ? !row.Applications.First(a => a.ApplicationId == query.ApplicationId).IsDeleted : null,
         row.Username,
-        (row.Roles.Any() ? row.Roles.Where(r => r.Role.ApplicationId == query.ApplicationId).Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null),
+        (row.Roles.Any() ? row.Roles.Where(r => r.Role.ApplicationId == query.ApplicationId && !r.IsDeleted).Select(r => new Roles.Dtos.RoleDto(r.RoleId, r.Role.Name, r.Role.ApplicationId)) : null),
         row.Credentials.Select(c => c.CredentialValue).Distinct(),
         row.PrincipalEmailConfirmed,
         row.PrincipalPhoneNumber,
