@@ -4,6 +4,7 @@ using Fz.Identity.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fz.Identity.Api.Database.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20251007154623_AddAFZApp")]
+    partial class AddAFZApp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4031,22 +4034,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             TwoFactorEnabled = false,
                             UserId = new Guid("5f7b3712-0829-4a4b-a3c5-f38f35e37ca8")
-                        },
-                        new
-                        {
-                            Id = 1052,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CredentialConfirmed = false,
-                            CredentialTypeId = 4,
-                            CredentialValue = "atenea.promotec",
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            PasswordHash = new byte[] { 7, 225, 5, 182, 120, 18, 206, 254, 227, 159, 113, 133, 130, 191, 226, 35, 161, 253, 23, 137, 253, 113, 201, 254, 5, 184, 125, 230, 135, 108, 64, 218 },
-                            PasswordSalt = new byte[] { 110, 143, 245, 135, 74, 61, 120, 117, 202, 78, 101, 168, 20, 121, 188, 78, 220, 98, 136, 107, 116, 82, 147, 251, 225, 32, 248, 228, 125, 35, 136, 185 },
-                            TwoFactorEnabled = false,
-                            UserId = new Guid("c08a4028-3bf6-4b94-8f97-89982f217eb2")
                         });
                 });
 
@@ -7817,26 +7804,6 @@ namespace Fz.Identity.Api.Database.Migrations
                         },
                         new
                         {
-                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
-                            RouteId = 148,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
-                            RouteId = 149,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
                             RoleId = new Guid("bc59a574-4972-41d7-92a9-fdfbef4aad8a"),
                             RouteId = 128,
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -8060,7 +8027,7 @@ namespace Fz.Identity.Api.Database.Migrations
 
                     b.Property<string>("Component")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .ValueGeneratedOnAdd()
@@ -8118,7 +8085,7 @@ namespace Fz.Identity.Api.Database.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.HasIndex("ApplitionId", "Name", "Path", "Component")
+                    b.HasIndex("ApplitionId", "Name", "Path")
                         .IsUnique();
 
                     b.ToTable("Routes", "conf");
@@ -10179,42 +10146,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             Order = 0,
                             Path = "/home",
                             UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 148,
-                            ApplitionId = 4,
-                            Component = "PqrsManagamentDetail",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Gestión agentes",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Gestión agentes",
-                            Order = 0,
-                            ParentId = 26,
-                            Path = "",
-                            UrlImg = ""
-                        },
-                        new
-                        {
-                            Id = 149,
-                            ApplitionId = 4,
-                            Component = "PqrsManagamentDetail",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Description = "Gestión agentes",
-                            ExcludeNav = true,
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Gestión horarios",
-                            Order = 0,
-                            ParentId = 26,
-                            Path = "",
-                            UrlImg = ""
                         });
                 });
 
@@ -10668,21 +10599,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             PrincipalPhoneNumberConfirmed = false,
                             Surname = "Medina",
                             Username = "carol.medina"
-                        },
-                        new
-                        {
-                            Id = new Guid("c08a4028-3bf6-4b94-8f97-89982f217eb2"),
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Atenea",
-                            PrincipalEmail = "atenea.promotec@finanzatuo.com.co",
-                            PrincipalEmailConfirmed = false,
-                            PrincipalPhoneNumberConfirmed = false,
-                            Surname = "Promotec",
-                            Username = "atenea.promotec"
                         });
                 });
 
@@ -10867,16 +10783,6 @@ namespace Fz.Identity.Api.Database.Migrations
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             IsDeleted = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            UserId = new Guid("c08a4028-3bf6-4b94-8f97-89982f217eb2"),
-                            ApplicationId = 4,
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -11052,16 +10958,6 @@ namespace Fz.Identity.Api.Database.Migrations
                         {
                             UserId = new Guid("3181c2ed-7454-4c71-99a9-0797daa0f32d"),
                             RoleId = new Guid("07d4316e-4834-48fd-8afd-a96524c615ed"),
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            UserId = new Guid("c08a4028-3bf6-4b94-8f97-89982f217eb2"),
-                            RoleId = new Guid("8149c0b3-18db-4c79-8df3-81300b7c5cfb"),
                             CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
