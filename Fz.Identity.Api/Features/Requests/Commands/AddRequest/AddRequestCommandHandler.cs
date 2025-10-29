@@ -7,9 +7,11 @@ using Fz.Identity.Api.Abstractions.Services;
 using Fz.Identity.Api.Constants;
 using Fz.Identity.Api.Database.Entities;
 using Fz.Identity.Api.Features.Requests.Dtos;
+using Fz.Identity.Api.Features.Roles.Commands.AddRole;
 using Fz.Identity.Api.Features.Users.Dtos;
 using Fz.Identity.Api.Settings;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Fz.Identity.Api.Features.Requests.Commands.AddRequest;
 
@@ -33,6 +35,22 @@ public class AddRequestCommandHandler(IServiceProvider provider) : ICommandHandl
     if(role is null)
       return Result.Failure<RequestDetailDto>(type: ResultTypes.NotFound, [new Error("Role.NotFound", "No se encontró el rol solicitado")]);
 
+    var options = new JsonSerializerOptions
+    {
+      PropertyNameCaseInsensitive = true
+    };
+    var requestedChanges = JsonSerializer.Deserialize<AddRoleCommand>(request.ChangesJson, options);
+    IEnumerable<KeyValuePair<Error, bool>> validations = [
+      KeyValuePair.Create(
+        new Error("Name.Registered", "El nombre ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<Role>().AnyAsync(row => row.Name == requestedChanges.Name && row.Id != role.Id && row.ApplicationId == _identityManager.ApplicationId, cancellationToken)),
+      KeyValuePair.Create(
+        new Error("ActiveDirectoryRole.Registered", "El rol de directorio activo ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<Role>().AnyAsync(row => row.ActiveDirectoryRoleId == requestedChanges.ActiveDirectoryRoleId && row.Id != role.Id && row.ApplicationId == _identityManager.ApplicationId, cancellationToken)),
+    ];
+
+    if (validations.Any(row => row.Value))
+      return Result.Failure(ResultTypes.BadRequest, validations.Where(row => row.Value).Select(row => row.Key));
     Request requestEntity = new()
     {
       RoleId = request.RoleId,

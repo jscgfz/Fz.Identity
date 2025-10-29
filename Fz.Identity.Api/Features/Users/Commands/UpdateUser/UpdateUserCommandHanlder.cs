@@ -35,6 +35,24 @@ public class UpdateUserCommandHanlder(IServiceProvider provider) : ICommandHandl
     if (user is null)
       return Result.Failure(type: ResultTypes.NotFound, [new Error("User.NotFound", "No se encontró el usuario")]);
 
+    IEnumerable<KeyValuePair<Error, bool>> validations = [
+      KeyValuePair.Create(
+        new Error("Email.Registered", "El correo ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<User>().AnyAsync(row => row.PrincipalEmail == request.Email && row.Id != user.Id, cancellationToken)),
+      KeyValuePair.Create(
+        new Error("Username.Registered", "El nombre de usuario ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<User>().AnyAsync(row => row.Username == request.UserName && row.Id != user.Id, cancellationToken)),
+      KeyValuePair.Create(
+        new Error("PhoneNumber.Registered", "El número de telefono ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<User>().AnyAsync(row => !string.IsNullOrEmpty(request.PhoneNamuber) && row.PrincipalPhoneNumber == request.PhoneNamuber && row.Id != user.Id, cancellationToken)),
+      KeyValuePair.Create(
+        new Error("IdentificationNumber.Registered", "El número de identificación ya se encuentra registrado en la base de datos"),
+        await _dbContext.Repository<User>().AnyAsync(row => ! string.IsNullOrEmpty(request.IdentificationNumber) && row.IdentificationNumber == request.IdentificationNumber && row.Id != user.Id, cancellationToken)),
+    ];
+
+    if (validations.Any(row => row.Value))
+      return Result.Failure<UserAddedResponseDto>(ResultTypes.BadRequest, validations.Where(row => row.Value).Select(row => row.Key));
+
     string changes = string.Empty;
     try
     {
