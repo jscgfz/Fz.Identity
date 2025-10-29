@@ -50,7 +50,7 @@ public sealed class IdentityTokenProviderService(IServiceProvider provider) : IT
       return Result.Failure<IdentityResponseDto>(ResultTypes.NotFound, [new Error("Application.NotFound", "Aplicación no encontrada")]);
     
     if(!user.Applications.Any(a => a.ApplicationId == applicationId))
-      return Result.Failure<IdentityResponseDto>(ResultTypes.Unauthorized, [new Error("User.Unauthorized", $"Acceso no autorizado a la applicación {app.Name}")]);
+      return Result.Failure<IdentityResponseDto>(ResultTypes.Unauthorized, [new Error("User.Unauthorized", $"Acceso no autorizado a la aplicación {app.Name}")]);
 
     IEnumerable<ClaimStorage> claims = [
       ..roles.Select(row => new ClaimStorage(ClaimTypes.Role, row.Id.ToString())),

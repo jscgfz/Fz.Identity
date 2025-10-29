@@ -36,7 +36,7 @@ public class RejectRequestCommandHandler(IServiceProvider provider) : ICommandHa
     AuditLog auditLog = new AuditLog
     {
       Action = Actions.ApproveReject,
-      Module = "Soliciitudes de edición",
+      Module = "Solicitudes de edición",
       UserId = _identityManager.CurrentUserId,
       ApplicationId = (int)_identityManager.ApplicationId,
       Description = $"Rechazo de solicitud {request.RequestId}, rol {requestEntity.Role.Name}",
