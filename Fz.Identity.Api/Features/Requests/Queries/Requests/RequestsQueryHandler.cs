@@ -21,8 +21,11 @@ public sealed class RequestsQueryHandler(IServiceProvider provider) : IQueryHand
     RequestSpecification.ByRequestsQuery,
     request,
     _context,
-    [new Error("Requests.NotFound", "no se encontraron solicitudes para la consulta")]
+    [new Error("Requests.NotFound", "No se encontraron solicitudes para la consulta")]
     );
+
+    if(result.Result.IsFailure)
+      return await result;
 
     List<Guid> userids = result.Result.Value.Data.Select(x => x.UserId)
       .Distinct()
