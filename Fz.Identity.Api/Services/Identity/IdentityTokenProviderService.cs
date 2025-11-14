@@ -24,12 +24,14 @@ public sealed class IdentityTokenProviderService(IServiceProvider provider) : IT
 {
   private readonly IReadOnlyDbContext _context
     = provider.GetRequiredKeyedService<IReadOnlyDbContext>(ContextTypes.Identity);
+  private readonly IDbContext _dbContext
+    = provider.GetRequiredKeyedService<IDbContext>(ContextTypes.Identity);
+  private readonly IUnitOfWork _unitOfWork
+    = provider.GetRequiredKeyedService<IUnitOfWork>(ContextTypes.Identity);
   private readonly ICacheManager _cacheManager
     = provider.GetRequiredService<ICacheManager>();
   private readonly IConfigurationSection _jwt
     = provider.GetRequiredService<IConfiguration>().GetRequiredSection(nameof(JwtBearerOptions));
-  private readonly JsonSerializerOptions _jsonSerializerSettings
-    = provider.GetRequiredService<IOptions<JsonOptions>>().Value.SerializerOptions;
   private readonly IHttpContextAccessor _contextAccessor
     = provider.GetRequiredService<IHttpContextAccessor>();
   private readonly IIdentityContextControlFieldsManager _identityManager
@@ -52,6 +54,17 @@ public sealed class IdentityTokenProviderService(IServiceProvider provider) : IT
     if(!user.Applications.Any(a => a.ApplicationId == applicationId))
       return Result.Failure<IdentityResponseDto>(ResultTypes.Unauthorized, [new Error("User.Unauthorized", $"Acceso no autorizado a la aplicación {app.Name}")]);
 
+    LoginLog log = new()
+    {
+      ApplicationId = applicationId,
+      UserId = user.Id,
+      ClaimedAtUtc = DateTime.UtcNow,
+      Location = _contextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString()!,
+    };
+
+    _dbContext.Add(log);
+    await _unitOfWork.SaveChangesAsync();
+    
     IEnumerable<ClaimStorage> claims = [
       ..roles.Select(row => new ClaimStorage(ClaimTypes.Role, row.Id.ToString())),
       new(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -60,7 +73,8 @@ public sealed class IdentityTokenProviderService(IServiceProvider provider) : IT
       new(ClaimTypes.Surname, user.Surname),
       new(ClaimTypes.Uri, _contextAccessor.HttpContext?.Connection.RemoteIpAddress?.MapToIPv4().ToString() ?? string.Empty),
       new(IdentityClaimTypes.ApplicationId, app.Id.ToString()),
-      new(IdentityClaimTypes.ApplicationName, app.Name)
+      new(IdentityClaimTypes.ApplicationName, app.Name),
+      new(IdentityClaimTypes.TraceIdentifier, log.Id.ToString())
     ];
 
     IdentityStorage identity = new(claims, app, user, roles);

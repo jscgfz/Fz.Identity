@@ -3,7 +3,9 @@ using Fz.Core.Cache.InMemory.Extensions;
 using Fz.Core.Http.Extensions;
 using Fz.Core.Result.Extensions.Extensions;
 using Fz.Identity.Api.Abstractions;
+using Fz.Identity.Api.Behaviors;
 using Fz.Identity.Api.Extensions;
+using MediatR;
 using System.Reflection;
 
 var app = WebApplication
@@ -17,8 +19,8 @@ var app = WebApplication
   .WithJsonWebToken()
   .WithResultExtensions(options =>
   {
-    options
-      .RegisterServicesFromAssemblies([Assembly.GetExecutingAssembly()]);
+    options.RegisterServicesFromAssemblies([Assembly.GetExecutingAssembly()]);
+    options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoginLogBehavior<,>));
     options
       .RegisterGenericHandlers = true;
   })

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Masters\Commands\" />
+    <Folder Include="Features\Reports\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

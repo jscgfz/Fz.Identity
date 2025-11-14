@@ -16,4 +16,6 @@ public class UserApplication : IAuditableEntity<Guid>, ISoftDeleteableEntity<Gui
 
   public virtual User User { get; set; } = default!;
   public virtual Application Application { get; set; } = default!;
+
+  public virtual ICollection<LoginLog> Logs { get; set; } = default!;
 }

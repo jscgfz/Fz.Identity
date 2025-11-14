@@ -39,6 +39,7 @@ public class IdentityContext(DbContextOptions options, IServiceProvider provider
       .ApplyConfiguration(new ClaimConfiguration())
       .ApplyConfiguration(new ClaimTypeConfiguration())
       .ApplyConfiguration(new CredentialConfiguration())
+      .ApplyConfiguration(new LoginLogConfiguration())
       .ApplyConfiguration(new CredentialTypeConfiguration())
       .ApplyConfiguration(new RoleConfiguration(_manager))
       .ApplyConfiguration(new RoleClaimConfiguration())
